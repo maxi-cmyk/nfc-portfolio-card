@@ -555,23 +555,23 @@ input {
   }
 
   9% {
-    transform: rotate(8deg);
+    transform: rotate(-8deg);
   }
 
   18% {
-    transform: rotate(-6deg);
+    transform: rotate(7deg);
   }
 
   28% {
-    transform: rotate(4deg);
+    transform: rotate(-5deg);
   }
 
   38% {
-    transform: rotate(-2deg);
+    transform: rotate(3deg);
   }
 
   47% {
-    transform: rotate(1deg);
+    transform: rotate(-1deg);
   }
 }
 
@@ -848,6 +848,8 @@ footer {
 }
 
 .asteroid-shot {
+  fill: var(--acid);
+  stroke: none;
   animation: shot-travel 6s linear infinite;
 }
 
@@ -896,36 +898,36 @@ footer {
 
 @keyframes shot-travel {
   0%,
-  36% {
+  37% {
     opacity: 0;
     transform: translateY(0);
   }
 
-  38% {
+  39% {
     opacity: 1;
     transform: translateY(0);
   }
 
-  54% {
+  53% {
     opacity: 1;
-    transform: translateY(-25px);
+    transform: translateY(-15px);
   }
 
-  55%,
+  54%,
   100% {
     opacity: 0;
-    transform: translateY(-25px);
+    transform: translateY(-15px);
   }
 }
 
 @keyframes target-destroyed {
   0%,
-  54% {
+  53% {
     opacity: 1;
     transform: scale(1);
   }
 
-  55%,
+  54%,
   76% {
     opacity: 0;
     transform: scale(0.2);
@@ -959,14 +961,14 @@ footer {
 
 @keyframes impact-burst {
   0%,
-  54%,
-  61%,
+  53%,
+  60%,
   100% {
     opacity: 0;
     transform: scale(0.4);
   }
 
-  56% {
+  54% {
     opacity: 1;
     transform: scale(1.25);
   }
