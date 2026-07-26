@@ -467,10 +467,6 @@ input {
 }
 
 .focus-heading {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(390px, 0.85fr);
-  gap: clamp(32px, 5vw, 72px);
-  align-items: end;
   margin-bottom: 58px;
 }
 
@@ -629,6 +625,147 @@ input {
   100% {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+/* Keep the technical sketches in the page atmosphere, not in a card UI. */
+.shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.intro,
+.terminal,
+.quick-links,
+.focus-heading > div,
+.focus-terminal,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+.field-trio {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  pointer-events: none;
+}
+
+.field-art-card {
+  position: absolute;
+  display: block;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  opacity: 0.34;
+}
+
+.field-art-card svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.field-art-label,
+.field-art-caption {
+  display: none;
+}
+
+.cyber-art {
+  top: 235px;
+  right: -30px;
+  width: 230px;
+  height: 180px;
+  transform: rotate(10deg);
+}
+
+.esp32-art {
+  top: 1130px;
+  left: -30px;
+  width: 155px;
+  height: 285px;
+  transform: rotate(-7deg);
+}
+
+.conway-art {
+  top: 1930px;
+  right: -25px;
+  width: 205px;
+  height: 165px;
+  transform: rotate(8deg);
+}
+
+.esp-usb {
+  fill: #8b8e86;
+  stroke: var(--muted);
+  stroke-width: 2;
+}
+
+.esp-module {
+  fill: #b8b8ae;
+  stroke: var(--acid);
+  stroke-width: 2;
+}
+
+.esp-antenna-trace {
+  fill: none;
+  stroke: #e1e0d8;
+  stroke-width: 2;
+}
+
+.esp-button {
+  fill: var(--panel);
+  stroke: var(--muted);
+  stroke-width: 2;
+}
+
+.esp-pins {
+  fill: #d7bd74;
+  stroke: var(--muted);
+  stroke-width: 1;
+}
+
+@media (max-width: 900px) {
+  .cyber-art {
+    top: 610px;
+    right: -125px;
+  }
+
+  .esp32-art {
+    left: -125px;
+  }
+
+  .conway-art {
+    right: -122px;
+  }
+}
+
+@media (max-width: 650px) {
+  .field-art-card {
+    opacity: 0.16;
+  }
+
+  .cyber-art {
+    top: 530px;
+    right: -120px;
+    width: 180px;
+    height: 140px;
+  }
+
+  .esp32-art {
+    top: 1260px;
+    left: -115px;
+    width: 120px;
+    height: 220px;
+  }
+
+  .conway-art {
+    top: 2160px;
+    right: -115px;
+    width: 165px;
+    height: 135px;
   }
 }
 
@@ -805,6 +942,15 @@ footer a:hover {
   .field-art-label,
   .field-art-caption {
     font-size: 8px;
+  }
+
+  .field-trio .field-art-card {
+    min-height: 0;
+    padding: 0;
+  }
+
+  .field-trio .field-art-card svg {
+    height: 100%;
   }
 
   .focus-index article {
