@@ -6,6 +6,7 @@
   --line: #b9c9d4;
   --acid: #155b8f;
   --warm: #0e4b78;
+  --command: #96642f;
   --red: #6e9fc2;
   --shadow: #c2b79f;
 }
@@ -116,7 +117,7 @@ input {
 }
 
 .boot-line.command {
-  color: var(--warm);
+  color: var(--command);
 }
 
 .boot-line.output {
@@ -268,15 +269,15 @@ input {
 }
 
 .red {
-  background: var(--red);
+  background: #ff5f57;
 }
 
 .amber {
-  background: var(--warm);
+  background: #febc2e;
 }
 
 .green {
-  background: var(--acid);
+  background: #28c840;
 }
 
 .output {
@@ -329,7 +330,7 @@ input {
 }
 
 .command {
-  color: var(--warm);
+  color: var(--command);
 }
 
 .result-text {
@@ -414,7 +415,7 @@ input {
   padding: 0;
   outline: 0;
   background: transparent;
-  color: var(--ink);
+  color: var(--command);
   font: inherit;
 }
 
