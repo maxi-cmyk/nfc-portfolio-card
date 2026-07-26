@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Max Leong — cybersecurity, mathematics, engineering, and AI."
+    />
+    <title>Max Leong — Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <section
+      id="boot-screen"
+      class="boot-screen"
+      aria-label="Portfolio startup"
+    >
+      <div class="boot-terminal">
+        <div class="boot-topline">
+          <p>MAX LEONG // PORTFOLIO</p>
+          <button id="skip-boot" type="button">Skip animation ↗</button>
+        </div>
+        <pre id="boot-log" class="boot-log" aria-live="polite"></pre>
+        <span class="boot-cursor" aria-hidden="true">█</span>
+      </div>
+    </section>
+
+    <main id="portfolio" class="shell" aria-labelledby="site-title" hidden>
+      <!-- alias: banana + chip -->
+      <section id="top" class="intro" aria-labelledby="site-title">
+        <button
+          id="panda-mascot"
+          class="panda"
+          type="button"
+          aria-describedby="mascot-hint"
+          aria-label="Ask the panda for a hint"
+        >
+          ʕ•ᴥ•ʔ
+        </button>
+        <p id="mascot-hint" class="mascot-hint" aria-live="polite" hidden></p>
+        <p class="eyebrow">// PORTFOLIO</p>
+        <h1 id="site-title">MAX LEONG</h1>
+        <p class="lede">
+          CS student building at the intersection of <em>cybersecurity</em>,
+          <em>math</em>, <em>engineering</em>, and <em>AI</em>.
+        </p>
+      </section>
+
+      <section class="terminal" aria-labelledby="terminal-title">
+        <div class="terminal-bar">
+          <span class="dot red"></span><span class="dot amber"></span
+          ><span class="dot green"></span>
+          <h2 id="terminal-title">max@portfolio:~</h2>
+        </div>
+        <div id="output" class="output" aria-live="polite">
+          <p>
+            <span class="prompt">max@portfolio:~$</span>
+            <span class="command">whoami</span>
+          </p>
+          <p class="result">
+            Max Leong<br />CS student · builder at the physical–digital boundary
+          </p>
+          <p>
+            <span class="prompt">max@portfolio:~$</span>
+            <span class="command">help</span>
+          </p>
+          <p class="result">
+            Available commands: about · projects · contact · clear
+          </p>
+        </div>
+        <form id="terminal-form" class="command-line">
+          <label class="prompt" for="command-input">max@portfolio:~$</label>
+          <input
+            id="command-input"
+            name="command"
+            autocomplete="off"
+            autocapitalize="none"
+            spellcheck="false"
+            placeholder="type a command"
+            aria-label="Terminal command"
+          />
+        </form>
+      </section>
+
+      <nav class="quick-links" aria-label="Quick terminal commands">
+        <button type="button" data-command="about">about</button>
+        <button type="button" data-command="projects">projects</button>
+        <button type="button" data-command="contact">contact</button>
+      </nav>
+
+      <section class="focus" aria-labelledby="focus-title">
+        <p class="eyebrow">// CURRENT FOCUS</p>
+        <h2 id="focus-title">Build systems that meet the real world.</h2>
+        <div class="focus-terminal">
+          <p class="focus-command">
+            <span class="prompt">max@portfolio:~$</span>
+            <span class="command">ls focus/</span>
+          </p>
+          <div class="focus-index">
+            <article>
+              <span class="focus-number">01</span>
+              <div>
+                <h3>cybersecurity/</h3>
+                <p>
+                  Understand systems, identify weaknesses, and build with
+                  privacy in mind.
+                </p>
+              </div>
+              <span class="focus-kind">dir</span>
+            </article>
+            <article>
+              <span class="focus-number">02</span>
+              <div>
+                <h3>engineering/</h3>
+                <p>
+                  Hardware, sensors, embedded systems, and interactive physical
+                  computing.
+                </p>
+              </div>
+              <span class="focus-kind">dir</span>
+            </article>
+            <article>
+              <span class="focus-number">03</span>
+              <div>
+                <h3>ai & math/</h3>
+                <p>
+                  Use models and mathematical thinking to turn noisy inputs into
+                  useful tools.
+                </p>
+              </div>
+              <span class="focus-kind">dir</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <p>Built for the curious.</p>
+        <div>
+          <a
+            href="https://github.com/maxi-cmyk"
+            target="_blank"
+            rel="noreferrer"
+            >GitHub ↗</a
+          >
+          <a
+            href="https://www.linkedin.com/in/maxleongruisheng"
+            target="_blank"
+            rel="noreferrer"
+            >LinkedIn ↗</a
+          >
+        </div>
+      </footer>
+    </main>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

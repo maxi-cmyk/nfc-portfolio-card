@@ -1,0 +1,16 @@
+{
+  "name": "nfc-portfolio-card",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "node --test",
+    "format": "prettier --write \"*.{js,html,css,json}\" \"tests/**/*.js\""
+  },
+  "devDependencies": {
+    "prettier": "^3.9.6",
+    "vite": "latest"
+  }
+}
