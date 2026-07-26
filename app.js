@@ -1,5 +1,9 @@
 import { getBootDelay, getBootSteps, getTypingFrames } from "./boot.js";
 import { getMascotHint, getTerminalPlaceholder } from "./easter-eggs.js";
+import {
+  shouldAutoFocusTerminal,
+  shouldFocusTerminalAfterQuickCommand,
+} from "./terminal-input.js";
 import { resolveCommand } from "./commands.js";
 
 const form = document.querySelector("#terminal-form");
@@ -132,7 +136,10 @@ function revealPortfolio() {
   main.hidden = false;
   startAliasTeaser();
   window.setTimeout(() => bootScreen.remove(), 450);
-  input.focus();
+
+  if (shouldAutoFocusTerminal(window.matchMedia("(pointer: coarse)").matches)) {
+    input.focus();
+  }
 }
 
 async function runBootSequence() {
@@ -181,7 +188,10 @@ form.addEventListener("submit", (event) => {
 quickLinks.forEach((button) => {
   button.addEventListener("click", () => {
     appendCommand(button.dataset.command);
-    input.focus();
+
+    if (shouldFocusTerminalAfterQuickCommand()) {
+      input.focus();
+    }
   });
 });
 
