@@ -1267,3 +1267,74 @@ footer a:hover {
     animation: none !important;
   }
 }
+
+/* Blue-and-cream theme: circuit ink, paper substrate, and brass contacts. */
+.field-art-card {
+  opacity: 0.28;
+}
+
+.art-wire,
+.art-lock,
+.esp-board,
+.esp-trace,
+.esp-antenna-trace,
+.conway-grid,
+.conway-arrow,
+.camera-board,
+.camera-lens-ring,
+.camera-trace,
+.camera-frame,
+.oled-frame,
+.oled-screen {
+  stroke: var(--acid);
+}
+
+.esp-board,
+.camera-board {
+  fill: #e6d8b6;
+}
+
+.esp-module,
+.camera-module {
+  fill: #fff9ee;
+  stroke: var(--command);
+}
+
+.esp-chip,
+.camera-lens {
+  fill: #eaf2f5;
+  stroke: var(--ink);
+}
+
+.esp-usb,
+.oled-frame {
+  fill: #d3c29c;
+}
+
+.oled-screen {
+  fill: #eff6f7;
+}
+
+.esp-pins,
+.camera-pins {
+  fill: var(--command);
+  stroke: var(--ink);
+}
+
+.asteroid-ship,
+.asteroid-rock,
+.asteroid-shot,
+.asteroid-burst,
+.oled-button {
+  stroke: var(--acid);
+}
+
+.asteroid-shot {
+  fill: var(--command);
+}
+
+.life-cell,
+.art-packet,
+.esp-led {
+  fill: var(--command);
+}
