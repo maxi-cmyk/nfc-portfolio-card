@@ -136,6 +136,104 @@ input {
   margin: auto;
 }
 
+.system-rail {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .shell {
+    width: min(1000px, calc(100% - 40px));
+  }
+
+  .system-rail {
+    position: fixed;
+    top: 50%;
+    z-index: 3;
+    display: grid;
+    width: 100px;
+    color: var(--muted);
+    font:
+      11px / 1.35 "DM Mono",
+      monospace;
+    letter-spacing: 0.04em;
+    transform: translateY(-50%);
+  }
+
+  .system-rail-left {
+    left: max(24px, calc((100vw - 1280px) / 2));
+    gap: 10px;
+    padding-left: 14px;
+    border-left: 1px solid var(--line);
+  }
+
+  .system-rail-right {
+    right: max(24px, calc((100vw - 1280px) / 2));
+    gap: 12px;
+    padding-right: 14px;
+    border-right: 1px solid var(--line);
+    text-align: right;
+  }
+
+  .system-rail-label,
+  .system-rail-status {
+    margin: 0;
+    color: var(--muted);
+    font-size: 10px;
+  }
+
+  .system-rail-left a {
+    display: flex;
+    gap: 8px;
+    width: fit-content;
+    color: var(--muted);
+    text-decoration: none;
+    transition:
+      color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .system-rail-left a span,
+  .system-rail-right span {
+    color: var(--acid);
+  }
+
+  .system-rail-left a:hover,
+  .system-rail-left a:focus-visible,
+  .system-rail-left a.is-active {
+    color: var(--ink);
+    outline: none;
+    transform: translateX(5px);
+  }
+
+  .system-rail-left a.is-active::after {
+    width: 22px;
+    height: 1px;
+    align-self: center;
+    margin-left: 1px;
+    background: var(--acid);
+    box-shadow: 0 0 8px color-mix(in srgb, var(--acid), transparent 35%);
+    content: "";
+  }
+
+  .system-rail-right ul {
+    display: grid;
+    gap: 7px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .system-rail-right li {
+    white-space: nowrap;
+  }
+
+  .system-rail-status {
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+    color: var(--acid);
+  }
+}
+
 .masthead {
   display: flex;
   align-items: center;

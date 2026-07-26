@@ -33,8 +33,35 @@
     </section>
 
     <main id="portfolio" class="shell" aria-labelledby="site-title" hidden>
+      <nav
+        class="system-rail system-rail-left"
+        aria-label="Desktop section navigation"
+      >
+        <p class="system-rail-label">INDEX / 01</p>
+        <a href="#home" data-rail-target="home"><span>01</span> HOME</a>
+        <a href="#terminal" data-rail-target="terminal"
+          ><span>02</span> TERMINAL</a
+        >
+        <a href="#focus" data-rail-target="focus"><span>03</span> FOCUS</a>
+        <a href="#contact" data-rail-target="contact"
+          ><span>04</span> CONTACT</a
+        >
+      </nav>
+      <aside
+        class="system-rail system-rail-right"
+        aria-label="Portfolio disciplines"
+      >
+        <p class="system-rail-label">FIELD INDEX</p>
+        <ul>
+          <li><span>01</span> EMBEDDED</li>
+          <li><span>02</span> SECURITY</li>
+          <li><span>03</span> VISION + AI</li>
+          <li><span>04</span> MATH</li>
+        </ul>
+        <p class="system-rail-status">MODE // BUILD</p>
+      </aside>
       <!-- alias: banana + chip -->
-      <section id="top" class="intro" aria-labelledby="site-title">
+      <section id="home" class="intro" aria-labelledby="site-title">
         <button
           id="panda-mascot"
           class="panda"
@@ -53,7 +80,7 @@
         </p>
       </section>
 
-      <section class="terminal" aria-labelledby="terminal-title">
+      <section id="terminal" class="terminal" aria-labelledby="terminal-title">
         <div class="terminal-bar">
           <span class="dot red"></span><span class="dot amber"></span
           ><span class="dot green"></span>
@@ -95,7 +122,7 @@
         <button type="button" data-command="contact">contact</button>
       </nav>
 
-      <section class="focus" aria-labelledby="focus-title">
+      <section id="focus" class="focus" aria-labelledby="focus-title">
         <div class="focus-heading">
           <div>
             <p class="eyebrow">// CURRENT FOCUS</p>
@@ -378,7 +405,7 @@
         </div>
       </section>
 
-      <footer>
+      <footer id="contact">
         <p>Built for the curious.</p>
         <div>
           <a
