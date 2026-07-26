@@ -196,6 +196,18 @@ body::before {
   border-radius: 0;
 }
 
+.dot.red {
+  background: #ff5f57;
+}
+
+.dot.amber {
+  background: #febc2e;
+}
+
+.dot.green {
+  background: #28c840;
+}
+
 .output {
   color: var(--ink);
   font-family: "DM Mono", monospace;
