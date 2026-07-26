@@ -460,10 +460,176 @@ input {
 
 .focus h2 {
   max-width: 750px;
-  margin: 0 0 58px;
+  margin: 0;
   font-size: clamp(38px, 6vw, 74px);
   line-height: 0.98;
   letter-spacing: -0.035em;
+}
+
+.focus-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(390px, 0.85fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: end;
+  margin-bottom: 58px;
+}
+
+.focus-heading .eyebrow {
+  margin-top: 0;
+}
+
+.field-trio {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.field-art-card {
+  display: grid;
+  min-width: 0;
+  min-height: 154px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  grid-template-rows: auto 1fr auto;
+}
+
+.field-art-label,
+.field-art-caption {
+  color: var(--muted);
+  font:
+    10px "DM Mono",
+    monospace;
+}
+
+.field-art-label {
+  color: var(--acid);
+}
+
+.field-art-caption {
+  white-space: nowrap;
+}
+
+.field-art-card svg {
+  width: 100%;
+  height: 90px;
+  overflow: visible;
+}
+
+.art-wire,
+.art-lock,
+.esp-trace,
+.esp-antenna,
+.conway-grid,
+.conway-arrow {
+  fill: none;
+  stroke: var(--muted);
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-width: 2;
+}
+
+.art-node {
+  fill: var(--panel);
+  stroke: var(--acid);
+  stroke-width: 2;
+}
+
+.art-packet,
+.esp-led,
+.life-cell {
+  fill: var(--acid);
+}
+
+.art-packet {
+  animation: packet-travel 3.6s ease-in-out infinite;
+}
+
+.esp-board {
+  fill: #1f362d;
+  stroke: var(--acid);
+  stroke-width: 2;
+}
+
+.esp-chip {
+  fill: var(--panel);
+  stroke: var(--muted);
+  stroke-width: 2;
+}
+
+.esp-led {
+  animation: board-pulse 2.2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.life-cell {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.cell-a,
+.cell-e {
+  animation: life-step 4s steps(2, end) infinite;
+}
+
+.cell-b,
+.cell-f {
+  animation: life-step 4s steps(2, end) 0.8s infinite;
+}
+
+.cell-c,
+.cell-g {
+  animation: life-step 4s steps(2, end) 1.6s infinite;
+}
+
+.cell-d {
+  animation: life-step 4s steps(2, end) 2.4s infinite;
+}
+
+@keyframes packet-travel {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate(-14px, 10px);
+  }
+
+  35%,
+  65% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0;
+    transform: translate(45px, -31px);
+  }
+}
+
+@keyframes board-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+}
+
+@keyframes life-step {
+  0%,
+  44% {
+    opacity: 0.2;
+    transform: scale(0.72);
+  }
+
+  45%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .focus-terminal {
@@ -619,6 +785,26 @@ footer a:hover {
 
   .focus {
     padding-bottom: 80px;
+  }
+
+  .focus-heading {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-bottom: 42px;
+  }
+
+  .field-art-card {
+    min-height: 128px;
+    padding: 9px;
+  }
+
+  .field-art-card svg {
+    height: 70px;
+  }
+
+  .field-art-label,
+  .field-art-caption {
+    font-size: 8px;
   }
 
   .focus-index article {
