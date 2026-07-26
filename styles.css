@@ -649,6 +649,7 @@ footer {
   inset: 0;
   z-index: 0;
   display: block;
+  overflow: hidden;
   pointer-events: none;
 }
 
@@ -659,7 +660,7 @@ footer {
   padding: 0;
   border: 0;
   background: transparent;
-  opacity: 0.34;
+  opacity: 0.22;
 }
 
 .field-art-card svg {
@@ -675,26 +676,44 @@ footer {
 
 .cyber-art {
   top: 235px;
-  right: -30px;
-  width: 230px;
-  height: 180px;
+  right: -42px;
+  width: 300px;
+  height: 230px;
   transform: rotate(10deg);
 }
 
 .esp32-art {
-  top: 1130px;
-  left: -30px;
-  width: 155px;
-  height: 285px;
+  top: 1100px;
+  left: -90px;
+  width: 205px;
+  height: 380px;
   transform: rotate(-7deg);
 }
 
 .conway-art {
-  top: 1930px;
-  right: -25px;
-  width: 205px;
-  height: 165px;
+  top: 1500px;
+  right: auto;
+  left: -105px;
+  width: 270px;
+  height: 220px;
   transform: rotate(8deg);
+}
+
+.camera-art {
+  top: 1375px;
+  right: -75px;
+  width: 245px;
+  height: 180px;
+  transform: rotate(-11deg);
+}
+
+.asteroids-art {
+  top: 1600px;
+  right: -100px;
+  left: auto;
+  width: 270px;
+  height: 190px;
+  transform: rotate(7deg);
 }
 
 .esp-usb {
@@ -725,6 +744,88 @@ footer {
   fill: #d7bd74;
   stroke: var(--muted);
   stroke-width: 1;
+}
+
+.camera-board {
+  fill: #234035;
+  stroke: var(--acid);
+  stroke-width: 2;
+}
+
+.camera-module {
+  fill: #b8b8ae;
+  stroke: var(--muted);
+  stroke-width: 2;
+}
+
+.camera-lens-ring {
+  fill: #282d2b;
+  stroke: var(--acid);
+  stroke-width: 2;
+}
+
+.camera-lens {
+  fill: var(--panel);
+  stroke: var(--muted);
+  stroke-width: 2;
+}
+
+.camera-trace,
+.camera-frame {
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 2;
+}
+
+.camera-pins {
+  fill: #d7bd74;
+  stroke: var(--muted);
+  stroke-width: 1;
+}
+
+.oled-frame {
+  fill: #2a2d28;
+  stroke: var(--muted);
+  stroke-width: 2;
+}
+
+.oled-screen {
+  fill: #16231b;
+  stroke: var(--acid);
+  stroke-width: 2;
+}
+
+.asteroid-ship,
+.asteroid-rock,
+.asteroid-shot,
+.oled-button {
+  fill: none;
+  stroke: var(--acid);
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-width: 2;
+}
+
+.asteroid-shot {
+  animation: shot-flash 1.6s steps(2, end) infinite;
+}
+
+.rock-b {
+  animation: rock-drift 5s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes shot-flash {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes rock-drift {
+  50% {
+    transform: translate(-4px, 3px) rotate(15deg);
+  }
 }
 
 @media (max-width: 900px) {
