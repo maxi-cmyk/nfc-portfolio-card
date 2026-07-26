@@ -608,7 +608,7 @@ input {
 }
 
 .art-packet {
-  animation: packet-travel 3.6s ease-in-out infinite;
+  transform-box: fill-box;
 }
 
 .art-lock-pendulum {
@@ -685,24 +685,6 @@ input {
 
 .cell-d {
   animation: life-step 4s steps(2, end) 2.4s infinite;
-}
-
-@keyframes packet-travel {
-  0%,
-  100% {
-    opacity: 0;
-    transform: translate(-14px, 10px);
-  }
-
-  35%,
-  65% {
-    opacity: 1;
-  }
-
-  70% {
-    opacity: 0;
-    transform: translate(45px, -31px);
-  }
 }
 
 @keyframes board-pulse {
@@ -1333,5 +1315,9 @@ footer a:hover {
     scroll-behavior: auto !important;
     transition: none !important;
     animation: none !important;
+  }
+
+  .art-packet {
+    display: none;
   }
 }
