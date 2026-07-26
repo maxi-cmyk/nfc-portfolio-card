@@ -136,6 +136,76 @@ input {
   margin: auto;
 }
 
+.system-rail {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .shell {
+    width: min(940px, calc(100% - 40px));
+  }
+
+  .system-rail {
+    position: fixed;
+    top: 50%;
+    z-index: 3;
+    display: grid;
+    width: 132px;
+    color: var(--muted);
+    font:
+      12px / 1.35 "DM Mono",
+      monospace;
+    letter-spacing: 0.04em;
+    transform: translateY(-50%);
+  }
+
+  .system-rail-left {
+    left: max(24px, calc((100vw - 1280px) / 2));
+    gap: 14px;
+    padding-left: 16px;
+    border-left: 1px solid var(--line);
+  }
+
+  .system-rail-label {
+    margin: 0;
+    color: var(--muted);
+    font-size: 11px;
+  }
+
+  .system-rail-left a {
+    display: flex;
+    gap: 8px;
+    width: fit-content;
+    color: var(--muted);
+    text-decoration: none;
+    transition:
+      color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .system-rail-left a span {
+    color: var(--acid);
+  }
+
+  .system-rail-left a:hover,
+  .system-rail-left a:focus-visible,
+  .system-rail-left a.is-active {
+    color: var(--ink);
+    outline: none;
+    transform: translateX(5px);
+  }
+
+  .system-rail-left a.is-active::after {
+    width: 22px;
+    height: 1px;
+    align-self: center;
+    margin-left: 1px;
+    background: var(--acid);
+    box-shadow: 0 0 8px color-mix(in srgb, var(--acid), transparent 35%);
+    content: "";
+  }
+}
+
 .masthead {
   display: flex;
   align-items: center;
@@ -538,7 +608,7 @@ input {
 }
 
 .art-packet {
-  animation: packet-travel 3.6s ease-in-out infinite;
+  transform-box: fill-box;
 }
 
 .art-lock-pendulum {
@@ -617,24 +687,6 @@ input {
   animation: life-step 4s steps(2, end) 2.4s infinite;
 }
 
-@keyframes packet-travel {
-  0%,
-  100% {
-    opacity: 0;
-    transform: translate(-14px, 10px);
-  }
-
-  35%,
-  65% {
-    opacity: 1;
-  }
-
-  70% {
-    opacity: 0;
-    transform: translate(45px, -31px);
-  }
-}
-
 @keyframes board-pulse {
   0%,
   100% {
@@ -710,7 +762,7 @@ footer {
 
 .cyber-art {
   top: 230px;
-  right: 82px;
+  right: 18px;
   width: 250px;
   height: 192px;
   transform: rotate(10deg);
@@ -1263,5 +1315,9 @@ footer a:hover {
     scroll-behavior: auto !important;
     transition: none !important;
     animation: none !important;
+  }
+
+  .art-packet {
+    display: none;
   }
 }
