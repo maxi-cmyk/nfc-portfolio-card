@@ -27,14 +27,14 @@ function flashAliasPlaceholder() {
   window.setTimeout(() => {
     input.placeholder = getTerminalPlaceholder(false);
     input.classList.remove("is-alias-teaser");
-  }, 1000);
+  }, 500);
 }
 
 function startAliasTeaser() {
   if (aliasTeaserStarted) return;
 
   aliasTeaserStarted = true;
-  window.setInterval(flashAliasPlaceholder, 5000);
+  window.setInterval(flashAliasPlaceholder, 4000);
 }
 
 function handleMascotClick() {
@@ -135,9 +135,9 @@ function revealPortfolio() {
   bootScreen.classList.add("is-complete");
   main.hidden = false;
   startAliasTeaser();
-  window.setTimeout(() => bootScreen.remove(), 450);
+  window.setTimeout(() => bootScreen.remove(), 250);
 
-  if (shouldAutoFocusTerminal(window.matchMedia("(pointer: coarse)").matches)) {
+  if (shouldAutoFocusTerminal()) {
     input.focus();
   }
 }

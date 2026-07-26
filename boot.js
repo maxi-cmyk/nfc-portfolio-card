@@ -3,7 +3,7 @@ export function getTypingFrames(text) {
 }
 
 export function getBootDelay() {
-  return 450;
+  return 250;
 }
 
 export function getBootSteps() {

@@ -5,9 +5,8 @@ import {
   shouldFocusTerminalAfterQuickCommand,
 } from "../terminal-input.js";
 
-test("terminal does not autofocus on touch-first devices", () => {
-  assert.equal(shouldAutoFocusTerminal(true), false);
-  assert.equal(shouldAutoFocusTerminal(false), true);
+test("terminal does not autofocus after reveal", () => {
+  assert.equal(shouldAutoFocusTerminal(), false);
 });
 
 test("quick commands keep focus away from the text input", () => {

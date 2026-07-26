@@ -21,7 +21,7 @@ test("boot sequence introduces the portfolio and ends online", () => {
 });
 
 test("boot sequence gives each line a deliberate reading pause", () => {
-  assert.equal(getBootDelay(), 450);
+  assert.equal(getBootDelay(), 250);
 });
 
 test("typing frames reveal text one character at a time", () => {

@@ -1,5 +1,5 @@
-export function shouldAutoFocusTerminal(isCoarsePointer) {
-  return !isCoarsePointer;
+export function shouldAutoFocusTerminal() {
+  return false;
 }
 
 export function shouldFocusTerminalAfterQuickCommand() {
