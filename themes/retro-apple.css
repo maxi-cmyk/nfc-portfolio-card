@@ -320,3 +320,75 @@ footer a {
     box-shadow: 3px 3px 0 #74736d;
   }
 }
+
+/* System-7 technical sketches: blue ink, platinum enclosures, plum signals. */
+.field-art-card {
+  opacity: 0.3;
+}
+
+.art-wire,
+.art-lock,
+.esp-board,
+.esp-trace,
+.esp-antenna-trace,
+.conway-grid,
+.conway-arrow,
+.camera-board,
+.camera-lens-ring,
+.camera-trace,
+.camera-frame,
+.oled-frame,
+.oled-screen {
+  stroke: var(--ink);
+}
+
+.art-node,
+.asteroid-ship,
+.asteroid-rock,
+.asteroid-burst,
+.oled-button {
+  stroke: #12376b;
+}
+
+.esp-board,
+.camera-board {
+  fill: #e7e6df;
+}
+
+.esp-module,
+.camera-module,
+.esp-usb {
+  fill: #c7c6bf;
+  stroke: var(--ink);
+}
+
+.esp-chip,
+.camera-lens {
+  fill: #6db4d7;
+  stroke: #12376b;
+}
+
+.esp-pins,
+.camera-pins {
+  fill: #7a2e5d;
+  stroke: var(--ink);
+}
+
+.oled-frame {
+  fill: #c7c6bf;
+}
+
+.oled-screen {
+  fill: #d9edf6;
+}
+
+.asteroid-shot,
+.life-cell,
+.art-packet,
+.esp-led {
+  fill: #7a2e5d;
+}
+
+.asteroid-shot {
+  stroke: none;
+}
