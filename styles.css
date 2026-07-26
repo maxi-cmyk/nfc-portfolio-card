@@ -142,7 +142,7 @@ input {
 
 @media (min-width: 1280px) {
   .shell {
-    width: min(1000px, calc(100% - 40px));
+    width: min(940px, calc(100% - 40px));
   }
 
   .system-rail {
@@ -150,10 +150,10 @@ input {
     top: 50%;
     z-index: 3;
     display: grid;
-    width: 100px;
+    width: 132px;
     color: var(--muted);
     font:
-      11px / 1.35 "DM Mono",
+      12px / 1.35 "DM Mono",
       monospace;
     letter-spacing: 0.04em;
     transform: translateY(-50%);
@@ -161,24 +161,15 @@ input {
 
   .system-rail-left {
     left: max(24px, calc((100vw - 1280px) / 2));
-    gap: 10px;
-    padding-left: 14px;
+    gap: 14px;
+    padding-left: 16px;
     border-left: 1px solid var(--line);
   }
 
-  .system-rail-right {
-    right: max(24px, calc((100vw - 1280px) / 2));
-    gap: 12px;
-    padding-right: 14px;
-    border-right: 1px solid var(--line);
-    text-align: right;
-  }
-
-  .system-rail-label,
-  .system-rail-status {
+  .system-rail-label {
     margin: 0;
     color: var(--muted);
-    font-size: 10px;
+    font-size: 11px;
   }
 
   .system-rail-left a {
@@ -192,8 +183,7 @@ input {
       transform 180ms ease;
   }
 
-  .system-rail-left a span,
-  .system-rail-right span {
+  .system-rail-left a span {
     color: var(--acid);
   }
 
@@ -213,24 +203,6 @@ input {
     background: var(--acid);
     box-shadow: 0 0 8px color-mix(in srgb, var(--acid), transparent 35%);
     content: "";
-  }
-
-  .system-rail-right ul {
-    display: grid;
-    gap: 7px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .system-rail-right li {
-    white-space: nowrap;
-  }
-
-  .system-rail-status {
-    padding-top: 10px;
-    border-top: 1px solid var(--line);
-    color: var(--acid);
   }
 }
 
