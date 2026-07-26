@@ -462,10 +462,598 @@ input {
 
 .focus h2 {
   max-width: 750px;
-  margin: 0 0 58px;
+  margin: 0;
   font-size: clamp(38px, 6vw, 74px);
   line-height: 0.98;
   letter-spacing: -0.035em;
+}
+
+.focus-heading {
+  margin-bottom: 58px;
+}
+
+.focus-heading .eyebrow {
+  margin-top: 0;
+}
+
+.field-trio {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.field-art-card {
+  display: grid;
+  min-width: 0;
+  min-height: 154px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  grid-template-rows: auto 1fr auto;
+}
+
+.field-art-label,
+.field-art-caption {
+  color: var(--muted);
+  font:
+    10px "DM Mono",
+    monospace;
+}
+
+.field-art-label {
+  color: var(--acid);
+}
+
+.field-art-caption {
+  white-space: nowrap;
+}
+
+.field-art-card svg {
+  width: 100%;
+  height: 90px;
+  overflow: visible;
+}
+
+.art-wire,
+.art-lock,
+.esp-trace,
+.esp-antenna,
+.conway-grid,
+.conway-arrow {
+  fill: none;
+  stroke: var(--muted);
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-width: 2;
+}
+
+.art-node {
+  fill: var(--panel);
+  stroke: var(--acid);
+  stroke-width: 2;
+}
+
+.art-packet,
+.esp-led,
+.life-cell {
+  fill: var(--acid);
+}
+
+.art-packet {
+  animation: packet-travel 3.6s ease-in-out infinite;
+}
+
+.art-lock-pendulum {
+  animation: lock-pendulum 8s ease-out infinite;
+  transform-box: view-box;
+  transform-origin: 78px 57px;
+}
+
+@keyframes lock-pendulum {
+  0%,
+  56%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  9% {
+    transform: rotate(-8deg);
+  }
+
+  18% {
+    transform: rotate(7deg);
+  }
+
+  28% {
+    transform: rotate(-5deg);
+  }
+
+  38% {
+    transform: rotate(3deg);
+  }
+
+  47% {
+    transform: rotate(-1deg);
+  }
+}
+
+.esp-board {
+  fill: #1f362d;
+  stroke: var(--acid);
+  stroke-width: 2;
+}
+
+.esp-chip {
+  fill: var(--panel);
+  stroke: var(--muted);
+  stroke-width: 2;
+}
+
+.esp-led {
+  animation: board-pulse 2.2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.life-cell {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.cell-a,
+.cell-e {
+  animation: life-step 4s steps(2, end) infinite;
+}
+
+.cell-b,
+.cell-f {
+  animation: life-step 4s steps(2, end) 0.8s infinite;
+}
+
+.cell-c,
+.cell-g {
+  animation: life-step 4s steps(2, end) 1.6s infinite;
+}
+
+.cell-d {
+  animation: life-step 4s steps(2, end) 2.4s infinite;
+}
+
+@keyframes packet-travel {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate(-14px, 10px);
+  }
+
+  35%,
+  65% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0;
+    transform: translate(45px, -31px);
+  }
+}
+
+@keyframes board-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+}
+
+@keyframes life-step {
+  0%,
+  44% {
+    opacity: 0.2;
+    transform: scale(0.72);
+  }
+
+  45%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Keep the technical sketches in the page atmosphere, not in a card UI. */
+.shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.intro,
+.terminal,
+.quick-links,
+.focus-heading > div,
+.focus-terminal,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+.field-trio {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.field-art-card {
+  position: absolute;
+  display: block;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  opacity: 0.22;
+}
+
+.field-art-card svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.field-art-label,
+.field-art-caption {
+  display: none;
+}
+
+.cyber-art {
+  top: 230px;
+  right: 82px;
+  width: 250px;
+  height: 192px;
+  transform: rotate(10deg);
+}
+
+.esp32-art {
+  top: 1160px;
+  left: 22px;
+  width: 168px;
+  height: 310px;
+  transform: rotate(-7deg);
+}
+
+.conway-art {
+  top: 1510px;
+  right: auto;
+  left: 30px;
+  width: 210px;
+  height: 172px;
+  transform: rotate(8deg);
+}
+
+.camera-art {
+  top: 1370px;
+  right: 28px;
+  width: 195px;
+  height: 144px;
+  transform: rotate(-11deg);
+}
+
+.asteroids-art {
+  top: 1590px;
+  right: 30px;
+  left: auto;
+  width: 215px;
+  height: 152px;
+  transform: rotate(7deg);
+}
+
+.esp-usb {
+  fill: #8b8e86;
+  stroke: var(--muted);
+  stroke-width: 2;
+}
+
+.esp-module {
+  fill: #b8b8ae;
+  stroke: var(--acid);
+  stroke-width: 2;
+}
+
+.esp-antenna-trace {
+  fill: none;
+  stroke: #e1e0d8;
+  stroke-width: 2;
+}
+
+.esp-button {
+  fill: var(--panel);
+  stroke: var(--muted);
+  stroke-width: 2;
+}
+
+.esp-pins {
+  fill: #d7bd74;
+  stroke: var(--muted);
+  stroke-width: 1;
+}
+
+.camera-board {
+  fill: #234035;
+  stroke: var(--acid);
+  stroke-width: 2;
+}
+
+.camera-module {
+  fill: #b8b8ae;
+  stroke: var(--muted);
+  stroke-width: 2;
+}
+
+.camera-lens-ring {
+  fill: #282d2b;
+  stroke: var(--acid);
+  stroke-width: 2;
+}
+
+.camera-lens {
+  fill: var(--panel);
+  stroke: var(--muted);
+  stroke-width: 2;
+}
+
+.camera-trace,
+.camera-frame {
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 2;
+}
+
+.camera-pins {
+  fill: #d7bd74;
+  stroke: var(--muted);
+  stroke-width: 1;
+}
+
+.oled-frame {
+  fill: #2a2d28;
+  stroke: var(--muted);
+  stroke-width: 2;
+}
+
+.oled-screen {
+  fill: #16231b;
+  stroke: var(--acid);
+  stroke-width: 2;
+}
+
+.asteroid-ship,
+.asteroid-rock,
+.asteroid-shot,
+.asteroid-burst,
+.oled-button {
+  fill: none;
+  stroke: var(--acid);
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-width: 2;
+}
+
+.asteroids-ship {
+  animation: ship-strafe 6s ease-in-out infinite;
+  transform-box: view-box;
+  transform-origin: center;
+}
+
+.asteroid-shot {
+  fill: var(--acid);
+  stroke: none;
+  animation: shot-travel 6s linear infinite;
+}
+
+.rock-target {
+  animation: target-destroyed 6s steps(1, end) infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.rock-spawn-a,
+.rock-spawn-b,
+.rock-spawn-c {
+  animation: asteroid-spawn 6s ease-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.rock-spawn-b {
+  animation-delay: 1.15s;
+}
+
+.rock-spawn-c {
+  animation-delay: 2.2s;
+}
+
+.asteroid-burst {
+  animation: impact-burst 6s steps(2, end) infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes ship-strafe {
+  0%,
+  100% {
+    transform: translateX(-17px);
+  }
+
+  35% {
+    transform: translateX(13px);
+  }
+
+  68% {
+    transform: translateX(-5px);
+  }
+}
+
+@keyframes shot-travel {
+  0%,
+  37% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  39% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  53% {
+    opacity: 1;
+    transform: translateY(-15px);
+  }
+
+  54%,
+  100% {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes target-destroyed {
+  0%,
+  53% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  54%,
+  76% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+
+  77%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes asteroid-spawn {
+  0%,
+  65% {
+    opacity: 0;
+    transform: scale(0.2) translateY(-8px);
+  }
+
+  72% {
+    opacity: 1;
+    transform: scale(1.2) translateY(0);
+  }
+
+  82%,
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes impact-burst {
+  0%,
+  53%,
+  60%,
+  100% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+
+  54% {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+}
+
+@media (max-width: 900px) {
+  .cyber-art {
+    top: 260px;
+    right: 28px;
+    width: 190px;
+    height: 146px;
+  }
+
+  .esp32-art {
+    top: 1080px;
+    left: 18px;
+    width: 130px;
+    height: 240px;
+  }
+
+  .conway-art {
+    top: 1460px;
+    right: auto;
+    left: 22px;
+    width: 165px;
+    height: 135px;
+  }
+
+  .camera-art {
+    top: 1300px;
+    right: 22px;
+    width: 155px;
+    height: 115px;
+  }
+
+  .asteroids-art {
+    top: 1570px;
+    right: 24px;
+    width: 170px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 650px) {
+  .field-art-card {
+    opacity: 0.16;
+  }
+
+  .cyber-art {
+    top: 210px;
+    right: 14px;
+    width: 132px;
+    height: 101px;
+  }
+
+  .esp32-art {
+    top: 1020px;
+    left: 10px;
+    width: 88px;
+    height: 163px;
+  }
+
+  .conway-art {
+    top: 1400px;
+    right: auto;
+    left: 12px;
+    width: 112px;
+    height: 91px;
+  }
+
+  .camera-art {
+    top: 1240px;
+    right: 12px;
+    width: 112px;
+    height: 83px;
+  }
+
+  .asteroids-art {
+    top: 1510px;
+    right: 14px;
+    width: 122px;
+    height: 86px;
+  }
 }
 
 .focus-terminal {
@@ -621,6 +1209,35 @@ footer a:hover {
 
   .focus {
     padding-bottom: 80px;
+  }
+
+  .focus-heading {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-bottom: 42px;
+  }
+
+  .field-art-card {
+    min-height: 128px;
+    padding: 9px;
+  }
+
+  .field-art-card svg {
+    height: 70px;
+  }
+
+  .field-art-label,
+  .field-art-caption {
+    font-size: 8px;
+  }
+
+  .field-trio .field-art-card {
+    min-height: 0;
+    padding: 0;
+  }
+
+  .field-trio .field-art-card svg {
+    height: 100%;
   }
 
   .focus-index article {
