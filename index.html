@@ -15,6 +15,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./themes/retro-apple.css" />
   </head>
   <body>
     <section
@@ -35,15 +36,18 @@
     <main id="portfolio" class="shell" aria-labelledby="site-title" hidden>
       <!-- alias: banana + chip -->
       <section id="top" class="intro" aria-labelledby="site-title">
-        <button
-          id="panda-mascot"
-          class="panda"
-          type="button"
-          aria-describedby="mascot-hint"
-          aria-label="Ask the panda for a hint"
-        >
-          ʕ•ᴥ•ʔ
-        </button>
+        <div class="intro-tools">
+          <button
+            id="panda-mascot"
+            class="panda"
+            type="button"
+            aria-describedby="mascot-hint"
+            aria-label="Ask the panda for a hint"
+          >
+            ʕ•ᴥ•ʔ
+          </button>
+          <div class="retro-monitor" aria-hidden="true"><span>ML</span></div>
+        </div>
         <p id="mascot-hint" class="mascot-hint" aria-live="polite" hidden></p>
         <p class="eyebrow">// PORTFOLIO</p>
         <h1 id="site-title">MAX LEONG</h1>

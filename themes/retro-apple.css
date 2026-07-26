@@ -1,0 +1,310 @@
+/* A 1990s desktop-computer theme: platinum surfaces, hard borders, and 3D controls. */
+:root {
+  --ink: #1d1d1d;
+  --muted: #545454;
+  --bg: #d6d5cd;
+  --panel: #f4f3ed;
+  --line: #1d1d1d;
+  --acid: #1e4f9e;
+  --warm: #7a2e5d;
+  --red: #d83a3a;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 3px,
+      rgba(255, 255, 255, 0.22) 3px 4px
+    ),
+    var(--bg);
+  color: var(--ink);
+  font-family: Geneva, Arial, sans-serif;
+}
+
+body::before {
+  display: none;
+}
+
+.boot-screen {
+  background: var(--bg);
+}
+
+.boot-terminal,
+.terminal {
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  background: var(--panel);
+  box-shadow: 5px 5px 0 #74736d;
+}
+
+.boot-terminal {
+  font-family: "DM Mono", monospace;
+}
+
+.boot-topline,
+.terminal-bar {
+  background: repeating-linear-gradient(0deg, #fbfaf5 0 2px, #d1d0c9 2px 4px);
+}
+
+.boot-topline {
+  margin: calc(clamp(24px, 5vw, 52px) * -1);
+  margin-bottom: 28px;
+  padding: 12px clamp(24px, 5vw, 52px);
+  border-bottom: 2px solid var(--ink);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.boot-topline button {
+  color: var(--acid);
+  font-weight: 700;
+}
+
+.boot-line.command,
+.command {
+  color: #7a2e5d;
+  font-weight: 700;
+}
+
+.boot-line.success,
+.prompt {
+  color: var(--acid);
+  font-weight: 700;
+}
+
+.shell {
+  width: min(1040px, calc(100% - 40px));
+}
+
+.intro {
+  max-width: 920px;
+  padding-top: clamp(56px, 9vw, 100px);
+}
+
+.intro-tools {
+  display: flex;
+  align-items: end;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.panda {
+  margin: 0;
+  color: var(--ink);
+  font-size: 34px;
+}
+
+.panda:hover,
+.panda:focus-visible,
+.panda.has-hint {
+  color: var(--acid);
+}
+
+.retro-monitor {
+  position: relative;
+  width: 76px;
+  height: 62px;
+  border: 3px solid var(--ink);
+  background: #e7e6df;
+  box-shadow: 3px 3px 0 #74736d;
+}
+
+.retro-monitor::before {
+  position: absolute;
+  inset: 7px 8px 16px;
+  border: 2px solid var(--ink);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.55), transparent 48%), #6db4d7;
+  content: "";
+}
+
+.retro-monitor::after {
+  position: absolute;
+  right: 19px;
+  bottom: 5px;
+  left: 19px;
+  height: 4px;
+  border: 2px solid var(--ink);
+  border-top: 0;
+  background: #e7e6df;
+  content: "";
+}
+
+.retro-monitor span {
+  position: absolute;
+  top: 14px;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  color: #12376b;
+  font:
+    700 14px "DM Mono",
+    monospace;
+  text-align: center;
+}
+
+.eyebrow,
+.mascot-hint {
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.intro h1 {
+  color: #12376b;
+  font-family:
+    Arial Black,
+    Geneva,
+    Arial,
+    sans-serif;
+  letter-spacing: -0.065em;
+  text-shadow: 2px 2px 0 #fffdf6;
+}
+
+.lede {
+  color: #333;
+}
+
+.lede em {
+  color: #7a2e5d;
+  font-weight: 700;
+}
+
+.terminal-bar {
+  min-height: 44px;
+  padding: 9px 12px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.terminal-bar h2 {
+  padding: 2px 9px;
+  border: 1px solid var(--ink);
+  background: var(--panel);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.dot {
+  width: 11px;
+  height: 11px;
+  border: 1px solid var(--ink);
+  border-radius: 0;
+}
+
+.output {
+  color: var(--ink);
+  font-family: "DM Mono", monospace;
+}
+
+.result,
+.project-description,
+.terminal-link {
+  color: #333;
+}
+
+.terminal-link {
+  color: var(--acid);
+  font-weight: 700;
+}
+
+.command-line {
+  border-top: 2px solid var(--ink);
+  background: #e7e6df;
+}
+
+.command-line input {
+  color: #7a2e5d;
+  font-weight: 700;
+}
+
+.command-line input::placeholder {
+  color: #777;
+}
+
+.quick-links {
+  gap: 12px;
+}
+
+.quick-links button {
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  background: #e7e6df;
+  box-shadow:
+    inset 2px 2px 0 #fffef7,
+    inset -2px -2px 0 #8b8a84,
+    2px 2px 0 #74736d;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.quick-links button:hover,
+.quick-links button:focus-visible {
+  border-color: var(--ink);
+  background: #c8d8ed;
+  color: #12376b;
+}
+
+.quick-links button:active {
+  box-shadow:
+    inset 2px 2px 0 #8b8a84,
+    inset -2px -2px 0 #fffef7;
+  transform: translate(2px, 2px);
+}
+
+.focus h2,
+.focus-index h3 {
+  color: #12376b;
+  font-family:
+    Arial Black,
+    Geneva,
+    Arial,
+    sans-serif;
+}
+
+.focus-terminal,
+.focus-index article,
+.focus-command,
+footer {
+  border-color: var(--ink);
+}
+
+.focus-number {
+  color: #7a2e5d;
+  font-weight: 700;
+}
+
+.focus-kind,
+.focus-index p,
+footer {
+  color: var(--muted);
+}
+
+footer a {
+  color: var(--acid);
+  font-weight: 700;
+}
+
+@media (max-width: 650px) {
+  .shell {
+    width: min(100% - 28px, 1040px);
+  }
+
+  .intro-tools {
+    gap: 14px;
+  }
+
+  .retro-monitor {
+    width: 65px;
+    height: 54px;
+  }
+
+  .boot-terminal,
+  .terminal {
+    box-shadow: 3px 3px 0 #74736d;
+  }
+}
