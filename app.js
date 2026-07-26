@@ -4,6 +4,7 @@ import {
   shouldAutoFocusTerminal,
   shouldFocusTerminalAfterQuickCommand,
 } from "./terminal-input.js";
+import { getLatestResultScrollOptions } from "./terminal-scroll.js";
 import { resolveCommand } from "./commands.js";
 
 const form = document.querySelector("#terminal-form");
@@ -127,6 +128,15 @@ function appendCommand(command) {
     Boolean(output.querySelector(".result.projects")),
   );
   output.scrollTop = output.scrollHeight;
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  window.requestAnimationFrame(() => {
+    resultRow.scrollIntoView(
+      getLatestResultScrollOptions(prefersReducedMotion),
+    );
+  });
 }
 
 function revealPortfolio() {
