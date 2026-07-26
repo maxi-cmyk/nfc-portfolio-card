@@ -541,6 +541,40 @@ input {
   animation: packet-travel 3.6s ease-in-out infinite;
 }
 
+.art-lock-pendulum {
+  animation: lock-pendulum 8s ease-out infinite;
+  transform-box: view-box;
+  transform-origin: 78px 57px;
+}
+
+@keyframes lock-pendulum {
+  0%,
+  56%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  9% {
+    transform: rotate(8deg);
+  }
+
+  18% {
+    transform: rotate(-6deg);
+  }
+
+  28% {
+    transform: rotate(4deg);
+  }
+
+  38% {
+    transform: rotate(-2deg);
+  }
+
+  47% {
+    transform: rotate(1deg);
+  }
+}
+
 .esp-board {
   fill: #1f362d;
   stroke: var(--acid);
@@ -675,44 +709,44 @@ footer {
 }
 
 .cyber-art {
-  top: 235px;
-  right: -42px;
-  width: 300px;
-  height: 230px;
+  top: 230px;
+  right: 82px;
+  width: 250px;
+  height: 192px;
   transform: rotate(10deg);
 }
 
 .esp32-art {
-  top: 1100px;
-  left: -90px;
-  width: 205px;
-  height: 380px;
+  top: 1160px;
+  left: 22px;
+  width: 168px;
+  height: 310px;
   transform: rotate(-7deg);
 }
 
 .conway-art {
-  top: 1500px;
+  top: 1510px;
   right: auto;
-  left: -105px;
-  width: 270px;
-  height: 220px;
+  left: 30px;
+  width: 210px;
+  height: 172px;
   transform: rotate(8deg);
 }
 
 .camera-art {
-  top: 1375px;
-  right: -75px;
-  width: 245px;
-  height: 180px;
+  top: 1370px;
+  right: 28px;
+  width: 195px;
+  height: 144px;
   transform: rotate(-11deg);
 }
 
 .asteroids-art {
-  top: 1600px;
-  right: -100px;
+  top: 1590px;
+  right: 30px;
   left: auto;
-  width: 270px;
-  height: 190px;
+  width: 215px;
+  height: 152px;
   transform: rotate(7deg);
 }
 
@@ -798,6 +832,7 @@ footer {
 .asteroid-ship,
 .asteroid-rock,
 .asteroid-shot,
+.asteroid-burst,
 .oled-button {
   fill: none;
   stroke: var(--acid);
@@ -806,40 +841,172 @@ footer {
   stroke-width: 2;
 }
 
-.asteroid-shot {
-  animation: shot-flash 1.6s steps(2, end) infinite;
+.asteroids-ship {
+  animation: ship-strafe 6s ease-in-out infinite;
+  transform-box: view-box;
+  transform-origin: center;
 }
 
-.rock-b {
-  animation: rock-drift 5s ease-in-out infinite;
+.asteroid-shot {
+  animation: shot-travel 6s linear infinite;
+}
+
+.rock-target {
+  animation: target-destroyed 6s steps(1, end) infinite;
   transform-box: fill-box;
   transform-origin: center;
 }
 
-@keyframes shot-flash {
-  50% {
-    opacity: 0;
+.rock-spawn-a,
+.rock-spawn-b,
+.rock-spawn-c {
+  animation: asteroid-spawn 6s ease-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.rock-spawn-b {
+  animation-delay: 1.15s;
+}
+
+.rock-spawn-c {
+  animation-delay: 2.2s;
+}
+
+.asteroid-burst {
+  animation: impact-burst 6s steps(2, end) infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes ship-strafe {
+  0%,
+  100% {
+    transform: translateX(-17px);
+  }
+
+  35% {
+    transform: translateX(13px);
+  }
+
+  68% {
+    transform: translateX(-5px);
   }
 }
 
-@keyframes rock-drift {
-  50% {
-    transform: translate(-4px, 3px) rotate(15deg);
+@keyframes shot-travel {
+  0%,
+  36% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  38% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  54% {
+    opacity: 1;
+    transform: translateY(-25px);
+  }
+
+  55%,
+  100% {
+    opacity: 0;
+    transform: translateY(-25px);
+  }
+}
+
+@keyframes target-destroyed {
+  0%,
+  54% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  55%,
+  76% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+
+  77%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes asteroid-spawn {
+  0%,
+  65% {
+    opacity: 0;
+    transform: scale(0.2) translateY(-8px);
+  }
+
+  72% {
+    opacity: 1;
+    transform: scale(1.2) translateY(0);
+  }
+
+  82%,
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes impact-burst {
+  0%,
+  54%,
+  61%,
+  100% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+
+  56% {
+    opacity: 1;
+    transform: scale(1.25);
   }
 }
 
 @media (max-width: 900px) {
   .cyber-art {
-    top: 610px;
-    right: -125px;
+    top: 260px;
+    right: 28px;
+    width: 190px;
+    height: 146px;
   }
 
   .esp32-art {
-    left: -125px;
+    top: 1080px;
+    left: 18px;
+    width: 130px;
+    height: 240px;
   }
 
   .conway-art {
-    right: -122px;
+    top: 1460px;
+    right: auto;
+    left: 22px;
+    width: 165px;
+    height: 135px;
+  }
+
+  .camera-art {
+    top: 1300px;
+    right: 22px;
+    width: 155px;
+    height: 115px;
+  }
+
+  .asteroids-art {
+    top: 1570px;
+    right: 24px;
+    width: 170px;
+    height: 120px;
   }
 }
 
@@ -849,24 +1016,39 @@ footer {
   }
 
   .cyber-art {
-    top: 530px;
-    right: -120px;
-    width: 180px;
-    height: 140px;
+    top: 210px;
+    right: 14px;
+    width: 132px;
+    height: 101px;
   }
 
   .esp32-art {
-    top: 1260px;
-    left: -115px;
-    width: 120px;
-    height: 220px;
+    top: 1020px;
+    left: 10px;
+    width: 88px;
+    height: 163px;
   }
 
   .conway-art {
-    top: 2160px;
-    right: -115px;
-    width: 165px;
-    height: 135px;
+    top: 1400px;
+    right: auto;
+    left: 12px;
+    width: 112px;
+    height: 91px;
+  }
+
+  .camera-art {
+    top: 1240px;
+    right: 12px;
+    width: 112px;
+    height: 83px;
+  }
+
+  .asteroids-art {
+    top: 1510px;
+    right: 14px;
+    width: 122px;
+    height: 86px;
   }
 }
 

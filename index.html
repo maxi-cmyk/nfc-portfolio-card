@@ -111,10 +111,12 @@
                 <circle class="art-node" cx="76" cy="20" r="7" />
                 <circle class="art-node" cx="91" cy="67" r="7" />
                 <circle class="art-packet" cx="35" cy="58" r="3" />
-                <path
-                  class="art-lock"
-                  d="M70 73v-8a8 8 0 0 1 16 0v8m-19 0h22v15H67z"
-                />
+                <g class="art-lock-pendulum">
+                  <path
+                    class="art-lock"
+                    d="M70 73v-8a8 8 0 0 1 16 0v8m-19 0h22v15H67z"
+                  />
+                </g>
               </svg>
               <span class="field-art-caption">secure link</span>
             </div>
@@ -303,20 +305,30 @@
                   height="56"
                   rx="1"
                 />
-                <path class="asteroid-ship" d="m72 42 8 19-8-4-8 4z" />
+                <g class="asteroids-ship">
+                  <path class="asteroid-ship" d="m75 64 9 18-9-5-9 5z" />
+                </g>
                 <path
-                  class="asteroid-rock rock-a"
-                  d="m36 38 7-6 8 4 1 9-7 6-9-4z"
+                  class="asteroid-rock rock-target"
+                  d="m70 33 7-6 8 4 1 9-7 6-9-4z"
                 />
                 <path
-                  class="asteroid-rock rock-b"
-                  d="m105 60 7-5 7 4 1 8-6 5-8-4z"
+                  class="asteroid-rock rock-spawn-a"
+                  d="m35 37 6-5 7 4 1 8-6 5-8-4z"
                 />
                 <path
-                  class="asteroid-rock rock-c"
-                  d="m94 33 4-4 5 3 1 5-4 4-5-2z"
+                  class="asteroid-rock rock-spawn-b"
+                  d="m103 42 5-4 6 3 1 7-5 4-7-3z"
                 />
-                <path class="asteroid-shot" d="M72 35v-7" />
+                <path
+                  class="asteroid-rock rock-spawn-c"
+                  d="m45 57 4-4 5 3 1 5-4 4-5-2z"
+                />
+                <path class="asteroid-shot" d="M75 62v-26" />
+                <path
+                  class="asteroid-burst"
+                  d="m75 42 0-7m0 14v7m-7-14 5-5m5 10 5 5m-10-10-5 5m10-10 5-5"
+                />
                 <circle class="oled-button" cx="34" cy="100" r="4" />
                 <circle class="oled-button" cx="48" cy="100" r="4" />
               </svg>
