@@ -1,12 +1,13 @@
 :root {
-  --ink: #e8e4d9;
-  --muted: #96958e;
-  --bg: #10120f;
-  --panel: #171a15;
-  --line: #353a30;
-  --acid: #c5f36d;
-  --warm: #efb46a;
-  --red: #ed776d;
+  --ink: #163f60;
+  --muted: #53748b;
+  --bg: #f5eddd;
+  --panel: #fff9ee;
+  --line: #b9c9d4;
+  --acid: #155b8f;
+  --warm: #0e4b78;
+  --red: #6e9fc2;
+  --shadow: #c2b79f;
 }
 
 * {
@@ -30,7 +31,7 @@ body::before {
   z-index: 20;
   pointer-events: none;
   background-image: linear-gradient(
-    rgba(255, 255, 255, 0.6) 1px,
+    rgba(22, 63, 96, 0.18) 1px,
     transparent 1px
   );
   background-size: 100% 4px;
@@ -69,7 +70,7 @@ input {
   padding: clamp(24px, 5vw, 52px);
   border: 1px solid var(--line);
   background: var(--panel);
-  box-shadow: 12px 12px 0 #0a0c09;
+  box-shadow: 12px 12px 0 var(--shadow);
   font:
     clamp(13px, 1.8vw, 16px) / 1.7 "DM Mono",
     monospace;
@@ -226,7 +227,7 @@ input {
 .lede {
   max-width: 650px;
   margin: 38px 0 0;
-  color: #c7c4bb;
+  color: #274f70;
   font-size: clamp(19px, 2.4vw, 27px);
   line-height: 1.4;
 }
@@ -241,7 +242,7 @@ input {
   border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--panel);
-  box-shadow: 12px 12px 0 #0a0c09;
+  box-shadow: 12px 12px 0 var(--shadow);
 }
 
 .terminal-bar {
@@ -352,7 +353,7 @@ input {
 
 .project-description {
   margin-top: 0.3em;
-  color: #cfcec5;
+  color: #2b5577;
 }
 
 .project-entry .terminal-link {
@@ -361,7 +362,7 @@ input {
 
 .terminal-link {
   display: block;
-  color: #cfcec5;
+  color: #2b5577;
   text-decoration: none;
 }
 
@@ -375,7 +376,7 @@ input {
 
 .result {
   margin: 0 0 20px;
-  color: #cfcec5;
+  color: #2b5577;
   white-space: pre-wrap;
   font:
     14px / 1.65 "DM Mono",
@@ -418,7 +419,7 @@ input {
 }
 
 .command-line input::placeholder {
-  color: #5e625a;
+  color: #6b8497;
 }
 
 .command-line input.is-alias-teaser::placeholder {
@@ -576,7 +577,7 @@ footer a:hover {
 
   .boot-terminal {
     min-height: 300px;
-    box-shadow: 6px 6px 0 #0a0c09;
+    box-shadow: 6px 6px 0 var(--shadow);
   }
 
   .boot-topline {
@@ -591,7 +592,7 @@ footer a:hover {
   }
 
   .terminal {
-    box-shadow: 6px 6px 0 #0a0c09;
+    box-shadow: 6px 6px 0 var(--shadow);
   }
 
   .output {
