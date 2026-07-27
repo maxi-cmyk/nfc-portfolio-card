@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { resolveCommand } from "../commands.js";
-import { projectsCommand } from "../commands/project.js";
+import { resolveCommand } from "../src/terminal/commands/index.js";
+import { projectsCommand } from "../src/terminal/commands/project.js";
 
 test("thebananachip reveals the panda easter egg", () => {
   const result = resolveCommand("thebananachip");

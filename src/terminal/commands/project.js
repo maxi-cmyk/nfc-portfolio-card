@@ -39,7 +39,9 @@ export const projectsCommand = {
       meta: "hardware",
       description:
         "Two-node ESP32 security system: a PIR interrupt publishes an event that triggers an ESP32-CAM stream, alerts, and evidence capture.",
-      links: [{ label: "github", url: "https://github.com/maxi-cmyk/sentinel" }],
+      links: [
+        { label: "github", url: "https://github.com/maxi-cmyk/sentinel" },
+      ],
     },
     {
       name: "Conway's Game of Life",

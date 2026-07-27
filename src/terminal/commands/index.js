@@ -1,8 +1,8 @@
-import { aboutCommand } from "./commands/about.js";
-import { contactCommand } from "./commands/contact.js";
-import { helpCommand } from "./commands/help.js";
-import { pandaCommand } from "./commands/panda.js";
-import { projectsCommand } from "./commands/project.js";
+import { aboutCommand } from "./about.js";
+import { contactCommand } from "./contact.js";
+import { helpCommand } from "./help.js";
+import { pandaCommand } from "./panda.js";
+import { projectsCommand } from "./project.js";
 
 const commands = {
   about: aboutCommand,

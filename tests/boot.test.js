@@ -1,6 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { getBootDelay, getBootSteps, getTypingFrames } from "../boot.js";
+import {
+  getBootDelay,
+  getBootSteps,
+  getTypingFrames,
+} from "../src/terminal/boot.js";
 
 test("boot sequence introduces the portfolio and ends online", () => {
   const steps = getBootSteps();

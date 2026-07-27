@@ -1,12 +1,19 @@
-import { getBootDelay, getBootSteps, getTypingFrames } from "./boot.js";
-import { getMascotHint, getTerminalPlaceholder } from "./easter-eggs.js";
+import {
+  getBootDelay,
+  getBootSteps,
+  getTypingFrames,
+} from "./terminal/boot.js";
+import {
+  getMascotHint,
+  getTerminalPlaceholder,
+} from "./terminal/easter-eggs.js";
 import {
   shouldAutoFocusTerminal,
   shouldFocusTerminalAfterQuickCommand,
-} from "./terminal-input.js";
-import { getLatestResultScrollOptions } from "./terminal-scroll.js";
-import { getActiveRailTarget } from "./system-rail.js";
-import { resolveCommand } from "./commands.js";
+} from "./terminal/input.js";
+import { getLatestResultScrollOptions } from "./terminal/scroll.js";
+import { getActiveRailTarget } from "./navigation/system-rail.js";
+import { resolveCommand } from "./terminal/commands/index.js";
 
 const form = document.querySelector("#terminal-form");
 const input = document.querySelector("#command-input");

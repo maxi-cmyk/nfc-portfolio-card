@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {
   shouldAutoFocusTerminal,
   shouldFocusTerminalAfterQuickCommand,
-} from "../terminal-input.js";
+} from "../src/terminal/input.js";
 
 test("terminal does not autofocus after reveal", () => {
   assert.equal(shouldAutoFocusTerminal(), false);

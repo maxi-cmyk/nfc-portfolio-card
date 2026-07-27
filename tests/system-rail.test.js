@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { getActiveRailTarget } from "../system-rail.js";
+import { getActiveRailTarget } from "../src/navigation/system-rail.js";
 
 test("system rail selects the most visible section", () => {
   const active = getActiveRailTarget([

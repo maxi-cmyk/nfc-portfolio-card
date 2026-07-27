@@ -1,6 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { getMascotHint, getTerminalPlaceholder } from "../easter-eggs.js";
+import {
+  getMascotHint,
+  getTerminalPlaceholder,
+} from "../src/terminal/easter-eggs.js";
 
 test("alias placeholder only appears during the teaser flash", () => {
   assert.equal(getTerminalPlaceholder(false), "type a command");
