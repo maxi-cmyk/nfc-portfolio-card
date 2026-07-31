@@ -4,7 +4,7 @@ export const projectsCommand = {
   projects: [
     {
       name: "it'sPEAK",
-      meta: "first full-stack app",
+      meta: "2nd place · first full-stack app",
       description:
         "Private web coach for rehearsing presentations. Owned the backend, database, video-analysis pipeline, and production deployment.",
       links: [
