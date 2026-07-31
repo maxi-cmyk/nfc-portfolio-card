@@ -14,7 +14,8 @@
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./src/styles/main.css" />
+    <link rel="stylesheet" href="./src/styles/themes/retro-apple.css" />
   </head>
   <body>
     <section
@@ -33,17 +34,34 @@
     </section>
 
     <main id="portfolio" class="shell" aria-labelledby="site-title" hidden>
-      <!-- alias: banana + chip -->
-      <section id="top" class="intro" aria-labelledby="site-title">
-        <button
-          id="panda-mascot"
-          class="panda"
-          type="button"
-          aria-describedby="mascot-hint"
-          aria-label="Ask the panda for a hint"
+      <nav
+        class="system-rail system-rail-left"
+        aria-label="Desktop section navigation"
+      >
+        <p class="system-rail-label">INDEX / 01</p>
+        <a href="#home" data-rail-target="home"><span>01</span> HOME</a>
+        <a href="#terminal" data-rail-target="terminal"
+          ><span>02</span> TERMINAL</a
         >
-          ʕ•ᴥ•ʔ
-        </button>
+        <a href="#focus" data-rail-target="focus"><span>03</span> FOCUS</a>
+        <a href="#contact" data-rail-target="contact"
+          ><span>04</span> CONTACT</a
+        >
+      </nav>
+      <!-- alias: banana + chip -->
+      <section id="home" class="intro" aria-labelledby="site-title">
+        <div class="intro-tools">
+          <button
+            id="panda-mascot"
+            class="panda"
+            type="button"
+            aria-describedby="mascot-hint"
+            aria-label="Ask the panda for a hint"
+          >
+            ʕ•ᴥ•ʔ
+          </button>
+          <div class="retro-monitor" aria-hidden="true"><span>ML</span></div>
+        </div>
         <p id="mascot-hint" class="mascot-hint" aria-live="polite" hidden></p>
         <p class="eyebrow">// PORTFOLIO</p>
         <h1 id="site-title">MAX LEONG</h1>
@@ -53,7 +71,7 @@
         </p>
       </section>
 
-      <section class="terminal" aria-labelledby="terminal-title">
+      <section id="terminal" class="terminal" aria-labelledby="terminal-title">
         <div class="terminal-bar">
           <span class="dot red"></span><span class="dot amber"></span
           ><span class="dot green"></span>
@@ -95,7 +113,7 @@
         <button type="button" data-command="contact">contact</button>
       </nav>
 
-      <section class="focus" aria-labelledby="focus-title">
+      <section id="focus" class="focus" aria-labelledby="focus-title">
         <div class="focus-heading">
           <div>
             <p class="eyebrow">// CURRENT FOCUS</p>
@@ -110,7 +128,13 @@
                 <circle class="art-node" cx="51" cy="47" r="7" />
                 <circle class="art-node" cx="76" cy="20" r="7" />
                 <circle class="art-node" cx="91" cy="67" r="7" />
-                <circle class="art-packet" cx="35" cy="58" r="3" />
+                <circle class="art-packet" r="3">
+                  <animateMotion
+                    dur="4.8s"
+                    path="M20 69 L51 47 L76 20 L51 47 L91 67"
+                    repeatCount="indefinite"
+                  />
+                </circle>
                 <g class="art-lock-pendulum">
                   <path
                     class="art-lock"
@@ -378,7 +402,7 @@
         </div>
       </section>
 
-      <footer>
+      <footer id="contact">
         <p>Built for the curious.</p>
         <div>
           <a
@@ -396,6 +420,6 @@
         </div>
       </footer>
     </main>
-    <script type="module" src="./app.js"></script>
+    <script type="module" src="./src/main.js"></script>
   </body>
 </html>

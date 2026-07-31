@@ -1,11 +1,19 @@
-import { getBootDelay, getBootSteps, getTypingFrames } from "./boot.js";
-import { getMascotHint, getTerminalPlaceholder } from "./easter-eggs.js";
+import {
+  getBootDelay,
+  getBootSteps,
+  getTypingFrames,
+} from "./terminal/boot.js";
+import {
+  getMascotHint,
+  getTerminalPlaceholder,
+} from "./terminal/easter-eggs.js";
 import {
   shouldAutoFocusTerminal,
   shouldFocusTerminalAfterQuickCommand,
-} from "./terminal-input.js";
-import { getLatestResultScrollOptions } from "./terminal-scroll.js";
-import { resolveCommand } from "./commands.js";
+} from "./terminal/input.js";
+import { getLatestResultScrollOptions } from "./terminal/scroll.js";
+import { getActiveRailTarget } from "./navigation/system-rail.js";
+import { resolveCommand } from "./terminal/commands/index.js";
 
 const form = document.querySelector("#terminal-form");
 const input = document.querySelector("#command-input");
@@ -17,6 +25,10 @@ const skipBoot = document.querySelector("#skip-boot");
 const main = document.querySelector("#portfolio");
 const pandaMascot = document.querySelector("#panda-mascot");
 const mascotHint = document.querySelector("#mascot-hint");
+const railLinks = document.querySelectorAll("[data-rail-target]");
+const railSections = document.querySelectorAll(
+  "#home, #terminal, #focus, #contact",
+);
 
 let mascotClicks = 0;
 let aliasTeaserStarted = false;
@@ -47,6 +59,34 @@ function handleMascotClick() {
   mascotHint.hidden = false;
   mascotHint.textContent = `// ${hint}`;
   pandaMascot.classList.add("has-hint");
+}
+
+function setActiveRailTarget(targetId) {
+  railLinks.forEach((link) => {
+    const isActive = link.dataset.railTarget === targetId;
+    link.classList.toggle("is-active", isActive);
+
+    if (isActive) {
+      link.setAttribute("aria-current", "location");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
+}
+
+function startSystemRail() {
+  if (!("IntersectionObserver" in window)) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const activeTarget = getActiveRailTarget(entries);
+      if (activeTarget) setActiveRailTarget(activeTarget);
+    },
+    { rootMargin: "-28% 0px -58% 0px", threshold: [0.1, 0.45, 0.8] },
+  );
+
+  railSections.forEach((section) => observer.observe(section));
+  setActiveRailTarget("home");
 }
 
 function appendCommand(command) {
@@ -145,6 +185,7 @@ function revealPortfolio() {
   bootScreen.classList.add("is-complete");
   main.hidden = false;
   startAliasTeaser();
+  startSystemRail();
   window.setTimeout(() => bootScreen.remove(), 250);
 
   if (shouldAutoFocusTerminal()) {

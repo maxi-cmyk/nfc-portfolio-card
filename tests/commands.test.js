@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { resolveCommand } from "../commands.js";
-import { projectsCommand } from "../commands/project.js";
+import { resolveCommand } from "../src/terminal/commands/index.js";
+import { projectsCommand } from "../src/terminal/commands/project.js";
 
 test("thebananachip reveals the panda easter egg", () => {
   const result = resolveCommand("thebananachip");
@@ -25,29 +25,38 @@ test("projects lists the selected hardware and maths builds", () => {
   assert.equal(result.kind, "projects");
   assert.equal(result.output, "Selected projects");
   assert.deepEqual(
-    result.projects.map(({ name, links }) => ({
+    result.projects.map(({ name, meta, links }) => ({
       name,
+      meta,
       urls: links.map(({ url }) => url),
     })),
     [
       {
         name: "it'sPEAK",
+        meta: "2nd place · first full-stack app",
         urls: [
           "https://github.com/maxi-cmyk/it-sPeak",
           "https://devpost.com/software/itspeak?ref_content=my-projects-tab&ref_feature=my_projects",
         ],
       },
-      { name: "Echo", urls: ["https://github.com/maxi-cmyk/echo"] },
+      {
+        name: "Echo",
+        meta: "iNTUition 2026 · Best Freshmen Award",
+        urls: ["https://github.com/maxi-cmyk/echo"],
+      },
       {
         name: "ESP32 Asteroids",
+        meta: "hardware",
         urls: ["https://github.com/maxi-cmyk/asteriods"],
       },
       {
         name: "Sentinel",
+        meta: "hardware",
         urls: ["https://github.com/maxi-cmyk/sentinel"],
       },
       {
         name: "Conway's Game of Life",
+        meta: "maths + hardware",
         urls: ["https://github.com/maxi-cmyk/conway_game_of_life"],
       },
     ],

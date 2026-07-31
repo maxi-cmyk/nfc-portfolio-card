@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "test": "node --test",
-    "format": "prettier --write \"*.{js,html,css,json}\" \"tests/**/*.js\""
+    "format": "prettier --write \"*.{html,json}\" \"src/**/*.{js,css,md}\" \"tests/**/*.js\""
   },
   "devDependencies": {
     "prettier": "^3.9.6",

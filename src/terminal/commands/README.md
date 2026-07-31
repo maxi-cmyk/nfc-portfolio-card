@@ -8,4 +8,4 @@ Each terminal response lives in the file for its feature:
 - `help.js` — visible command help
 - `panda.js` — hidden `thebananachip` response and panda art
 
-`../commands.js` is only the command router. It imports these modules and maps typed command names to their responses.
+`index.js` is only the command router. It imports these modules and maps typed command names to their responses.

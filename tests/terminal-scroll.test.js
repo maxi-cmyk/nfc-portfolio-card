@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { getLatestResultScrollOptions } from "../terminal-scroll.js";
+import { getLatestResultScrollOptions } from "../src/terminal/scroll.js";
 
 test("new terminal results are centered in view", () => {
   assert.deepEqual(getLatestResultScrollOptions(false), {
