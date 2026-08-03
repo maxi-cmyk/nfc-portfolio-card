@@ -389,6 +389,12 @@ footer a {
   fill: #7a2e5d;
 }
 
+@media (max-width: 650px) {
+  .field-art-card {
+    opacity: 0.2;
+  }
+}
+
 .asteroid-shot {
   stroke: none;
 }

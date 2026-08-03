@@ -1066,43 +1066,48 @@ footer {
 
 @media (max-width: 650px) {
   .field-art-card {
-    opacity: 0.16;
+    opacity: 0.2;
   }
 
   .cyber-art {
-    top: 210px;
-    right: 14px;
-    width: 132px;
-    height: 101px;
+    top: 300px;
+    right: 8px;
+    width: 150px;
+    height: 115px;
+    transform: rotate(7deg);
   }
 
   .esp32-art {
-    top: 1020px;
-    left: 10px;
-    width: 88px;
-    height: 163px;
+    top: 1040px;
+    left: 8px;
+    width: 110px;
+    height: 204px;
+    transform: rotate(-5deg);
   }
 
   .conway-art {
-    top: 1400px;
+    top: 1540px;
     right: auto;
-    left: 12px;
-    width: 112px;
-    height: 91px;
+    left: 10px;
+    width: 132px;
+    height: 108px;
+    transform: rotate(6deg);
   }
 
   .camera-art {
-    top: 1240px;
-    right: 12px;
-    width: 112px;
-    height: 83px;
+    top: 1320px;
+    right: 8px;
+    width: 130px;
+    height: 96px;
+    transform: rotate(-8deg);
   }
 
   .asteroids-art {
-    top: 1510px;
-    right: 14px;
-    width: 122px;
-    height: 86px;
+    top: 1800px;
+    right: 10px;
+    width: 142px;
+    height: 100px;
+    transform: rotate(4deg);
   }
 }
 
