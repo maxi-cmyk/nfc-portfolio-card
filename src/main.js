@@ -11,13 +11,13 @@ import {
   shouldAutoFocusTerminal,
   shouldFocusTerminalAfterQuickCommand,
 } from "./terminal/input.js";
-import { getLatestResultScrollOptions } from "./terminal/scroll.js";
 import { getActiveRailTarget } from "./navigation/system-rail.js";
-import { resolveCommand } from "./terminal/commands/index.js";
+import { initRouter, handleRoute } from "./navigation/router.js";
+import { appendCommand } from "./components/terminal/runner.js";
+import { CommandHistory } from "./terminal/history.js";
 
 const form = document.querySelector("#terminal-form");
 const input = document.querySelector("#command-input");
-const output = document.querySelector("#output");
 const quickLinks = document.querySelectorAll("[data-command]");
 const bootScreen = document.querySelector("#boot-screen");
 const bootLog = document.querySelector("#boot-log");
@@ -30,6 +30,7 @@ const railSections = document.querySelectorAll(
   "#home, #terminal, #focus, #contact",
 );
 
+const commandHistory = new CommandHistory();
 let mascotClicks = 0;
 let aliasTeaserStarted = false;
 
@@ -89,96 +90,6 @@ function startSystemRail() {
   setActiveRailTarget("home");
 }
 
-function appendCommand(command) {
-  const result = resolveCommand(command);
-
-  if (result.kind === "clear") {
-    output.replaceChildren();
-    output.classList.remove("is-panda-output", "is-projects-output");
-    return;
-  }
-
-  const commandRow = document.createElement("p");
-  commandRow.innerHTML =
-    '<span class="prompt">max@portfolio:~$</span> <span class="command"></span>';
-  commandRow.querySelector(".command").textContent = command;
-
-  const resultRow = document.createElement(
-    result.links || result.projects ? "div" : "pre",
-  );
-  resultRow.className = `result ${result.kind}`;
-
-  if (result.projects) {
-    const heading = document.createElement("pre");
-    heading.className = "result-text";
-    heading.textContent = result.output;
-    resultRow.append(heading);
-
-    result.projects.forEach(({ name, meta, description, links }, index) => {
-      const project = document.createElement("section");
-      project.className = "project-entry";
-
-      const title = document.createElement("p");
-      title.className = "project-title";
-      title.textContent = `[${String(index + 1).padStart(2, "0")}] ${name} · ${meta}`;
-
-      const summary = document.createElement("p");
-      summary.className = "project-description";
-      summary.textContent = description;
-
-      const projectLinks = links.map(({ label, url }) => {
-        const projectLink = document.createElement("a");
-        projectLink.className = "terminal-link";
-        projectLink.href = url;
-        projectLink.target = "_blank";
-        projectLink.rel = "noreferrer";
-        projectLink.textContent = `${label.padEnd(9, " ")}→ ${url.replace("https://", "")}`;
-        return projectLink;
-      });
-
-      project.append(title, summary, ...projectLinks);
-      resultRow.append(project);
-    });
-  } else if (result.links) {
-    const text = document.createElement("pre");
-    text.className = "result-text";
-    text.textContent = result.output;
-    resultRow.append(text);
-
-    result.links.forEach(({ label, url }) => {
-      const link = document.createElement("a");
-      link.className = "terminal-link";
-      link.href = url;
-      link.target = "_blank";
-      link.rel = "noreferrer";
-      link.textContent = `${label.padEnd(9, " ")}→ ${url.replace("https://", "")}`;
-      resultRow.append(link);
-    });
-  } else {
-    resultRow.textContent = result.output;
-  }
-
-  output.append(commandRow, resultRow);
-  output.classList.toggle(
-    "is-panda-output",
-    Boolean(output.querySelector(".result.panda")),
-  );
-  output.classList.toggle(
-    "is-projects-output",
-    Boolean(output.querySelector(".result.projects")),
-  );
-  output.scrollTop = output.scrollHeight;
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  ).matches;
-
-  window.requestAnimationFrame(() => {
-    resultRow.scrollIntoView(
-      getLatestResultScrollOptions(prefersReducedMotion),
-    );
-  });
-}
-
 function revealPortfolio() {
   if (!main.hidden) return;
 
@@ -186,6 +97,7 @@ function revealPortfolio() {
   main.hidden = false;
   startAliasTeaser();
   startSystemRail();
+  initRouter();
   window.setTimeout(() => bootScreen.remove(), 250);
 
   if (shouldAutoFocusTerminal()) {
@@ -232,12 +144,32 @@ form.addEventListener("submit", (event) => {
   const command = input.value;
   if (!command.trim()) return;
 
+  commandHistory.push(command);
   appendCommand(command);
   input.value = "";
 });
 
+input.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowUp") {
+    event.preventDefault();
+    const prev = commandHistory.navigateUp(input.value);
+    if (prev !== null) {
+      input.value = prev;
+      input.setSelectionRange(prev.length, prev.length);
+    }
+  } else if (event.key === "ArrowDown") {
+    event.preventDefault();
+    const next = commandHistory.navigateDown();
+    if (next !== null) {
+      input.value = next;
+      input.setSelectionRange(next.length, next.length);
+    }
+  }
+});
+
 quickLinks.forEach((button) => {
   button.addEventListener("click", () => {
+    commandHistory.push(button.dataset.command);
     appendCommand(button.dataset.command);
 
     if (shouldFocusTerminalAfterQuickCommand()) {

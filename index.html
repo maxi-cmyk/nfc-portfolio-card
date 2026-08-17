@@ -48,377 +48,475 @@
           ><span>04</span> CONTACT</a
         >
       </nav>
-      <!-- alias: banana + chip -->
-      <section id="home" class="intro" aria-labelledby="site-title">
-        <div class="intro-tools">
-          <button
-            id="panda-mascot"
-            class="panda"
-            type="button"
-            aria-describedby="mascot-hint"
-            aria-label="Ask the panda for a hint"
-          >
-            ʕ•ᴥ•ʔ
-          </button>
-          <div class="retro-monitor" aria-hidden="true"><span>ML</span></div>
-        </div>
-        <p id="mascot-hint" class="mascot-hint" aria-live="polite" hidden></p>
-        <p class="eyebrow">// PORTFOLIO</p>
-        <h1 id="site-title">MAX LEONG</h1>
-        <p class="lede">
-          CS student building at the intersection of <em>cybersecurity</em>,
-          <em>math</em>, <em>engineering</em>, and <em>AI</em>.
-        </p>
-      </section>
-
-      <section id="terminal" class="terminal" aria-labelledby="terminal-title">
-        <div class="terminal-bar">
-          <span class="dot red"></span><span class="dot amber"></span
-          ><span class="dot green"></span>
-          <h2 id="terminal-title">max@portfolio:~</h2>
-        </div>
-        <div id="output" class="output" aria-live="polite">
-          <p>
-            <span class="prompt">max@portfolio:~$</span>
-            <span class="command">whoami</span>
-          </p>
-          <p class="result">
-            Max Leong<br />CS student · builder at the physical–digital boundary
-          </p>
-          <p>
-            <span class="prompt">max@portfolio:~$</span>
-            <span class="command">help</span>
-          </p>
-          <p class="result">
-            Available commands: about · projects · contact · clear
-          </p>
-        </div>
-        <form id="terminal-form" class="command-line">
-          <label class="prompt" for="command-input">max@portfolio:~$</label>
-          <input
-            id="command-input"
-            name="command"
-            autocomplete="off"
-            autocapitalize="none"
-            spellcheck="false"
-            placeholder="type a command"
-            aria-label="Terminal command"
-          />
-        </form>
-      </section>
-
-      <nav class="quick-links" aria-label="Quick terminal commands">
-        <button type="button" data-command="about">about</button>
-        <button type="button" data-command="projects">projects</button>
-        <button type="button" data-command="contact">contact</button>
-      </nav>
-
-      <section id="focus" class="focus" aria-labelledby="focus-title">
-        <div class="focus-heading">
-          <div>
-            <p class="eyebrow">// CURRENT FOCUS</p>
-            <h2 id="focus-title">Build systems that meet the real world.</h2>
+      <div id="landing-view">
+        <!-- alias: banana + chip -->
+        <section id="home" class="intro" aria-labelledby="site-title">
+          <div class="intro-tools">
+            <button
+              id="panda-mascot"
+              class="panda"
+              type="button"
+              aria-describedby="mascot-hint"
+              aria-label="Ask the panda for a hint"
+            >
+              ʕ•ᴥ•ʔ
+            </button>
+            <div class="retro-monitor" aria-hidden="true"><span>ML</span></div>
           </div>
-          <aside class="field-trio" aria-hidden="true">
-            <div class="field-art-card cyber-art">
-              <span class="field-art-label">NET</span>
-              <svg viewBox="0 0 120 94" focusable="false">
-                <path class="art-wire" d="M20 69 51 47 91 67M51 47 76 20" />
-                <circle class="art-node" cx="20" cy="69" r="7" />
-                <circle class="art-node" cx="51" cy="47" r="7" />
-                <circle class="art-node" cx="76" cy="20" r="7" />
-                <circle class="art-node" cx="91" cy="67" r="7" />
-                <circle class="art-packet" r="3">
-                  <animateMotion
-                    dur="4.8s"
-                    path="M20 69 L51 47 L76 20 L51 47 L91 67"
-                    repeatCount="indefinite"
+          <p id="mascot-hint" class="mascot-hint" aria-live="polite" hidden></p>
+          <p class="eyebrow">// PORTFOLIO</p>
+          <h1 id="site-title">MAX LEONG</h1>
+          <p class="lede">
+            CS student building at the intersection of <em>cybersecurity</em>,
+            <em>math</em>, <em>engineering</em>, and <em>AI</em>.
+          </p>
+        </section>
+
+        <section
+          id="terminal"
+          class="terminal"
+          aria-labelledby="terminal-title"
+        >
+          <div class="terminal-bar">
+            <span class="dot red"></span><span class="dot amber"></span
+            ><span class="dot green"></span>
+            <h2 id="terminal-title">max@portfolio:~</h2>
+          </div>
+          <div id="output" class="output" aria-live="polite">
+            <p>
+              <span class="prompt">max@portfolio:~$</span>
+              <span class="command">whoami</span>
+            </p>
+            <p class="result">
+              Max Leong<br />CS student · builder at the physical–digital
+              boundary
+            </p>
+            <p>
+              <span class="prompt">max@portfolio:~$</span>
+              <span class="command">help</span>
+            </p>
+            <p class="result">
+              Available commands: about · skills · projects · resume · contact ·
+              ls focus · cd focus/&lt;category&gt; · clear
+            </p>
+          </div>
+          <form id="terminal-form" class="command-line">
+            <label class="prompt" for="command-input">max@portfolio:~$</label>
+            <input
+              id="command-input"
+              name="command"
+              autocomplete="off"
+              autocapitalize="none"
+              spellcheck="false"
+              placeholder="type a command"
+              aria-label="Terminal command"
+            />
+          </form>
+        </section>
+
+        <nav class="quick-links" aria-label="Quick terminal commands">
+          <button type="button" data-command="about">about</button>
+          <button type="button" data-command="skills">skills</button>
+          <button type="button" data-command="projects">projects</button>
+          <button type="button" data-command="resume">resume</button>
+          <button type="button" data-command="contact">contact</button>
+        </nav>
+
+        <section id="focus" class="focus" aria-labelledby="focus-title">
+          <div class="focus-heading">
+            <div>
+              <p class="eyebrow">// CURRENT FOCUS</p>
+              <h2 id="focus-title">Build systems that meet the real world.</h2>
+            </div>
+            <aside class="field-trio" aria-hidden="true">
+              <div class="field-art-card cyber-art">
+                <span class="field-art-label">NET</span>
+                <svg viewBox="0 0 120 94" focusable="false">
+                  <path class="art-wire" d="M20 69 51 47 91 67M51 47 76 20" />
+                  <circle class="art-node" cx="20" cy="69" r="7" />
+                  <circle class="art-node" cx="51" cy="47" r="7" />
+                  <circle class="art-node" cx="76" cy="20" r="7" />
+                  <circle class="art-node" cx="91" cy="67" r="7" />
+                  <circle class="art-packet" r="3">
+                    <animateMotion
+                      dur="4.8s"
+                      path="M20 69 L51 47 L76 20 L51 47 L91 67"
+                      repeatCount="indefinite"
+                    />
+                  </circle>
+                  <g class="art-lock-pendulum">
+                    <path
+                      class="art-lock"
+                      d="M70 73v-8a8 8 0 0 1 16 0v8m-19 0h22v15H67z"
+                    />
+                  </g>
+                </svg>
+                <span class="field-art-caption">secure link</span>
+              </div>
+              <div class="field-art-card esp32-art">
+                <span class="field-art-label">ESP32</span>
+                <svg viewBox="0 0 120 220" focusable="false">
+                  <rect
+                    class="esp-board"
+                    x="23"
+                    y="9"
+                    width="74"
+                    height="202"
+                    rx="4"
                   />
-                </circle>
-                <g class="art-lock-pendulum">
+                  <rect
+                    class="esp-usb"
+                    x="47"
+                    y="5"
+                    width="26"
+                    height="20"
+                    rx="2"
+                  />
+                  <rect
+                    class="esp-module"
+                    x="36"
+                    y="43"
+                    width="48"
+                    height="58"
+                    rx="2"
+                  />
+                  <path class="esp-antenna-trace" d="M41 48h38v12H41z" />
+                  <rect class="esp-chip" x="44" y="67" width="32" height="23" />
+                  <circle class="esp-led" cx="84" cy="33" r="4" />
+                  <circle class="esp-button" cx="36" cy="34" r="5" />
                   <path
-                    class="art-lock"
-                    d="M70 73v-8a8 8 0 0 1 16 0v8m-19 0h22v15H67z"
+                    class="esp-trace"
+                    d="M47 119h-11v17h-7m18-17v20m11-20v20m11-20v20m11-20v17h7v-17M47 154h-11v16h-7m18-16v20m11-20v20m11-20v20m11-20v16h7v-16"
                   />
-                </g>
-              </svg>
-              <span class="field-art-caption">secure link</span>
-            </div>
-            <div class="field-art-card esp32-art">
-              <span class="field-art-label">ESP32</span>
-              <svg viewBox="0 0 120 220" focusable="false">
-                <rect
-                  class="esp-board"
-                  x="23"
-                  y="9"
-                  width="74"
-                  height="202"
-                  rx="4"
-                />
-                <rect
-                  class="esp-usb"
-                  x="47"
-                  y="5"
-                  width="26"
-                  height="20"
-                  rx="2"
-                />
-                <rect
-                  class="esp-module"
-                  x="36"
-                  y="43"
-                  width="48"
-                  height="58"
-                  rx="2"
-                />
-                <path class="esp-antenna-trace" d="M41 48h38v12H41z" />
-                <rect class="esp-chip" x="44" y="67" width="32" height="23" />
-                <circle class="esp-led" cx="84" cy="33" r="4" />
-                <circle class="esp-button" cx="36" cy="34" r="5" />
-                <path
-                  class="esp-trace"
-                  d="M47 119h-11v17h-7m18-17v20m11-20v20m11-20v20m11-20v17h7v-17M47 154h-11v16h-7m18-16v20m11-20v20m11-20v20m11-20v16h7v-16"
-                />
-                <g class="esp-pins">
-                  <circle cx="25" cy="55" r="2" />
-                  <circle cx="25" cy="67" r="2" />
-                  <circle cx="25" cy="79" r="2" />
-                  <circle cx="25" cy="91" r="2" />
-                  <circle cx="25" cy="103" r="2" />
-                  <circle cx="25" cy="115" r="2" />
-                  <circle cx="25" cy="127" r="2" />
-                  <circle cx="25" cy="139" r="2" />
-                  <circle cx="25" cy="151" r="2" />
-                  <circle cx="25" cy="163" r="2" />
-                  <circle cx="25" cy="175" r="2" />
-                  <circle cx="95" cy="55" r="2" />
-                  <circle cx="95" cy="67" r="2" />
-                  <circle cx="95" cy="79" r="2" />
-                  <circle cx="95" cy="91" r="2" />
-                  <circle cx="95" cy="103" r="2" />
-                  <circle cx="95" cy="115" r="2" />
-                  <circle cx="95" cy="127" r="2" />
-                  <circle cx="95" cy="139" r="2" />
-                  <circle cx="95" cy="151" r="2" />
-                  <circle cx="95" cy="163" r="2" />
-                  <circle cx="95" cy="175" r="2" />
-                </g>
-              </svg>
-              <span class="field-art-caption">signal online</span>
-            </div>
-            <div class="field-art-card conway-art">
-              <span class="field-art-label">LIFE</span>
-              <svg viewBox="0 0 120 94" focusable="false">
-                <g class="conway-grid">
+                  <g class="esp-pins">
+                    <circle cx="25" cy="55" r="2" />
+                    <circle cx="25" cy="67" r="2" />
+                    <circle cx="25" cy="79" r="2" />
+                    <circle cx="25" cy="91" r="2" />
+                    <circle cx="25" cy="103" r="2" />
+                    <circle cx="25" cy="115" r="2" />
+                    <circle cx="25" cy="127" r="2" />
+                    <circle cx="25" cy="139" r="2" />
+                    <circle cx="25" cy="151" r="2" />
+                    <circle cx="25" cy="163" r="2" />
+                    <circle cx="25" cy="175" r="2" />
+                    <circle cx="95" cy="55" r="2" />
+                    <circle cx="95" cy="67" r="2" />
+                    <circle cx="95" cy="79" r="2" />
+                    <circle cx="95" cy="91" r="2" />
+                    <circle cx="95" cy="103" r="2" />
+                    <circle cx="95" cy="115" r="2" />
+                    <circle cx="95" cy="127" r="2" />
+                    <circle cx="95" cy="139" r="2" />
+                    <circle cx="95" cy="151" r="2" />
+                    <circle cx="95" cy="163" r="2" />
+                    <circle cx="95" cy="175" r="2" />
+                  </g>
+                </svg>
+                <span class="field-art-caption">signal online</span>
+              </div>
+              <div class="field-art-card conway-art">
+                <span class="field-art-label">LIFE</span>
+                <svg viewBox="0 0 120 94" focusable="false">
+                  <g class="conway-grid">
+                    <path
+                      d="M18 18h66v66H18zM29 18v66m11-66v66m11-66v66m11-66v66m11-66v66M18 29h66M18 40h66M18 51h66M18 62h66M18 73h66"
+                    />
+                  </g>
+                  <g class="conway-cells">
+                    <rect
+                      class="life-cell cell-a"
+                      x="31"
+                      y="31"
+                      width="8"
+                      height="8"
+                    />
+                    <rect
+                      class="life-cell cell-b"
+                      x="42"
+                      y="31"
+                      width="8"
+                      height="8"
+                    />
+                    <rect
+                      class="life-cell cell-c"
+                      x="53"
+                      y="31"
+                      width="8"
+                      height="8"
+                    />
+                    <rect
+                      class="life-cell cell-d"
+                      x="42"
+                      y="42"
+                      width="8"
+                      height="8"
+                    />
+                    <rect
+                      class="life-cell cell-e"
+                      x="53"
+                      y="53"
+                      width="8"
+                      height="8"
+                    />
+                    <rect
+                      class="life-cell cell-f"
+                      x="64"
+                      y="53"
+                      width="8"
+                      height="8"
+                    />
+                    <rect
+                      class="life-cell cell-g"
+                      x="53"
+                      y="64"
+                      width="8"
+                      height="8"
+                    />
+                  </g>
+                  <path class="conway-arrow" d="M94 41v20m0 0-5-5m5 5 5-5" />
+                </svg>
+                <span class="field-art-caption">generation +1</span>
+              </div>
+              <div class="field-art-card camera-art">
+                <svg viewBox="0 0 150 108" focusable="false">
+                  <rect
+                    class="camera-board"
+                    x="13"
+                    y="16"
+                    width="124"
+                    height="76"
+                    rx="4"
+                  />
+                  <rect
+                    class="camera-module"
+                    x="42"
+                    y="25"
+                    width="50"
+                    height="51"
+                    rx="3"
+                  />
+                  <circle class="camera-lens-ring" cx="67" cy="50" r="16" />
+                  <circle class="camera-lens" cx="67" cy="50" r="10" />
                   <path
-                    d="M18 18h66v66H18zM29 18v66m11-66v66m11-66v66m11-66v66m11-66v66M18 29h66M18 40h66M18 51h66M18 62h66M18 73h66"
+                    class="camera-trace"
+                    d="M25 34h12m-12 12h12m-12 12h12m58-24h19m-19 12h19m-19 12h19M52 86v-9m11 9v-9m11 9v-9"
                   />
-                </g>
-                <g class="conway-cells">
-                  <rect
-                    class="life-cell cell-a"
-                    x="31"
-                    y="31"
-                    width="8"
-                    height="8"
+                  <g class="camera-pins">
+                    <circle cx="20" cy="27" r="2" />
+                    <circle cx="20" cy="39" r="2" />
+                    <circle cx="20" cy="51" r="2" />
+                    <circle cx="20" cy="63" r="2" />
+                    <circle cx="20" cy="75" r="2" />
+                    <circle cx="130" cy="27" r="2" />
+                    <circle cx="130" cy="39" r="2" />
+                    <circle cx="130" cy="51" r="2" />
+                    <circle cx="130" cy="63" r="2" />
+                    <circle cx="130" cy="75" r="2" />
+                  </g>
+                  <path
+                    class="camera-frame"
+                    d="M38 14h-9v9m54-9h9v9m-63 58h9v9m54-9v9"
                   />
+                </svg>
+              </div>
+              <div class="field-art-card asteroids-art">
+                <svg viewBox="0 0 150 108" focusable="false">
                   <rect
-                    class="life-cell cell-b"
-                    x="42"
-                    y="31"
-                    width="8"
-                    height="8"
-                  />
-                  <rect
-                    class="life-cell cell-c"
-                    x="53"
-                    y="31"
-                    width="8"
-                    height="8"
-                  />
-                  <rect
-                    class="life-cell cell-d"
-                    x="42"
-                    y="42"
-                    width="8"
-                    height="8"
-                  />
-                  <rect
-                    class="life-cell cell-e"
-                    x="53"
-                    y="53"
-                    width="8"
-                    height="8"
+                    class="oled-frame"
+                    x="12"
+                    y="15"
+                    width="126"
+                    height="78"
+                    rx="5"
                   />
                   <rect
-                    class="life-cell cell-f"
-                    x="64"
-                    y="53"
-                    width="8"
-                    height="8"
+                    class="oled-screen"
+                    x="21"
+                    y="25"
+                    width="108"
+                    height="56"
+                    rx="1"
                   />
-                  <rect
-                    class="life-cell cell-g"
-                    x="53"
-                    y="64"
-                    width="8"
-                    height="8"
+                  <g class="asteroids-ship">
+                    <path class="asteroid-ship" d="m75 64 9 18-9-5-9 5z" />
+                  </g>
+                  <path
+                    class="asteroid-rock rock-target"
+                    d="m70 33 7-6 8 4 1 9-7 6-9-4z"
                   />
-                </g>
-                <path class="conway-arrow" d="M94 41v20m0 0-5-5m5 5 5-5" />
-              </svg>
-              <span class="field-art-caption">generation +1</span>
+                  <path
+                    class="asteroid-rock rock-spawn-a"
+                    d="m35 37 6-5 7 4 1 8-6 5-8-4z"
+                  />
+                  <path
+                    class="asteroid-rock rock-spawn-b"
+                    d="m103 42 5-4 6 3 1 7-5 4-7-3z"
+                  />
+                  <path
+                    class="asteroid-rock rock-spawn-c"
+                    d="m45 57 4-4 5 3 1 5-4 4-5-2z"
+                  />
+                  <circle class="asteroid-shot" cx="75" cy="61" r="1.2" />
+                  <path
+                    class="asteroid-burst"
+                    d="m75 42 0-7m0 14v7m-7-14 5-5m5 10 5 5m-10-10-5 5m10-10 5-5"
+                  />
+                  <circle class="oled-button" cx="34" cy="100" r="4" />
+                  <circle class="oled-button" cx="48" cy="100" r="4" />
+                </svg>
+              </div>
+            </aside>
+          </div>
+          <div class="focus-terminal">
+            <p class="focus-command">
+              <span class="prompt">max@portfolio:~$</span>
+              <span class="command">ls focus/</span>
+            </p>
+            <div class="focus-index">
+              <article>
+                <span class="focus-number">01</span>
+                <div>
+                  <h3>
+                    <a
+                      href="#focus/cybersecurity"
+                      class="focus-header-btn"
+                      data-focus="cybersecurity"
+                    >
+                      cybersecurity/
+                    </a>
+                  </h3>
+                  <p>
+                    Understand systems, identify weaknesses, and build with
+                    privacy in mind.
+                  </p>
+                </div>
+                <span class="focus-kind">dir</span>
+              </article>
+              <article>
+                <span class="focus-number">02</span>
+                <div>
+                  <h3>
+                    <a
+                      href="#focus/engineering"
+                      class="focus-header-btn"
+                      data-focus="engineering"
+                    >
+                      engineering/
+                    </a>
+                  </h3>
+                  <p>
+                    Hardware, sensors, embedded systems, and interactive
+                    physical computing.
+                  </p>
+                </div>
+                <span class="focus-kind">dir</span>
+              </article>
+              <article>
+                <span class="focus-number">03</span>
+                <div>
+                  <h3>
+                    <a
+                      href="#focus/ai-math"
+                      class="focus-header-btn"
+                      data-focus="ai-math"
+                    >
+                      ai & math/
+                    </a>
+                  </h3>
+                  <p>
+                    Use models and mathematical thinking to turn noisy inputs
+                    into useful tools.
+                  </p>
+                </div>
+                <span class="focus-kind">dir</span>
+              </article>
+              <article>
+                <span class="focus-number">04</span>
+                <div>
+                  <h3>
+                    <a
+                      href="#focus/hackathons"
+                      class="focus-header-btn"
+                      data-focus="hackathons"
+                    >
+                      hackathons/
+                    </a>
+                  </h3>
+                  <p>
+                    Rapid prototyping, building under constraints, and shipping
+                    award-winning products.
+                  </p>
+                </div>
+                <span class="focus-kind">dir</span>
+              </article>
             </div>
-            <div class="field-art-card camera-art">
-              <svg viewBox="0 0 150 108" focusable="false">
-                <rect
-                  class="camera-board"
-                  x="13"
-                  y="16"
-                  width="124"
-                  height="76"
-                  rx="4"
-                />
-                <rect
-                  class="camera-module"
-                  x="42"
-                  y="25"
-                  width="50"
-                  height="51"
-                  rx="3"
-                />
-                <circle class="camera-lens-ring" cx="67" cy="50" r="16" />
-                <circle class="camera-lens" cx="67" cy="50" r="10" />
-                <path
-                  class="camera-trace"
-                  d="M25 34h12m-12 12h12m-12 12h12m58-24h19m-19 12h19m-19 12h19M52 86v-9m11 9v-9m11 9v-9"
-                />
-                <g class="camera-pins">
-                  <circle cx="20" cy="27" r="2" />
-                  <circle cx="20" cy="39" r="2" />
-                  <circle cx="20" cy="51" r="2" />
-                  <circle cx="20" cy="63" r="2" />
-                  <circle cx="20" cy="75" r="2" />
-                  <circle cx="130" cy="27" r="2" />
-                  <circle cx="130" cy="39" r="2" />
-                  <circle cx="130" cy="51" r="2" />
-                  <circle cx="130" cy="63" r="2" />
-                  <circle cx="130" cy="75" r="2" />
-                </g>
-                <path
-                  class="camera-frame"
-                  d="M38 14h-9v9m54-9h9v9m-63 58h9v9m54-9v9"
-                />
-              </svg>
-            </div>
-            <div class="field-art-card asteroids-art">
-              <svg viewBox="0 0 150 108" focusable="false">
-                <rect
-                  class="oled-frame"
-                  x="12"
-                  y="15"
-                  width="126"
-                  height="78"
-                  rx="5"
-                />
-                <rect
-                  class="oled-screen"
-                  x="21"
-                  y="25"
-                  width="108"
-                  height="56"
-                  rx="1"
-                />
-                <g class="asteroids-ship">
-                  <path class="asteroid-ship" d="m75 64 9 18-9-5-9 5z" />
-                </g>
-                <path
-                  class="asteroid-rock rock-target"
-                  d="m70 33 7-6 8 4 1 9-7 6-9-4z"
-                />
-                <path
-                  class="asteroid-rock rock-spawn-a"
-                  d="m35 37 6-5 7 4 1 8-6 5-8-4z"
-                />
-                <path
-                  class="asteroid-rock rock-spawn-b"
-                  d="m103 42 5-4 6 3 1 7-5 4-7-3z"
-                />
-                <path
-                  class="asteroid-rock rock-spawn-c"
-                  d="m45 57 4-4 5 3 1 5-4 4-5-2z"
-                />
-                <circle class="asteroid-shot" cx="75" cy="61" r="1.2" />
-                <path
-                  class="asteroid-burst"
-                  d="m75 42 0-7m0 14v7m-7-14 5-5m5 10 5 5m-10-10-5 5m10-10 5-5"
-                />
-                <circle class="oled-button" cx="34" cy="100" r="4" />
-                <circle class="oled-button" cx="48" cy="100" r="4" />
-              </svg>
-            </div>
-          </aside>
+          </div>
+        </section>
+
+        <footer id="contact">
+          <p>Built for the curious.</p>
+          <div>
+            <a
+              href="https://github.com/maxi-cmyk"
+              target="_blank"
+              rel="noreferrer"
+              >GitHub ↗</a
+            >
+            <a
+              href="https://www.linkedin.com/in/maxleongruisheng"
+              target="_blank"
+              rel="noreferrer"
+              >LinkedIn ↗</a
+            >
+          </div>
+        </footer>
+      </div>
+
+      <section
+        id="full-subpage-view"
+        class="full-subpage-view"
+        hidden
+        aria-labelledby="full-subpage-title"
+      >
+        <div class="subpage-topbar">
+          <span class="subpage-breadcrumb"
+            >INDEX / FOCUS /
+            <span id="subpage-category-label">SUBPAGE</span></span
+          >
         </div>
-        <div class="focus-terminal">
+
+        <div class="subpage-hero">
           <p class="focus-command">
             <span class="prompt">max@portfolio:~$</span>
-            <span class="command">ls focus/</span>
+            <span id="full-subpage-path" class="command"
+              >cd focus/hackathons</span
+            >
           </p>
-          <div class="focus-index">
-            <article>
-              <span class="focus-number">01</span>
-              <div>
-                <h3>cybersecurity/</h3>
-                <p>
-                  Understand systems, identify weaknesses, and build with
-                  privacy in mind.
-                </p>
-              </div>
-              <span class="focus-kind">dir</span>
-            </article>
-            <article>
-              <span class="focus-number">02</span>
-              <div>
-                <h3>engineering/</h3>
-                <p>
-                  Hardware, sensors, embedded systems, and interactive physical
-                  computing.
-                </p>
-              </div>
-              <span class="focus-kind">dir</span>
-            </article>
-            <article>
-              <span class="focus-number">03</span>
-              <div>
-                <h3>ai & math/</h3>
-                <p>
-                  Use models and mathematical thinking to turn noisy inputs into
-                  useful tools.
-                </p>
-              </div>
-              <span class="focus-kind">dir</span>
-            </article>
-          </div>
+          <h1 id="full-subpage-title">hackathons/</h1>
+          <p id="full-subpage-desc" class="subpage-lede">
+            Rapid prototyping, building under constraints, and shipping
+            award-winning products.
+          </p>
+        </div>
+
+        <div
+          id="full-subpage-projects"
+          class="full-subpage-projects-grid"
+        ></div>
+
+        <div class="subpage-footer">
+          <a href="#focus" class="subpage-back-btn"
+            >← cd .. (back to focus index)</a
+          >
         </div>
       </section>
 
-      <footer id="contact">
-        <p>Built for the curious.</p>
-        <div>
-          <a
-            href="https://github.com/maxi-cmyk"
-            target="_blank"
-            rel="noreferrer"
-            >GitHub ↗</a
-          >
-          <a
-            href="https://www.linkedin.com/in/maxleongruisheng"
-            target="_blank"
-            rel="noreferrer"
-            >LinkedIn ↗</a
-          >
-        </div>
-      </footer>
+      <dialog
+        id="project-modal"
+        class="project-modal"
+        aria-labelledby="modal-project-title"
+      ></dialog>
     </main>
     <script type="module" src="./src/main.js"></script>
   </body>

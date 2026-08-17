@@ -18,6 +18,45 @@ test("about returns a brief introduction", () => {
   assert.equal(result.links, undefined);
 });
 
+test("skills returns categorised capabilities and stack matrix", () => {
+  const result = resolveCommand("skills");
+
+  assert.equal(result.kind, "skills");
+  assert.match(result.output, /EMBEDDED & HARDWARE/);
+  assert.match(result.output, /ESP32/);
+  assert.match(result.output, /SYSTEMS & CYBERSECURITY/);
+  assert.match(result.output, /BACKEND & AI PIPELINES/);
+  assert.match(result.output, /MATHEMATICS & SIMULATION/);
+
+  const stackResult = resolveCommand("stack");
+  assert.equal(stackResult.kind, "skills");
+});
+
+test("resume returns curriculum vitae info and WIP status with links", () => {
+  const result = resolveCommand("resume");
+
+  assert.equal(result.kind, "resume");
+  assert.match(result.output, /MAX LEONG — RESUME/);
+  assert.match(result.output, /WIP/);
+  assert.deepEqual(result.links, [
+    { label: "linkedin", url: "https://linkedin.com/in/maxleongruisheng" },
+    { label: "github", url: "https://github.com/maxi-cmyk" },
+  ]);
+
+  const catResume = resolveCommand("cat resume");
+  assert.equal(catResume.kind, "resume");
+});
+
+test("sudo and destructive commands trigger the playful hacker easter egg", () => {
+  const sudoResult = resolveCommand("sudo rm -rf /");
+  assert.equal(sudoResult.kind, "sudo");
+  assert.match(sudoResult.output, /password for visitor/);
+  assert.match(sudoResult.output, /Nice try, hacker/);
+
+  const rmResult = resolveCommand("rm -rf *");
+  assert.equal(rmResult.kind, "sudo");
+});
+
 test("projects lists the selected hardware and maths builds", () => {
   const result = resolveCommand("projects");
 
@@ -73,9 +112,11 @@ test("contact returns clickable public profile links", () => {
   ]);
 });
 
-test("help does not reveal the secret panda command", () => {
+test("help lists skills and resume while keeping panda easter egg secret", () => {
   const result = resolveCommand("help");
   assert.equal(result.kind, "help");
+  assert.match(result.output, /skills/);
+  assert.match(result.output, /resume/);
   assert.doesNotMatch(result.output, /thebananachip/i);
 });
 
@@ -83,4 +124,20 @@ test("unknown commands receive a useful terminal response", () => {
   const result = resolveCommand("quantum-banana");
   assert.equal(result.kind, "error");
   assert.match(result.output, /command not found/i);
+});
+
+test("focus category commands return filtered project listings and navTarget", () => {
+  const hackathonsResult = resolveCommand("cd focus/hackathons");
+  assert.equal(hackathonsResult.kind, "projects");
+  assert.equal(hackathonsResult.navTarget, "#focus/hackathons");
+  assert.equal(hackathonsResult.projects.length, 2);
+
+  const cyberResult = resolveCommand("ls focus/cybersecurity");
+  assert.equal(cyberResult.kind, "projects");
+  assert.equal(cyberResult.navTarget, "#focus/cybersecurity");
+  assert.equal(cyberResult.projects.length, 1);
+
+  const cdBackResult = resolveCommand("cd ..");
+  assert.equal(cdBackResult.kind, "nav");
+  assert.equal(cdBackResult.navTarget, "#focus");
 });

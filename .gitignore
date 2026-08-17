@@ -13,6 +13,7 @@ dist/
 # Logs and test output
 *.log
 coverage/
+tests
 
 # macOS metadata
 .DS_Store
