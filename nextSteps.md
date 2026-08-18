@@ -20,6 +20,9 @@ This document tracks completed implementations and details what remains to be do
   - Added `resume`, `cv`, `cat resume` commands and quick link button.
 - [x] **Project Insights Modal Architecture (WIP)**:
   - Implemented accessible `<dialog>` in [src/components/subpages/project-modal.js](file:///Users/maxi/Desktop/my_nonsense/nfc-portfolio-card/src/components/subpages/project-modal.js), router hashtag support (`#project/<slug>`), and `insights [wip] ↗` buttons across terminal & focus pages.
+- [x] **Tab Autocompletion in Terminal**:
+  - Implemented shell-like `Tab` key interception in [src/terminal/autocomplete.js](file:///Users/maxi/Desktop/my_nonsense/nfc-portfolio-card/src/terminal/autocomplete.js) with prefix matching, longest common prefix calculation, single-match autocompletion, category/subpath shortcuts, and multi-match interactive suggestion badges in [src/components/terminal/runner.js](file:///Users/maxi/Desktop/my_nonsense/nfc-portfolio-card/src/components/terminal/runner.js).
+
 
 ---
 
@@ -61,12 +64,13 @@ This document tracks completed implementations and details what remains to be do
 
 ---
 
-### 3. ⌨️ Tab Autocompletion in Terminal
+### 3. ⌨️ Tab Autocompletion in Terminal [Completed]
 - **Objective**: Shell-like UX where pressing `Tab` auto-completes available commands.
 - **Tasks**:
-  - Add `Tab` keydown interceptor in `#command-input`.
-  - Match partial inputs against commands: `ab` → `about`, `sk` → `skills`, `re` → `resume`, `cd focus/h` → `cd focus/hackathons`, `pro` → `projects`, `theb` → `thebananachip`.
-  - If multiple matches, flash matching suggestions in terminal.
+  - [x] Add `Tab` keydown interceptor in `#command-input`.
+  - [x] Match partial inputs against commands: `ab` → `about`, `sk` → `skills`, `re` → `resume`, `cd focus/h` → `cd focus/hackathons`, `pro` → `projects`, `theb` → `thebananachip`.
+  - [x] If multiple matches, flash matching suggestions in terminal.
+
 
 ---
 

@@ -13,8 +13,12 @@ import {
 } from "./terminal/input.js";
 import { getActiveRailTarget } from "./navigation/system-rail.js";
 import { initRouter, handleRoute } from "./navigation/router.js";
-import { appendCommand } from "./components/terminal/runner.js";
+import {
+  appendCommand,
+  appendSuggestions,
+} from "./components/terminal/runner.js";
 import { CommandHistory } from "./terminal/history.js";
+import { getAutocompleteResult } from "./terminal/autocomplete.js";
 
 const form = document.querySelector("#terminal-form");
 const input = document.querySelector("#command-input");
@@ -150,7 +154,37 @@ form.addEventListener("submit", (event) => {
 });
 
 input.addEventListener("keydown", (event) => {
-  if (event.key === "ArrowUp") {
+  if (event.key === "Tab") {
+    event.preventDefault();
+    const result = getAutocompleteResult(input.value);
+
+    if (!result.hasMatch) {
+      input.classList.add("is-autocomplete-empty");
+      window.setTimeout(() => {
+        input.classList.remove("is-autocomplete-empty");
+      }, 250);
+      return;
+    }
+
+    if (!result.hasMultiple) {
+      input.value = result.completion;
+      input.setSelectionRange(result.completion.length, result.completion.length);
+      input.classList.add("is-autocomplete-success");
+      window.setTimeout(() => {
+        input.classList.remove("is-autocomplete-success");
+      }, 250);
+    } else {
+      if (result.completion && result.completion !== input.value) {
+        input.value = result.completion;
+        input.setSelectionRange(result.completion.length, result.completion.length);
+      }
+      appendSuggestions(input.value, result.matches, (selected) => {
+        input.value = selected;
+        input.focus();
+        input.setSelectionRange(selected.length, selected.length);
+      });
+    }
+  } else if (event.key === "ArrowUp") {
     event.preventDefault();
     const prev = commandHistory.navigateUp(input.value);
     if (prev !== null) {
@@ -166,6 +200,7 @@ input.addEventListener("keydown", (event) => {
     }
   }
 });
+
 
 quickLinks.forEach((button) => {
   button.addEventListener("click", () => {

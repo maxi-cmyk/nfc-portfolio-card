@@ -173,3 +173,46 @@ export function appendCommand(command) {
     }, 150);
   }
 }
+
+export function appendSuggestions(currentInput, suggestions, onSelect) {
+  if (!output || !suggestions || suggestions.length === 0) return;
+
+  const commandRow = document.createElement("p");
+  commandRow.innerHTML =
+    '<span class="prompt">max@portfolio:~$</span> <span class="command"></span>';
+  commandRow.querySelector(".command").textContent = currentInput;
+
+  const resultRow = document.createElement("div");
+  resultRow.className = "result suggestions is-flash";
+
+  const list = document.createElement("div");
+  list.className = "suggestion-list";
+
+  suggestions.forEach((item) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "suggestion-item";
+    btn.textContent = item;
+    btn.addEventListener("click", () => {
+      if (typeof onSelect === "function") {
+        onSelect(item);
+      }
+    });
+    list.append(btn);
+  });
+
+  resultRow.append(list);
+  output.append(commandRow, resultRow);
+  output.scrollTop = output.scrollHeight;
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  window.requestAnimationFrame(() => {
+    resultRow.scrollIntoView(
+      getLatestResultScrollOptions(prefersReducedMotion),
+    );
+  });
+}
+
