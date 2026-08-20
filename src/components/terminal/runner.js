@@ -81,12 +81,16 @@ export function appendCommand(command) {
     text.textContent = result.output;
     resultRow.append(text);
 
-    result.links.forEach(({ label, url }) => {
+    result.links.forEach(({ label, url, download }) => {
       const link = document.createElement("a");
       link.className = "terminal-link";
       link.href = url;
-      link.target = "_blank";
-      link.rel = "noreferrer";
+      if (download) {
+        link.download = download;
+      } else {
+        link.target = "_blank";
+        link.rel = "noreferrer";
+      }
       link.textContent = `${label.padEnd(9, " ")}→ ${url.replace("https://", "")}`;
       resultRow.append(link);
     });
@@ -215,4 +219,3 @@ export function appendSuggestions(currentInput, suggestions, onSelect) {
     );
   });
 }
-

@@ -32,13 +32,19 @@ test("skills returns categorised capabilities and stack matrix", () => {
   assert.equal(stackResult.kind, "skills");
 });
 
-test("resume returns curriculum vitae info and WIP status with links", () => {
+test("resume returns the downloadable PDF and profile links", () => {
   const result = resolveCommand("resume");
 
   assert.equal(result.kind, "resume");
   assert.match(result.output, /MAX LEONG — RESUME/);
-  assert.match(result.output, /WIP/);
+  assert.match(result.output, /PDF resume ready/i);
   assert.deepEqual(result.links, [
+    {
+      label: "download resume pdf",
+      url: "/assets/Max_Leong_Resume.pdf",
+      download: "Max_Leong_Resume.pdf",
+    },
+    { label: "open in new tab", url: "/assets/Max_Leong_Resume.pdf" },
     { label: "linkedin", url: "https://linkedin.com/in/maxleongruisheng" },
     { label: "github", url: "https://github.com/maxi-cmyk" },
   ]);

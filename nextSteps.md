@@ -23,23 +23,24 @@ This document tracks completed implementations and details what remains to be do
 - [x] **Tab Autocompletion in Terminal**:
   - Implemented shell-like `Tab` key interception in [src/terminal/autocomplete.js](file:///Users/maxi/Desktop/my_nonsense/nfc-portfolio-card/src/terminal/autocomplete.js) with prefix matching, longest common prefix calculation, single-match autocompletion, category/subpath shortcuts, and multi-match interactive suggestion badges in [src/components/terminal/runner.js](file:///Users/maxi/Desktop/my_nonsense/nfc-portfolio-card/src/components/terminal/runner.js).
 
-
 ---
 
 ## 📌 Remaining Tasks & Feature Backlog
 
 ---
 
-### 1. 📄 Attach Official Resume PDF & Preview
+### 1. 📄 Attach Official Resume PDF & Preview [Completed]
+
 - **Objective**: Replace the current `[WIP]` resume placeholder with your actual PDF resume.
 - **Tasks**:
-  - Place your finalized resume PDF in `public/assets/Max_Leong_Resume.pdf`.
-  - Update [src/terminal/commands/resume.js](file:///Users/maxi/Desktop/my_nonsense/nfc-portfolio-card/src/terminal/commands/resume.js) to provide a direct download link (`/assets/Max_Leong_Resume.pdf`) and "Open in New Tab" link.
-  - Add quick action "Download Resume PDF" inside the terminal output and contact footer.
+  - [x] Place your finalized resume PDF in `public/assets/Max_Leong_Resume.pdf`.
+  - [x] Update [src/terminal/commands/resume.js](file:///Users/maxi/Desktop/my_nonsense/nfc-portfolio-card/src/terminal/commands/resume.js) to provide a direct download link (`/assets/Max_Leong_Resume.pdf`) and "Open in New Tab" link.
+  - [x] Add quick action "Download Resume PDF" inside the terminal output and contact footer.
 
 ---
 
 ### 2. 🔬 Populate Deep-Dive Project Case Studies & Media
+
 - **Objective**: Fill in detailed technical deep-dives for each marquee project in [src/data/projects.js](file:///Users/maxi/Desktop/my_nonsense/nfc-portfolio-card/src/data/projects.js).
 - **Projects to Flesh Out**:
   1. **Sentinel (Hardware · Security)**:
@@ -65,19 +66,19 @@ This document tracks completed implementations and details what remains to be do
 ---
 
 ### 3. ⌨️ Tab Autocompletion in Terminal [Completed]
+
 - **Objective**: Shell-like UX where pressing `Tab` auto-completes available commands.
 - **Tasks**:
   - [x] Add `Tab` keydown interceptor in `#command-input`.
   - [x] Match partial inputs against commands: `ab` → `about`, `sk` → `skills`, `re` → `resume`, `cd focus/h` → `cd focus/hackathons`, `pro` → `projects`, `theb` → `thebananachip`.
   - [x] If multiple matches, flash matching suggestions in terminal.
 
-
 ---
 
 ### 4. ⚡ Offline PWA & Service Worker for NFC Tap Reliability
+
 - **Objective**: Ensure the portfolio opens instantaneously even with flaky convention/hackathon Wi-Fi.
 - **Tasks**:
   - Create `manifest.webmanifest` and register a lightweight Service Worker caching fonts, icons, and Vite bundle.
 
 ---
-
