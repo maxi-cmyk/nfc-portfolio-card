@@ -269,7 +269,8 @@ body::before {
 }
 
 .focus h2,
-.focus-index h3 {
+.focus-index h3,
+.certificates-heading h2 {
   color: #12376b;
   font-family:
     Arial Black,

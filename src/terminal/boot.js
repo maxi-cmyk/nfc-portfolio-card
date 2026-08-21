@@ -2,8 +2,17 @@ export function getTypingFrames(text) {
   return Array.from(text, (_, index) => text.slice(0, index + 1));
 }
 
+export function getBootTiming() {
+  return {
+    typingDelay: 22.5,
+    lineDelay: 125,
+    completionDelay: 500,
+    exitDelay: 125,
+  };
+}
+
 export function getBootDelay() {
-  return 250;
+  return getBootTiming().lineDelay;
 }
 
 export function getBootSteps() {

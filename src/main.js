@@ -1,6 +1,7 @@
 import {
   getBootDelay,
   getBootSteps,
+  getBootTiming,
   getTypingFrames,
 } from "./terminal/boot.js";
 import {
@@ -19,6 +20,7 @@ import {
 } from "./components/terminal/runner.js";
 import { CommandHistory } from "./terminal/history.js";
 import { getAutocompleteResult } from "./terminal/autocomplete.js";
+import { initCertificates } from "./components/certificates.js";
 
 const form = document.querySelector("#terminal-form");
 const input = document.querySelector("#command-input");
@@ -31,7 +33,7 @@ const pandaMascot = document.querySelector("#panda-mascot");
 const mascotHint = document.querySelector("#mascot-hint");
 const railLinks = document.querySelectorAll("[data-rail-target]");
 const railSections = document.querySelectorAll(
-  "#home, #terminal, #focus, #contact",
+  "#home, #terminal, #focus, #certificates, #contact",
 );
 
 const commandHistory = new CommandHistory();
@@ -97,12 +99,14 @@ function startSystemRail() {
 function revealPortfolio() {
   if (!main.hidden) return;
 
+  const { exitDelay } = getBootTiming();
+
   bootScreen.classList.add("is-complete");
   main.hidden = false;
   startAliasTeaser();
   startSystemRail();
   initRouter();
-  window.setTimeout(() => bootScreen.remove(), 250);
+  window.setTimeout(() => bootScreen.remove(), exitDelay);
 
   if (shouldAutoFocusTerminal()) {
     input.focus();
@@ -110,6 +114,7 @@ function revealPortfolio() {
 }
 
 async function runBootSequence() {
+  const { typingDelay, completionDelay } = getBootTiming();
   const prefersReducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
   ).matches;
@@ -125,7 +130,7 @@ async function runBootSequence() {
       line.textContent = frame;
 
       if (!prefersReducedMotion) {
-        await new Promise((resolve) => window.setTimeout(resolve, 45));
+        await new Promise((resolve) => window.setTimeout(resolve, typingDelay));
       }
     }
 
@@ -137,7 +142,7 @@ async function runBootSequence() {
   }
 
   if (!prefersReducedMotion) {
-    await new Promise((resolve) => window.setTimeout(resolve, 1000));
+    await new Promise((resolve) => window.setTimeout(resolve, completionDelay));
   }
 
   revealPortfolio();
@@ -168,7 +173,10 @@ input.addEventListener("keydown", (event) => {
 
     if (!result.hasMultiple) {
       input.value = result.completion;
-      input.setSelectionRange(result.completion.length, result.completion.length);
+      input.setSelectionRange(
+        result.completion.length,
+        result.completion.length,
+      );
       input.classList.add("is-autocomplete-success");
       window.setTimeout(() => {
         input.classList.remove("is-autocomplete-success");
@@ -176,7 +184,10 @@ input.addEventListener("keydown", (event) => {
     } else {
       if (result.completion && result.completion !== input.value) {
         input.value = result.completion;
-        input.setSelectionRange(result.completion.length, result.completion.length);
+        input.setSelectionRange(
+          result.completion.length,
+          result.completion.length,
+        );
       }
       appendSuggestions(input.value, result.matches, (selected) => {
         input.value = selected;
@@ -201,7 +212,6 @@ input.addEventListener("keydown", (event) => {
   }
 });
 
-
 quickLinks.forEach((button) => {
   button.addEventListener("click", () => {
     commandHistory.push(button.dataset.command);
@@ -215,4 +225,5 @@ quickLinks.forEach((button) => {
 
 pandaMascot.addEventListener("click", handleMascotClick);
 skipBoot.addEventListener("click", revealPortfolio);
+initCertificates();
 runBootSequence();

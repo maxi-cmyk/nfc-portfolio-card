@@ -2,6 +2,23 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { resolveCommand } from "../src/terminal/commands/index.js";
 import { projectsCommand } from "../src/terminal/commands/project.js";
+import { certificates } from "../src/data/certificates.js";
+
+test("certificate entries point to public PDF and preview assets", () => {
+  assert.deepEqual(certificates, [
+    {
+      title: "Google AI Professional Certificate",
+      issuer: "Google · Coursera",
+      issued: "June 2026",
+      summary:
+        "A seven-course professional certificate covering practical AI use across research, writing, content creation, data analysis, and app building.",
+      pdfUrl: "/assets/AI-professional.pdf",
+      previewUrl: "/assets/AI-professional-preview.png",
+      previewAlt:
+        "Google AI Professional Certificate awarded to Max Leong on June 22, 2026",
+    },
+  ]);
+});
 
 test("thebananachip reveals the panda easter egg", () => {
   const result = resolveCommand("thebananachip");
