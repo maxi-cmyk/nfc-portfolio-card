@@ -28,29 +28,19 @@ This document tracks completed work and the remaining implementation priorities 
 
 ## 📌 Remaining Tasks & Feature Backlog
 
-### 1. 🧰 Add a Project-Backed Tech Stack Section
+### 1. ✅ Integrate Tools & Languages Into Focus Areas — Completed
 
-- **Objective**: Give visitors a fast, credible view of the technologies used to build the featured projects without relying on subjective proficiency bars or an unstructured logo wall.
-- **Placement**: Add “What I build with” after Focus/Projects and before Certificates.
-- **Content rules**:
-  - [ ] Display only technologies used in completed or demonstrable projects.
-  - [ ] Group the stack into Embedded & Hardware, Systems & Security, Backend & Data, AI & Computer Vision, Frontend, and Delivery.
-  - [ ] Give each technology a short project-backed context, such as `FastAPI — video-analysis APIs · it'sPEAK`.
-  - [ ] Make the related project name clickable when a project route or external project link is available.
-  - [ ] Do not add proficiency percentages, beginner/expert labels, years-of-experience claims, or external logo dependencies.
+- **Objective**: Keep the portfolio concise by showing the relevant stack where visitors already explore Cybersecurity, Engineering, AI & Math, and Hackathons.
 - **Implementation**:
-  - [ ] Audit [src/data/projects.js](file:///Users/maxi/Desktop/my_nonsense/nfc-portfolio-card/src/data/projects.js) and [src/terminal/commands/skills.js](file:///Users/maxi/Desktop/my_nonsense/nfc-portfolio-card/src/terminal/commands/skills.js) so every displayed technology has evidence.
-  - [ ] Create `src/data/stack.js` as the single source of truth for categories, technologies, context, and project references.
-  - [ ] Create a small stack renderer/component and add the section markup to `index.html`.
-  - [ ] Refactor the terminal `skills` command to generate its matrix from `src/data/stack.js`, preventing the terminal and visual section from drifting apart.
-  - [ ] Add `STACK` to the desktop navigation order: Home → Terminal → Focus → Stack → Certificates → Contact.
-  - [ ] Extend the existing retro desktop styling with category rows on desktop and readable stacked rows on mobile.
+  - [x] Remove the standalone “What I build with” section and `STACK` navigation item.
+  - [x] Add concise Languages and Tools lists to the four focus headers and their subpages.
+  - [x] Keep every displayed tool or language unique to one classification.
+  - [x] Use `src/data/focus-tools.js` as the shared source for the visual lists and terminal `skills` command.
+  - [x] Preserve project-backed technologies without proficiency scores or unsupported experience claims.
 - **Acceptance criteria**:
-  - [ ] Visitors can understand the primary stack and its project evidence within a few seconds.
-  - [ ] Technology names and evidence remain readable without horizontal overflow at mobile, intermediate, and desktop widths.
-  - [ ] Keyboard focus is visible and the section uses semantic headings, lists, and links.
-  - [ ] Tests cover category order, unique technology entries, required project evidence, terminal output generation, and absence of unsupported proficiency claims.
-  - [ ] `npm test`, `npm run build`, Prettier, the Impeccable detector, browser viewport checks, and `git diff --check` pass.
+  - [x] Each focus area shows its relevant tools and languages without repeating another classification.
+  - [x] Lists remain readable without horizontal overflow across mobile and desktop layouts.
+  - [x] Tests enforce classification order, global uniqueness, terminal generation, and absence of proficiency claims.
 
 ---
 

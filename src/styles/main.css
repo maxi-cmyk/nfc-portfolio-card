@@ -1257,6 +1257,36 @@ footer {
   line-height: 1.45;
 }
 
+.focus-tooling {
+  display: grid;
+  gap: 6px;
+  max-width: 640px;
+  margin: 14px 0 0;
+  font:
+    11px / 1.45 "DM Mono",
+    monospace;
+}
+
+.focus-tooling > div {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 10px;
+}
+
+.focus-tooling dt {
+  color: var(--warm);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.focus-tooling dd {
+  min-width: 0;
+  margin: 0;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
 .certificates {
   padding: 0 0 clamp(80px, 12vw, 128px);
 }
@@ -1539,6 +1569,15 @@ footer a:hover {
     gap: 18px;
   }
 
+  .focus-tooling {
+    font-size: 10px;
+  }
+
+  .focus-tooling > div {
+    grid-template-columns: 66px minmax(0, 1fr);
+    gap: 8px;
+  }
+
   .certificate-entry {
     gap: 28px;
   }
@@ -1626,6 +1665,11 @@ footer a:hover {
   font-family: "Outfit", sans-serif;
   font-size: clamp(16px, 2.2vw, 20px);
   line-height: 1.6;
+}
+
+.subpage-hero .focus-tooling {
+  max-width: 760px;
+  margin-top: 24px;
 }
 
 .full-subpage-projects {

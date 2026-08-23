@@ -1,11 +1,13 @@
 import { focusCategories } from "../../data/projects.js";
 import { openProjectModal } from "./project-modal.js";
+import { createFocusTooling } from "../focus-tooling.js";
 
 const landingView = document.querySelector("#landing-view");
 const fullSubpageView = document.querySelector("#full-subpage-view");
 const fullSubpagePath = document.querySelector("#full-subpage-path");
 const fullSubpageTitle = document.querySelector("#full-subpage-title");
 const fullSubpageDesc = document.querySelector("#full-subpage-desc");
+const fullSubpageTools = document.querySelector("#full-subpage-tools");
 const fullSubpageProjects = document.querySelector("#full-subpage-projects");
 const subpageCategoryLabel = document.querySelector("#subpage-category-label");
 
@@ -19,6 +21,7 @@ export function renderSubpage(focusId) {
   fullSubpagePath.textContent = `cd ${category.path}`;
   fullSubpageTitle.textContent = category.title;
   fullSubpageDesc.textContent = category.description;
+  fullSubpageTools.replaceChildren(createFocusTooling(category.id));
   subpageCategoryLabel.textContent = category.id
     .toUpperCase()
     .replace("-", " & ");

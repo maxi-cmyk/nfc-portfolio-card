@@ -3,6 +3,11 @@ import assert from "node:assert/strict";
 import { resolveCommand } from "../src/terminal/commands/index.js";
 import { projectsCommand } from "../src/terminal/commands/project.js";
 import { certificates } from "../src/data/certificates.js";
+import {
+  focusTechnologyGroups,
+  formatFocusToolsForTerminal,
+  getFocusTechnologyGroup,
+} from "../src/data/focus-tools.js";
 
 test("certificate entries point to public PDF and preview assets", () => {
   assert.deepEqual(certificates, [
@@ -39,14 +44,49 @@ test("skills returns categorised capabilities and stack matrix", () => {
   const result = resolveCommand("skills");
 
   assert.equal(result.kind, "skills");
-  assert.match(result.output, /EMBEDDED & HARDWARE/);
+  assert.match(result.output, /CYBERSECURITY/);
   assert.match(result.output, /ESP32/);
-  assert.match(result.output, /SYSTEMS & CYBERSECURITY/);
-  assert.match(result.output, /BACKEND & AI PIPELINES/);
-  assert.match(result.output, /MATHEMATICS & SIMULATION/);
+  assert.match(result.output, /ENGINEERING/);
+  assert.match(result.output, /AI & MATH/);
+  assert.match(result.output, /HACKATHONS/);
 
   const stackResult = resolveCommand("stack");
   assert.equal(stackResult.kind, "skills");
+});
+
+test("skills use unique tools and languages in focus order", () => {
+  assert.deepEqual(
+    focusTechnologyGroups.map((group) => group.title),
+    ["Cybersecurity", "Engineering", "AI & Math", "Hackathons"],
+  );
+
+  const entries = focusTechnologyGroups.flatMap((group) => [
+    ...group.languages,
+    ...group.tools,
+  ]);
+  const normalizedEntries = entries.map((entry) => entry.toLowerCase());
+  assert.equal(new Set(normalizedEntries).size, normalizedEntries.length);
+
+  focusTechnologyGroups.forEach((group) => {
+    assert.ok(group.tools.length > 0);
+    assert.equal(getFocusTechnologyGroup(group.id), group);
+  });
+});
+
+test("terminal skills output comes from focus data without proficiency claims", () => {
+  const output = formatFocusToolsForTerminal();
+
+  focusTechnologyGroups.forEach((group) => {
+    assert.match(output, new RegExp(`\\[${group.title.toUpperCase()}\\]`));
+    [...group.languages, ...group.tools].forEach((entry) => {
+      assert.ok(output.includes(entry));
+    });
+  });
+
+  const copy = `${JSON.stringify(focusTechnologyGroups)}\n${output}`;
+  assert.doesNotMatch(copy, /\b(beginner|intermediate|advanced|expert)\b/i);
+  assert.doesNotMatch(copy, /\b\d+\s*%/);
+  assert.doesNotMatch(copy, /\b\d+\+?\s+years?\b/i);
 });
 
 test("resume returns the downloadable PDF and profile links", () => {

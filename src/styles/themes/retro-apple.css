@@ -297,6 +297,14 @@ footer {
   color: var(--muted);
 }
 
+.focus-tooling dt {
+  color: #7a2e5d;
+}
+
+.focus-tooling dd {
+  color: #333;
+}
+
 footer a {
   color: var(--acid);
   font-weight: 700;

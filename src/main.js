@@ -21,6 +21,7 @@ import {
 import { CommandHistory } from "./terminal/history.js";
 import { getAutocompleteResult } from "./terminal/autocomplete.js";
 import { initCertificates } from "./components/certificates.js";
+import { initFocusTooling } from "./components/focus-tooling.js";
 
 const form = document.querySelector("#terminal-form");
 const input = document.querySelector("#command-input");
@@ -226,4 +227,5 @@ quickLinks.forEach((button) => {
 pandaMascot.addEventListener("click", handleMascotClick);
 skipBoot.addEventListener("click", revealPortfolio);
 initCertificates();
+initFocusTooling();
 runBootSequence();
