@@ -1,5 +1,6 @@
 import { resolveCommand } from "../../terminal/commands/index.js";
 import { getLatestResultScrollOptions } from "../../terminal/scroll.js";
+import { getCaseStudyLinkLabel } from "../../data/projects.js";
 import { openProjectModal } from "../subpages/project-modal.js";
 
 const output = document.querySelector("#output");
@@ -37,44 +38,43 @@ export function appendCommand(command) {
     heading.textContent = result.output;
     resultRow.append(heading);
 
-    result.projects.forEach(
-      ({ slug, name, meta, description, links }, index) => {
-        const project = document.createElement("section");
-        project.className = "project-entry";
+    result.projects.forEach((projectData, index) => {
+      const { slug, name, meta, description, links } = projectData;
+      const project = document.createElement("section");
+      project.className = "project-entry";
 
-        const title = document.createElement("p");
-        title.className = "project-title";
-        title.textContent = `[${String(index + 1).padStart(2, "0")}] ${name} · ${meta}`;
+      const title = document.createElement("p");
+      title.className = "project-title";
+      title.textContent = `[${String(index + 1).padStart(2, "0")}] ${name} · ${meta}`;
 
-        const summary = document.createElement("p");
-        summary.className = "project-description";
-        summary.textContent = description;
+      const summary = document.createElement("p");
+      summary.className = "project-description";
+      summary.textContent = description;
 
-        const projectLinks = links.map(({ label, url }) => {
-          const projectLink = document.createElement("a");
-          projectLink.className = "terminal-link";
-          projectLink.href = url;
-          projectLink.target = "_blank";
-          projectLink.rel = "noreferrer";
-          projectLink.textContent = `${label.padEnd(9, " ")}→ ${url.replace("https://", "")}`;
-          return projectLink;
+      const projectLinks = links.map(({ label, url }) => {
+        const projectLink = document.createElement("a");
+        projectLink.className = "terminal-link";
+        projectLink.href = url;
+        projectLink.target = "_blank";
+        projectLink.rel = "noreferrer";
+        projectLink.textContent = `${label.padEnd(9, " ")}→ ${url.replace("https://", "")}`;
+        return projectLink;
+      });
+
+      if (slug) {
+        const insightsBtn = document.createElement("button");
+        insightsBtn.type = "button";
+        insightsBtn.className = "terminal-link project-insights-btn";
+        insightsBtn.textContent = getCaseStudyLinkLabel(projectData);
+        insightsBtn.addEventListener("click", () => {
+          openProjectModal(slug);
         });
+        projectLinks.push(insightsBtn);
+      }
 
-        if (slug) {
-          const insightsBtn = document.createElement("button");
-          insightsBtn.type = "button";
-          insightsBtn.className = "terminal-link project-insights-btn";
-          insightsBtn.textContent = "insights [wip] ↗";
-          insightsBtn.addEventListener("click", () => {
-            openProjectModal(slug);
-          });
-          projectLinks.push(insightsBtn);
-        }
-
-        project.append(title, summary, ...projectLinks);
-        resultRow.append(project);
-      },
-    );
+      project.append(title, summary, ...projectLinks);
+      resultRow.append(project);
+    });
   } else if (result.links) {
     const text = document.createElement("pre");
     text.className = "result-text";

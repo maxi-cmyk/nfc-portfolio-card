@@ -1288,7 +1288,192 @@ footer {
 }
 
 .certificates {
+  position: relative;
+  isolation: isolate;
   padding: 0 0 clamp(80px, 12vw, 128px);
+}
+
+.certificates-heading,
+.certificate-list {
+  position: relative;
+  z-index: 1;
+}
+
+.certificate-atmosphere {
+  position: absolute;
+  inset: -70px -90px 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.certificate-art {
+  position: absolute;
+  display: block;
+  overflow: visible;
+  opacity: 0.22;
+}
+
+.certificate-art-credential {
+  top: 0;
+  right: 4px;
+  width: 210px;
+  transform: rotate(7deg);
+}
+
+.certificate-art-verification {
+  bottom: 18px;
+  left: -18px;
+  width: 250px;
+  transform: rotate(-8deg);
+}
+
+.credential-paper,
+.credential-copy,
+.credential-seal,
+.credential-check,
+.credential-ribbon,
+.credential-scan,
+.verification-path,
+.verification-nodes circle,
+.verification-check {
+  fill: none;
+  stroke: var(--line);
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-width: 2;
+}
+
+.credential-copy,
+.verification-path {
+  stroke: var(--muted);
+}
+
+.credential-seal,
+.credential-check,
+.verification-core,
+.verification-check {
+  stroke: var(--warm);
+}
+
+.credential-ribbon {
+  fill: color-mix(in srgb, var(--warm), transparent 78%);
+}
+
+.credential-scan {
+  stroke: var(--acid);
+  stroke-width: 3;
+  opacity: 0.9;
+}
+
+.verification-path {
+  stroke-dasharray: 8 7;
+}
+
+.verification-nodes circle {
+  fill: var(--bg);
+  stroke: var(--acid);
+}
+
+.verification-core {
+  fill: var(--warm);
+}
+
+.certificate-atmosphere.is-animating .credential-sheet {
+  animation: credential-float 7s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.certificate-atmosphere.is-animating .credential-scan {
+  animation: credential-scan 5.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.certificate-atmosphere.is-animating .credential-seal,
+.certificate-atmosphere.is-animating .credential-check,
+.certificate-atmosphere.is-animating .credential-ribbon {
+  animation: credential-verify 5.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.certificate-atmosphere.is-animating .verification-path {
+  animation: verification-flow 8s linear infinite;
+}
+
+.certificate-atmosphere.is-animating .verification-core,
+.certificate-atmosphere.is-animating .verification-check {
+  animation: verification-confirm 4.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes credential-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(-1.5deg);
+  }
+}
+
+@keyframes credential-scan {
+  0%,
+  12% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  22% {
+    opacity: 0.9;
+  }
+
+  62% {
+    opacity: 0.9;
+    transform: translateY(94px);
+  }
+
+  72%,
+  100% {
+    opacity: 0;
+    transform: translateY(94px);
+  }
+}
+
+@keyframes credential-verify {
+  0%,
+  58%,
+  100% {
+    opacity: 0.42;
+    transform: scale(0.94);
+  }
+
+  70%,
+  82% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes verification-flow {
+  to {
+    stroke-dashoffset: -60;
+  }
+}
+
+@keyframes verification-confirm {
+  0%,
+  52%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+
+  64%,
+  78% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
 }
 
 .certificates-heading {
@@ -1582,6 +1767,26 @@ footer a:hover {
     gap: 28px;
   }
 
+  .certificate-atmosphere {
+    inset: -36px -48px 0;
+  }
+
+  .certificate-art {
+    opacity: 0.16;
+  }
+
+  .certificate-art-credential {
+    top: 4px;
+    right: -18px;
+    width: 142px;
+  }
+
+  .certificate-art-verification {
+    bottom: 76px;
+    left: -40px;
+    width: 168px;
+  }
+
   .certificate-details h3 {
     font-size: 30px;
   }
@@ -1601,6 +1806,21 @@ footer a:hover {
 
   .art-packet {
     display: none;
+  }
+
+  .credential-sheet,
+  .credential-scan,
+  .credential-seal,
+  .credential-check,
+  .credential-ribbon,
+  .verification-path,
+  .verification-core,
+  .verification-check {
+    animation: none !important;
+  }
+
+  .credential-scan {
+    opacity: 0;
   }
 }
 
@@ -1772,7 +1992,7 @@ footer a:hover {
 }
 
 /* -------------------------------------------------- */
-/* Project Modal & Insights (WIP)                     */
+/* Project Modal & Case Studies                       */
 /* -------------------------------------------------- */
 
 .project-insights-btn {
@@ -1788,15 +2008,26 @@ footer a:hover {
   text-decoration: underline;
 }
 
+.project-insights-btn:focus-visible,
+.modal-close-btn:focus-visible {
+  outline: 2px solid var(--acid);
+  outline-offset: 4px;
+}
+
 .project-modal {
-  max-width: 680px;
-  width: calc(100% - 32px);
+  box-sizing: border-box;
+  width: min(960px, calc(100% - 32px));
+  max-width: 960px;
+  max-height: calc(100dvh - 32px);
   margin: auto;
   padding: 0;
   border: 1px solid var(--line);
   background: var(--panel);
   color: var(--ink);
   box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+  overflow: auto;
+  overflow-x: hidden;
+  scrollbar-color: var(--acid) var(--panel);
 }
 
 .project-modal::backdrop {
@@ -1807,7 +2038,10 @@ footer a:hover {
 .modal-dialog-content {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  gap: clamp(16px, 2.5vw, 24px);
   padding: clamp(20px, 3.5vw, 32px);
 }
 
@@ -1820,14 +2054,17 @@ footer a:hover {
 }
 
 .modal-badge {
+  min-width: 0;
   color: var(--muted);
   font:
     11px "DM Mono",
     monospace;
   letter-spacing: 0.05em;
+  overflow-wrap: anywhere;
 }
 
 .modal-close-btn {
+  flex: 0 0 auto;
   border: none;
   background: transparent;
   color: var(--acid);
@@ -1880,9 +2117,10 @@ footer a:hover {
 .modal-insights-box {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 16px;
-  border: 1px dashed var(--line);
+  min-width: 0;
+  gap: clamp(16px, 2.5vw, 24px);
+  padding: clamp(16px, 2.5vw, 24px);
+  border: 1px solid var(--line);
   background: var(--bg);
 }
 
@@ -1890,9 +2128,11 @@ footer a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
 }
 
 .insights-title {
+  min-width: 0;
   margin: 0;
   color: var(--ink);
   font:
@@ -1901,8 +2141,9 @@ footer a:hover {
   letter-spacing: 0.04em;
 }
 
-.status-badge-wip {
-  padding: 2px 6px;
+.status-badge {
+  flex: 0 0 auto;
+  padding: 3px 7px;
   border: 1px solid var(--acid);
   border-radius: 3px;
   background: transparent;
@@ -1911,47 +2152,145 @@ footer a:hover {
     10px "DM Mono",
     monospace;
   font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.status-badge-pending {
+  border-color: var(--warm);
+  color: var(--warm);
 }
 
 .insights-summary {
   margin: 0;
   color: var(--muted);
   font-family: "Outfit", sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
-.insights-sublabel {
-  margin: 4px 0 0;
-  color: var(--muted);
-  font:
-    11px "DM Mono",
-    monospace;
-}
-
-.insights-architecture {
+.insights-visual {
+  min-width: 0;
   margin: 0;
-  padding: 10px 12px;
-  border: 1px solid var(--line);
+}
+
+.insights-flow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px;
+  padding: 14px;
   background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.insights-flow-node {
+  position: relative;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+}
+
+.insights-flow-node:not(:last-child)::before {
+  position: absolute;
+  top: 50%;
+  right: -21px;
+  width: 20px;
+  border-top: 1px solid var(--line);
+  content: "";
+}
+
+.insights-flow-node:not(:last-child)::after {
+  position: absolute;
+  top: calc(50% - 3px);
+  right: -21px;
+  width: 6px;
+  height: 6px;
+  border-top: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  content: "";
+  transform: rotate(45deg);
+}
+
+.insights-flow-index,
+.insights-flow-node strong,
+.insights-flow-node span {
+  display: block;
+}
+
+.insights-flow-index {
+  margin-bottom: 12px;
   color: var(--acid);
   font:
-    11px "DM Mono",
+    10px "DM Mono",
     monospace;
+}
+
+.insights-flow-node strong {
+  margin-bottom: 5px;
+  color: var(--ink);
+  font:
+    500 12px "DM Mono",
+    monospace;
+  overflow-wrap: anywhere;
+}
+
+.insights-flow-node span:last-child {
+  color: var(--muted);
+  font-family: "Outfit", sans-serif;
+  font-size: 12px;
   line-height: 1.4;
-  overflow-x: auto;
 }
 
-.insights-highlights {
-  margin-top: 4px;
+.insights-visual figcaption {
+  margin-top: 7px;
+  color: var(--muted);
+  font:
+    10px "DM Mono",
+    monospace;
+  text-align: right;
 }
 
-.insights-list {
+.insights-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.insights-detail {
+  min-width: 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.insights-detail h4,
+.insights-evidence h4 {
+  margin: 0 0 8px;
+  color: var(--acid);
+  font:
+    500 12px "DM Mono",
+    monospace;
+}
+
+.insights-detail p {
   margin: 0;
-  padding-left: 18px;
   color: var(--ink);
   font-family: "Outfit", sans-serif;
   font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.insights-evidence {
+  padding: 14px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.insights-evidence ul {
+  margin: 0;
+  padding-inline-start: 18px;
+  color: var(--muted);
+  font-family: "Outfit", sans-serif;
+  font-size: 13px;
   line-height: 1.5;
 }
 
@@ -1961,6 +2300,62 @@ footer a:hover {
   gap: 16px;
   padding-top: 8px;
   border-top: 1px solid var(--line);
+}
+
+.modal-links .terminal-link {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 760px) {
+  .project-modal {
+    width: calc(100% - 16px);
+    max-height: calc(100dvh - 16px);
+  }
+
+  .modal-topbar,
+  .insights-header {
+    align-items: flex-start;
+  }
+
+  .insights-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .insights-flow,
+  .insights-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .insights-flow {
+    gap: 18px;
+  }
+
+  .insights-flow-node:not(:last-child)::before {
+    top: auto;
+    right: auto;
+    bottom: -19px;
+    left: 18px;
+    width: 0;
+    height: 18px;
+    border-top: 0;
+    border-left: 1px solid var(--line);
+  }
+
+  .insights-flow-node:not(:last-child)::after {
+    top: auto;
+    right: auto;
+    bottom: -18px;
+    left: 15px;
+    transform: rotate(135deg);
+  }
+
+  .status-badge {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    text-align: left;
+  }
 }
 
 /* -------------------------------------------------- */

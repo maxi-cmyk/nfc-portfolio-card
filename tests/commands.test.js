@@ -4,6 +4,11 @@ import { resolveCommand } from "../src/terminal/commands/index.js";
 import { projectsCommand } from "../src/terminal/commands/project.js";
 import { certificates } from "../src/data/certificates.js";
 import {
+  allProjects,
+  focusCategories,
+  getCaseStudyLinkLabel,
+} from "../src/data/projects.js";
+import {
   focusTechnologyGroups,
   formatFocusToolsForTerminal,
   getFocusTechnologyGroup,
@@ -163,6 +168,31 @@ test("projects lists the selected hardware and maths builds", () => {
       },
     ],
   );
+});
+
+test("every project publishes one complete source-reviewed case study", () => {
+  assert.equal(allProjects.length, 5);
+
+  for (const project of allProjects) {
+    assert.equal(project.insights.status, "complete", project.name);
+    assert.equal(project.insights.statusLabel, "SOURCE REVIEWED", project.name);
+    assert.equal(getCaseStudyLinkLabel(project), "case study ↗", project.name);
+    assert.equal(project.insights.diagram.nodes.length, 5, project.name);
+    assert.equal(project.insights.sections.length, 3, project.name);
+    assert.ok(project.insights.evidence.length >= 2, project.name);
+  }
+});
+
+test("focus categories reuse the canonical project records", () => {
+  const canonicalProjects = new Map(
+    allProjects.map((project) => [project.slug, project]),
+  );
+
+  for (const category of Object.values(focusCategories)) {
+    for (const project of category.projects) {
+      assert.equal(project, canonicalProjects.get(project.slug));
+    }
+  }
 });
 
 test("contact returns clickable public profile links", () => {

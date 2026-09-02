@@ -20,7 +20,7 @@ This document tracks completed work and the remaining implementation priorities 
   - Added a responsive, data-driven certificate showcase below Focus/Projects with the Google AI Professional Certificate, preview image, open action, and PDF download.
   - Certificate entries are maintained in [src/data/certificates.js](file:///Users/maxi/Desktop/my_nonsense/nfc-portfolio-card/src/data/certificates.js); certificate files and previews live in `public/assets/`.
 - [x] **Project insights foundation**
-  - Added the accessible project `<dialog>`, `#project/<slug>` routing, and `insights [wip] ↗` entry points. Detailed case-study content remains in Task 2.
+  - Added the accessible project `<dialog>`, `#project/<slug>` routing, and project case-study entry points; Task 2 now contains the completed source-reviewed content.
 - [x] **Faster startup sequence**
   - Reduced typing, line, completion, exit, and fade timings so the opening boot animation runs approximately twice as fast.
 
@@ -44,32 +44,20 @@ This document tracks completed work and the remaining implementation priorities 
 
 ---
 
-### 2. 🔬 Complete Deep-Dive Project Case Studies & Media
+### 2. ✅ Complete Deep-Dive Project Case Studies & Media — Completed
 
-- **Objective**: Replace the current project-insights placeholders with concise technical case studies sourced from the real implementations.
-- **Projects to complete**:
-  1. **Sentinel — Hardware · Security**
-     - Two-node ESP32 + ESP32-CAM architecture diagram.
-     - PIR interrupt circuit breakdown and measured power analysis.
-     - MQTT event payload and RTSP/MJPEG stream flow.
-  2. **it'sPEAK — AI Video Pipeline · 2nd Place**
-     - FastAPI asynchronous video-processing pipeline.
-     - OpenCV facial/gaze analysis and audio prosody flow.
-     - LLM feedback telemetry and scoring rubric.
-  3. **Echo — Accessibility · Best Freshmen Award**
-     - Familiarity-first PostgreSQL association graph.
-     - Accessibility engineering: contrast, voice support, and memory cues.
-  4. **ESP32 Asteroids — Embedded · Hardware**
-     - Fixed-point 2D vector mathematics.
-     - Hardware PWM square-wave audio routines.
-     - SSD1306 I2C OLED frame buffering.
-  5. **Conway's Game of Life — Math · Hardware**
-     - 32×8 MAX7219 LED matrix multiplexing.
-     - Bitwise toroidal-grid calculation engine.
-     - Real-time Server-Sent Events dashboard synchronization.
+- **Objective**: Replace the project-insights placeholders with concise technical case studies sourced from the real implementations.
+- **Implementation**:
+  - [x] Consolidate all project records in `src/data/projects.js` so focus pages, terminal output, and modals share one factual source.
+  - [x] Add responsive, code-native system-flow diagrams and structured implementation notes to every case study.
+  - [x] Review Sentinel against its two-node Blynk and MJPEG firmware; remove the unsupported MQTT, interrupt, and measured-power claims.
+  - [x] Review it'sPEAK against its FastAPI, Celery, Redis, MediaPipe, audio-scoring, and fallback-coaching implementation.
+  - [x] Review Echo against its Next.js PWA, Supabase/PostgreSQL, local LLaVA, ElevenLabs, recall/cooldown, and adaptive-accessibility implementation.
+  - [x] Review ESP32 Asteroids against its 50 FPS floating-point loop, SSD1306 buffer, LEDC audio sequencer, and Preferences-backed scores; remove the unsupported fixed-point claim.
+  - [x] Review Conway's Game of Life against its packed toroidal grid, MAX7219 output, SSE dashboard, persisted session history, and CSV/JSON exports.
 - **Acceptance criteria**:
-  - [ ] Remove each `[wip]` label only after its case study has verified copy, media, links, and responsive/modal QA.
-  - [ ] Do not publish fabricated measurements, architecture details, or outcomes; leave missing evidence explicitly pending.
+  - [x] Remove each `[wip]` label only after its case study has verified copy, a system-flow visual, working source links, and responsive modal QA.
+  - [x] Keep verification notes inside each case study so implementation evidence and unclaimed outcomes remain explicit.
 
 ---
 

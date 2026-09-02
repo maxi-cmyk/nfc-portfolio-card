@@ -1,4 +1,4 @@
-import { focusCategories } from "../../data/projects.js";
+import { focusCategories, getCaseStudyLinkLabel } from "../../data/projects.js";
 import { openProjectModal } from "./project-modal.js";
 import { createFocusTooling } from "../focus-tooling.js";
 
@@ -28,69 +28,68 @@ export function renderSubpage(focusId) {
 
   fullSubpageProjects.replaceChildren();
 
-  category.projects.forEach(
-    ({ slug, name, meta, tags, description, links }, index) => {
-      const card = document.createElement("article");
-      card.className = "full-project-card";
+  category.projects.forEach((project, index) => {
+    const { slug, name, meta, tags, description, links } = project;
+    const card = document.createElement("article");
+    card.className = "full-project-card";
 
-      const titleEl = document.createElement("h3");
-      titleEl.className = "project-card-title";
-      titleEl.textContent = `[${String(index + 1).padStart(2, "0")}] ${name}`;
+    const titleEl = document.createElement("h3");
+    titleEl.className = "project-card-title";
+    titleEl.textContent = `[${String(index + 1).padStart(2, "0")}] ${name}`;
 
-      const metaEl = document.createElement("span");
-      metaEl.className = "project-card-meta";
-      metaEl.textContent = meta;
+    const metaEl = document.createElement("span");
+    metaEl.className = "project-card-meta";
+    metaEl.textContent = meta;
 
-      const headerContainer = document.createElement("div");
-      headerContainer.className = "project-card-header";
-      headerContainer.append(titleEl, metaEl);
+    const headerContainer = document.createElement("div");
+    headerContainer.className = "project-card-header";
+    headerContainer.append(titleEl, metaEl);
 
-      const descEl = document.createElement("p");
-      descEl.className = "project-card-desc";
-      descEl.textContent = description;
+    const descEl = document.createElement("p");
+    descEl.className = "project-card-desc";
+    descEl.textContent = description;
 
-      const tagsContainer = document.createElement("div");
-      tagsContainer.className = "project-card-tags";
+    const tagsContainer = document.createElement("div");
+    tagsContainer.className = "project-card-tags";
 
-      if (tags && Array.isArray(tags)) {
-        tags.forEach((tag) => {
-          const tagEl = document.createElement("span");
-          tagEl.className = "tech-badge";
-          tagEl.textContent = tag;
-          tagsContainer.append(tagEl);
-        });
-      }
+    if (tags && Array.isArray(tags)) {
+      tags.forEach((tag) => {
+        const tagEl = document.createElement("span");
+        tagEl.className = "tech-badge";
+        tagEl.textContent = tag;
+        tagsContainer.append(tagEl);
+      });
+    }
 
-      const linksContainer = document.createElement("div");
-      linksContainer.className = "project-card-links";
+    const linksContainer = document.createElement("div");
+    linksContainer.className = "project-card-links";
 
-      if (links && Array.isArray(links)) {
-        links.forEach(({ label, url }) => {
-          const linkEl = document.createElement("a");
-          linkEl.className = "terminal-link";
-          linkEl.href = url;
-          linkEl.target = "_blank";
-          linkEl.rel = "noreferrer";
-          linkEl.textContent = `${label.padEnd(9, " ")}→ ${url.replace("https://", "")}`;
-          linksContainer.append(linkEl);
-        });
-      }
+    if (links && Array.isArray(links)) {
+      links.forEach(({ label, url }) => {
+        const linkEl = document.createElement("a");
+        linkEl.className = "terminal-link";
+        linkEl.href = url;
+        linkEl.target = "_blank";
+        linkEl.rel = "noreferrer";
+        linkEl.textContent = `${label.padEnd(9, " ")}→ ${url.replace("https://", "")}`;
+        linksContainer.append(linkEl);
+      });
+    }
 
-      if (slug) {
-        const insightsBtn = document.createElement("button");
-        insightsBtn.type = "button";
-        insightsBtn.className = "terminal-link project-insights-btn";
-        insightsBtn.textContent = "insights [wip] ↗";
-        insightsBtn.addEventListener("click", () => {
-          openProjectModal(slug);
-        });
-        linksContainer.append(insightsBtn);
-      }
+    if (slug) {
+      const insightsBtn = document.createElement("button");
+      insightsBtn.type = "button";
+      insightsBtn.className = "terminal-link project-insights-btn";
+      insightsBtn.textContent = getCaseStudyLinkLabel(project);
+      insightsBtn.addEventListener("click", () => {
+        openProjectModal(slug);
+      });
+      linksContainer.append(insightsBtn);
+    }
 
-      card.append(headerContainer, descEl, tagsContainer, linksContainer);
-      fullSubpageProjects.append(card);
-    },
-  );
+    card.append(headerContainer, descEl, tagsContainer, linksContainer);
+    fullSubpageProjects.append(card);
+  });
 
   window.scrollTo({ top: 0, behavior: "instant" });
   return true;

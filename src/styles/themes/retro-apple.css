@@ -407,3 +407,42 @@ footer a {
 .asteroid-shot {
   stroke: none;
 }
+
+.credential-paper,
+.credential-copy,
+.credential-seal,
+.credential-check,
+.credential-ribbon,
+.verification-path,
+.verification-nodes circle,
+.verification-check {
+  stroke: var(--ink);
+}
+
+.credential-copy,
+.verification-path {
+  stroke: #74736d;
+}
+
+.credential-seal,
+.credential-check,
+.verification-check {
+  stroke: #7a2e5d;
+}
+
+.credential-ribbon {
+  fill: rgba(122, 46, 93, 0.16);
+}
+
+.credential-scan,
+.verification-nodes circle {
+  stroke: #12376b;
+}
+
+.verification-nodes circle {
+  fill: #e7e6df;
+}
+
+.verification-core {
+  fill: #7a2e5d;
+}

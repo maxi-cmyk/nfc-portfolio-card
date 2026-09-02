@@ -1,6 +1,36 @@
 import { certificates } from "../data/certificates.js";
 
 const certificateList = document.querySelector("#certificate-list");
+const certificateAtmosphere = document.querySelector("#certificate-atmosphere");
+
+function initCertificateAtmosphere() {
+  if (!certificateAtmosphere) return;
+
+  let isVisible = false;
+
+  const updateAnimationState = () => {
+    certificateAtmosphere.classList.toggle(
+      "is-animating",
+      isVisible && !document.hidden,
+    );
+  };
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        updateAnimationState();
+      },
+      { rootMargin: "120px 0px", threshold: 0.05 },
+    );
+    observer.observe(certificateAtmosphere);
+  } else {
+    isVisible = true;
+  }
+
+  document.addEventListener("visibilitychange", updateAnimationState);
+  updateAnimationState();
+}
 
 function createCertificateEntry(certificate) {
   const entry = document.createElement("article");
@@ -67,4 +97,5 @@ export function initCertificates() {
   if (!certificateList) return;
 
   certificateList.replaceChildren(...certificates.map(createCertificateEntry));
+  initCertificateAtmosphere();
 }

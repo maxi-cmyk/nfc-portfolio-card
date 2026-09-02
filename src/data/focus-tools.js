@@ -3,7 +3,7 @@ export const focusTechnologyGroups = [
     id: "cybersecurity",
     title: "Cybersecurity",
     languages: [],
-    tools: ["ESP32-CAM", "MQTT", "RTSP / MJPEG", "PIR interrupts"],
+    tools: ["ESP32-CAM", "Blynk", "HTTP / MJPEG", "PIR sensing"],
   },
   {
     id: "engineering",

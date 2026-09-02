@@ -3,6 +3,59 @@ import { allProjects } from "../../data/projects.js";
 let modalEl = null;
 let previousActiveElement = null;
 
+function createFlowDiagram(diagram) {
+  const figure = document.createElement("figure");
+  figure.className = "insights-visual";
+
+  const flow = document.createElement("div");
+  flow.className = "insights-flow";
+  flow.setAttribute("role", "img");
+  flow.setAttribute(
+    "aria-label",
+    `${diagram.label}: ${diagram.nodes
+      .map(({ label, detail }) => `${label}, ${detail}`)
+      .join("; ")}`,
+  );
+
+  diagram.nodes.forEach(({ label, detail }, index) => {
+    const node = document.createElement("div");
+    node.className = "insights-flow-node";
+
+    const nodeIndex = document.createElement("span");
+    nodeIndex.className = "insights-flow-index";
+    nodeIndex.textContent = String(index + 1).padStart(2, "0");
+
+    const nodeLabel = document.createElement("strong");
+    nodeLabel.textContent = label;
+
+    const nodeDetail = document.createElement("span");
+    nodeDetail.textContent = detail;
+
+    node.append(nodeIndex, nodeLabel, nodeDetail);
+    flow.append(node);
+  });
+
+  const caption = document.createElement("figcaption");
+  caption.textContent = diagram.label;
+
+  figure.append(flow, caption);
+  return figure;
+}
+
+function createInsightSection({ title, body }) {
+  const section = document.createElement("section");
+  section.className = "insights-detail";
+
+  const heading = document.createElement("h4");
+  heading.textContent = title;
+
+  const copy = document.createElement("p");
+  copy.textContent = body;
+
+  section.append(heading, copy);
+  return section;
+}
+
 function ensureModal() {
   if (modalEl) return modalEl;
 
@@ -106,7 +159,7 @@ export function openProjectModal(slug) {
   desc.className = "modal-desc";
   desc.textContent = project.description;
 
-  // Deep-Dive Insights (WIP) Section
+  // Deep-dive case study
   const insightsSection = document.createElement("section");
   insightsSection.className = "modal-insights-box";
 
@@ -115,12 +168,14 @@ export function openProjectModal(slug) {
 
   const insightsTitle = document.createElement("h3");
   insightsTitle.className = "insights-title";
-  insightsTitle.innerHTML =
-    '<span class="prompt">//</span> ARCHITECTURE & SYSTEM INSIGHTS';
+  insightsTitle.innerHTML = '<span class="prompt">//</span> SYSTEM CASE STUDY';
 
   const statusBadge = document.createElement("span");
-  statusBadge.className = "status-badge-wip";
-  statusBadge.textContent = project.insights?.status || "WIP";
+  statusBadge.className = `status-badge status-badge-${
+    project.insights?.status || "pending"
+  }`;
+  statusBadge.textContent =
+    project.insights?.statusLabel || "SOURCE REVIEW PENDING";
 
   insightsHeader.append(insightsTitle, statusBadge);
 
@@ -128,41 +183,39 @@ export function openProjectModal(slug) {
   insightsSummary.className = "insights-summary";
   insightsSummary.textContent =
     project.insights?.summary ||
-    "Detailed system teardown and hardware schematics currently being documented.";
+    "This project's source review has not been completed yet.";
 
-  const archLabel = document.createElement("p");
-  archLabel.className = "insights-sublabel";
-  archLabel.textContent = "Pipeline / Data Flow Topology:";
+  const diagram = project.insights?.diagram
+    ? createFlowDiagram(project.insights.diagram)
+    : null;
 
-  const archDiagram = document.createElement("pre");
-  archDiagram.className = "insights-architecture";
-  archDiagram.textContent =
-    project.insights?.architecture ||
-    "Component A ──[Interrupt/Event]──> Controller ──> Output Telemetry";
+  const details = document.createElement("div");
+  details.className = "insights-detail-grid";
+  (project.insights?.sections || []).forEach((section) => {
+    details.append(createInsightSection(section));
+  });
 
-  const highlightsContainer = document.createElement("div");
-  highlightsContainer.className = "insights-highlights";
+  const evidence = document.createElement("section");
+  evidence.className = "insights-evidence";
 
-  if (
-    project.insights?.highlights &&
-    Array.isArray(project.insights.highlights)
-  ) {
-    const list = document.createElement("ul");
-    list.className = "insights-list";
-    project.insights.highlights.forEach((item) => {
-      const li = document.createElement("li");
-      li.textContent = item;
-      list.append(li);
-    });
-    highlightsContainer.append(list);
-  }
+  const evidenceTitle = document.createElement("h4");
+  evidenceTitle.textContent = "Verification notes";
+
+  const evidenceList = document.createElement("ul");
+  (project.insights?.evidence || []).forEach((item) => {
+    const listItem = document.createElement("li");
+    listItem.textContent = item;
+    evidenceList.append(listItem);
+  });
+
+  evidence.append(evidenceTitle, evidenceList);
 
   insightsSection.append(
     insightsHeader,
     insightsSummary,
-    archLabel,
-    archDiagram,
-    highlightsContainer,
+    ...(diagram ? [diagram] : []),
+    details,
+    evidence,
   );
 
   // Links
@@ -176,6 +229,7 @@ export function openProjectModal(slug) {
       link.target = "_blank";
       link.rel = "noreferrer";
       link.textContent = `${label.padEnd(9, " ")}→ ${url.replace("https://", "")}`;
+      link.setAttribute("aria-label", `Open ${project.name} ${label}`);
       linksContainer.append(link);
     });
   }
