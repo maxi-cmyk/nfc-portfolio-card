@@ -77,3 +77,13 @@ This document tracks completed work and the remaining implementation priorities 
   - [ ] Production build, tests, browser offline simulation, manifest validation, and `git diff --check` pass.
 
 ---
+
+### 4. improving layout of case studies (tbc)
+
+- **Objective**: make less cluttery
+- **Tasks**: 
+  - [ ] hackathons/ languages and tools need updating, maybe deserves its own style 
+  - [ ] all other pages languages are incomplete, needs update 
+  - [ ] remove the source reviewed in case study 
+  - [ ] button layout for projects needs visual improvement, not obvious that it's a button, looks weird
+  - [ ] projects deserves independently designed case studies, eg: conway's game of life should briefly discuss the algorithm behind it 
