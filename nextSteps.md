@@ -78,12 +78,38 @@ This document tracks completed work and the remaining implementation priorities 
 
 ---
 
-### 4. improving layout of case studies (tbc)
+### 4. Improve Case Study Layout & Content (tbc)
 
-- **Objective**: make less cluttery
-- **Tasks**: 
-  - [ ] hackathons/ languages and tools need updating, maybe deserves its own style 
-  - [ ] all other pages languages are incomplete, needs update 
-  - [ ] remove the source reviewed in case study 
-  - [ ] button layout for projects needs visual improvement, not obvious that it's a button, looks weird
-  - [ ] projects deserves independently designed case studies, eg: conway's game of life should briefly discuss the algorithm behind it 
+- **Objective**: Make the focus pages and project case studies less cluttered, visually clearer, and less like internal QA notes.
+
+#### 4.1 Hackathons languages/tools needs its own style
+- In `src/data/focus-tools.js`, `hackathons` is a generic full-stack web list (`JavaScript` / `React, Node.js, PostgreSQL, GitHub`), while Cybersecurity/Engineering/AI & Math read as hardware-flavored capability stacks. This mismatch exists because it'sPEAK and Echo are full web apps, not hardware builds — the category is really "rapid full-stack build under time pressure," not one tech stack.
+- [ ] Decide the direction: (a) keep the tools/languages list format but broaden it to reflect what's actually in the project data (FastAPI/Celery/Redis, Next.js/Supabase, MediaPipe, LLaVA, ElevenLabs are currently under-represented), or (b) replace the grid format for this one category with a narrative treatment (event names, time constraint, placements) since a plain tool list undersells hackathon work.
+- [ ] Whichever direction is chosen, keep it driven from `focus-tools.js` / `createFocusTooling` so the terminal `skills` command output and the visual page stay in sync.
+
+#### 4.2 Other pages' languages are incomplete
+- `cybersecurity.languages` is currently empty, and no group lists Python/C++ where it's actually used across their linked projects (e.g. Sentinel is C++ firmware, but Cybersecurity shows no language).
+- [ ] Audit each focus category in `focus-tools.js` against the real implementations in `src/data/projects.js` and fill in missing languages.
+- [ ] Preserve the Task 1 rule that each language/tool is unique to one classification — no duplicates across categories.
+
+#### 4.3 Remove "source reviewed" framing from the case study
+- The "Verification notes" block (`insights.evidence` in `projects.js`, rendered in `project-modal.js`) reads like an internal audit trail ("The checked-in firmware defines TARGET_FPS = 50...") rather than visitor-facing content.
+- [ ] Remove the evidence list and its rendering section, or fold anything visitor-relevant (e.g. a linked competition placement) into the summary/description copy instead.
+- [ ] Reconsider the `status-badge` ("SOURCE REVIEW PENDING" / reviewed state) next to the case-study title — same internal-process framing — and remove or repurpose it alongside the evidence list.
+
+#### 4.4 Button layout for projects needs visual improvement
+- `.project-insights-btn` is currently styled identically to `.terminal-link` (no border, no background, underline on hover), so the "Case Study" modal trigger is visually indistinguishable from real outbound GitHub/Devpost links even though it behaves differently (opens a modal vs. navigates away).
+- [ ] Give the case-study trigger a distinct affordance (background chip, bracket/box treatment, icon) separate from the plain `label → url` treatment used for real outbound links.
+- [ ] Consider separating the two groups visually within `.project-card-links` (e.g. real links together, case-study action on its own row or right-aligned) rather than one undifferentiated row.
+
+#### 4.5 Independently designed case studies
+- Every case study currently uses the same fixed template (summary → flow diagram → generic `sections` grid → evidence list), which flattens projects with an actual algorithm worth explaining — e.g. Conway's Game of Life's toroidal wraparound neighbor counting and bit-packed row representation are currently only described in audit-note form via `evidence`, not as an explanation.
+- [ ] Add a per-project "how it works" narrative slot (distinct from the generic `sections` grid) for algorithm/design explanation. Start with Conway's Game of Life as the pilot.
+- [ ] Extend the `insights` schema in `projects.js` to support this optional explanatory content, and update the modal template to render variable/optional sections per project rather than one rigid layout for all five.
+
+- **Acceptance criteria**:
+  - [ ] Every focus category shows a complete, non-duplicated language/tool list backed by its linked projects.
+  - [ ] The hackathons focus area's presentation is deliberately chosen (broadened list or narrative) rather than left as a mismatched generic stack.
+  - [ ] Case study modals no longer surface internal verification/audit language to visitors.
+  - [ ] The case-study button is visually distinguishable from outbound project links at a glance.
+  - [ ] At least one project (Conway's Game of Life) has a bespoke explanatory section beyond the shared template. 
