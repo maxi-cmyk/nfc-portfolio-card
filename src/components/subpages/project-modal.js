@@ -163,27 +163,14 @@ export function openProjectModal(slug) {
   const insightsSection = document.createElement("section");
   insightsSection.className = "modal-insights-box";
 
-  const insightsHeader = document.createElement("div");
-  insightsHeader.className = "insights-header";
-
   const insightsTitle = document.createElement("h3");
   insightsTitle.className = "insights-title";
   insightsTitle.innerHTML = '<span class="prompt">//</span> SYSTEM CASE STUDY';
 
-  const statusBadge = document.createElement("span");
-  statusBadge.className = `status-badge status-badge-${
-    project.insights?.status || "pending"
-  }`;
-  statusBadge.textContent =
-    project.insights?.statusLabel || "SOURCE REVIEW PENDING";
-
-  insightsHeader.append(insightsTitle, statusBadge);
-
   const insightsSummary = document.createElement("p");
   insightsSummary.className = "insights-summary";
   insightsSummary.textContent =
-    project.insights?.summary ||
-    "This project's source review has not been completed yet.";
+    project.insights?.summary || project.description;
 
   const diagram = project.insights?.diagram
     ? createFlowDiagram(project.insights.diagram)
@@ -195,27 +182,11 @@ export function openProjectModal(slug) {
     details.append(createInsightSection(section));
   });
 
-  const evidence = document.createElement("section");
-  evidence.className = "insights-evidence";
-
-  const evidenceTitle = document.createElement("h4");
-  evidenceTitle.textContent = "Verification notes";
-
-  const evidenceList = document.createElement("ul");
-  (project.insights?.evidence || []).forEach((item) => {
-    const listItem = document.createElement("li");
-    listItem.textContent = item;
-    evidenceList.append(listItem);
-  });
-
-  evidence.append(evidenceTitle, evidenceList);
-
   insightsSection.append(
-    insightsHeader,
+    insightsTitle,
     insightsSummary,
     ...(diagram ? [diagram] : []),
     details,
-    evidence,
   );
 
   // Links

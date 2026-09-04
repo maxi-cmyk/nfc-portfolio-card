@@ -94,6 +94,53 @@ test("terminal skills output comes from focus data without proficiency claims", 
   assert.doesNotMatch(copy, /\b\d+\+?\s+years?\b/i);
 });
 
+test("hackathon tooling reflects the shipped project stacks", () => {
+  const hackathons = getFocusTechnologyGroup("hackathons");
+
+  assert.equal(hackathons.variant, "expanded");
+  assert.deepEqual(hackathons.languages, ["TypeScript"]);
+  [
+    "FastAPI",
+    "Celery",
+    "Redis",
+    "MediaPipe",
+    "OpenAI",
+    "Next.js",
+    "Supabase",
+    "PostgreSQL",
+    "LLaVA",
+    "ElevenLabs",
+  ].forEach((tool) => assert.ok(hackathons.tools.includes(tool)));
+});
+
+test("every focus has a distinct project-backed language classification", () => {
+  const expectedLanguages = new Map([
+    ["cybersecurity", ["C++"]],
+    ["engineering", ["JavaScript"]],
+    ["ai-math", ["Python"]],
+    ["hackathons", ["TypeScript"]],
+  ]);
+
+  focusTechnologyGroups.forEach((group) => {
+    assert.deepEqual(group.languages, expectedLanguages.get(group.id));
+  });
+});
+
+test("focus tools reflect the linked implementations", () => {
+  const expectedTools = new Map([
+    ["cybersecurity", ["ESP32-CAM", "Blynk", "HTTP / MJPEG"]],
+    ["engineering", ["ESP32", "SSD1306 OLED", "React", "Chart.js"]],
+    ["ai-math", ["NumPy", "pandas", "scikit-learn", "Jupyter"]],
+    ["hackathons", ["FastAPI", "MediaPipe", "Next.js", "Supabase"]],
+  ]);
+
+  focusTechnologyGroups.forEach((group) => {
+    expectedTools
+      .get(group.id)
+      .forEach((tool) => assert.ok(group.tools.includes(tool)));
+  });
+});
+
 test("resume returns the downloadable PDF and profile links", () => {
   const result = resolveCommand("resume");
 
@@ -170,16 +217,16 @@ test("projects lists the selected hardware and maths builds", () => {
   );
 });
 
-test("every project publishes one complete source-reviewed case study", () => {
+test("every project publishes a visitor-facing case study", () => {
   assert.equal(allProjects.length, 5);
 
   for (const project of allProjects) {
-    assert.equal(project.insights.status, "complete", project.name);
-    assert.equal(project.insights.statusLabel, "SOURCE REVIEWED", project.name);
     assert.equal(getCaseStudyLinkLabel(project), "case study ↗", project.name);
     assert.equal(project.insights.diagram.nodes.length, 5, project.name);
     assert.equal(project.insights.sections.length, 3, project.name);
-    assert.ok(project.insights.evidence.length >= 2, project.name);
+    assert.equal("status" in project.insights, false, project.name);
+    assert.equal("statusLabel" in project.insights, false, project.name);
+    assert.equal("evidence" in project.insights, false, project.name);
   }
 });
 

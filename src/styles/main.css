@@ -1287,6 +1287,28 @@ footer {
   overflow-wrap: anywhere;
 }
 
+.focus-tooling--expanded {
+  gap: 9px;
+}
+
+.focus-tooling--expanded dd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 12px;
+}
+
+.focus-tooling--expanded dd span {
+  position: relative;
+  white-space: nowrap;
+}
+
+.focus-tooling--expanded dd span:not(:last-child)::after {
+  position: absolute;
+  left: calc(100% + 5px);
+  color: var(--muted);
+  content: "·";
+}
+
 .certificates {
   position: relative;
   isolation: isolate;
@@ -2124,13 +2146,6 @@ footer a:hover {
   background: var(--bg);
 }
 
-.insights-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
 .insights-title {
   min-width: 0;
   margin: 0;
@@ -2139,25 +2154,6 @@ footer a:hover {
     500 13px "DM Mono",
     monospace;
   letter-spacing: 0.04em;
-}
-
-.status-badge {
-  flex: 0 0 auto;
-  padding: 3px 7px;
-  border: 1px solid var(--acid);
-  border-radius: 3px;
-  background: transparent;
-  color: var(--acid);
-  font:
-    10px "DM Mono",
-    monospace;
-  font-weight: 500;
-  letter-spacing: 0.03em;
-}
-
-.status-badge-pending {
-  border-color: var(--warm);
-  color: var(--warm);
 }
 
 .insights-summary {
@@ -2262,8 +2258,7 @@ footer a:hover {
   border-top: 1px solid var(--line);
 }
 
-.insights-detail h4,
-.insights-evidence h4 {
+.insights-detail h4 {
   margin: 0 0 8px;
   color: var(--acid);
   font:
@@ -2277,21 +2272,6 @@ footer a:hover {
   font-family: "Outfit", sans-serif;
   font-size: 13.5px;
   line-height: 1.55;
-}
-
-.insights-evidence {
-  padding: 14px;
-  background: var(--panel);
-  border: 1px solid var(--line);
-}
-
-.insights-evidence ul {
-  margin: 0;
-  padding-inline-start: 18px;
-  color: var(--muted);
-  font-family: "Outfit", sans-serif;
-  font-size: 13px;
-  line-height: 1.5;
 }
 
 .modal-links {
@@ -2313,14 +2293,8 @@ footer a:hover {
     max-height: calc(100dvh - 16px);
   }
 
-  .modal-topbar,
-  .insights-header {
+  .modal-topbar {
     align-items: flex-start;
-  }
-
-  .insights-header {
-    flex-direction: column;
-    gap: 8px;
   }
 
   .insights-flow,
@@ -2349,12 +2323,6 @@ footer a:hover {
     bottom: -18px;
     left: 15px;
     transform: rotate(135deg);
-  }
-
-  .status-badge {
-    max-width: 100%;
-    overflow-wrap: anywhere;
-    text-align: left;
   }
 }
 

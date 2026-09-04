@@ -7,8 +7,6 @@ const projectsBySlug = {
     description:
       "Private web coach for rehearsing presentations. I owned the backend, persistence, media-analysis pipeline, and production deployment work.",
     insights: {
-      status: "complete",
-      statusLabel: "SOURCE REVIEWED",
       summary:
         "An asynchronous analysis system that turns an uploaded rehearsal into separate delivery and voice signals, normalized scores, and focused coaching cards.",
       diagram: {
@@ -35,10 +33,6 @@ const projectsBySlug = {
           body: "The coaching layer receives scored telemetry and the chosen speaking archetype. It validates structured LLM output and falls back to deterministic rule-based cards if the provider is unavailable.",
         },
       ],
-      evidence: [
-        "FastAPI routes, Celery tasks, Redis configuration, MediaPipe analysis, audio scoring, and fallback coaching are present in the implementation.",
-        "The 2nd-place result is linked through the project Devpost entry.",
-      ],
     },
     links: [
       { label: "github", url: "https://github.com/maxi-cmyk/it-sPeak" },
@@ -56,8 +50,6 @@ const projectsBySlug = {
     description:
       "Adaptive reminiscence PWA for people with cognitive impairment. I built the backend, database, and feed logic around familiar media, narration, recall, and accessible interaction.",
     insights: {
-      status: "complete",
-      statusLabel: "SOURCE REVIEWED",
       summary:
         "A caregiver-reviewed media pipeline turns personal photos and videos into approved memories, then presents them through a low-friction feed with narration, recall prompts, cooldowns, and adaptive voice controls.",
       diagram: {
@@ -84,10 +76,6 @@ const projectsBySlug = {
           body: "Repeated missed taps can switch the interface into a larger voice-control mode. A time-based sundowning setting activates a warmer presentation, while ElevenLabs provides generated or familiar-voice narration.",
         },
       ],
-      evidence: [
-        "The source includes the Next.js PWA, Supabase schema and RLS policies, LLaVA analysis route, ElevenLabs routes, cooldown and recall logic, and the adaptation hook.",
-        "The Best Freshmen Award remains the portfolio's recorded outcome; the technical case study does not infer additional clinical results.",
-      ],
     },
     links: [{ label: "github", url: "https://github.com/maxi-cmyk/echo" }],
   },
@@ -99,8 +87,6 @@ const projectsBySlug = {
     description:
       "A breadboard arcade game with a 128×64 OLED, calibrated joystick input, PWM audio, persistent high scores, and five stages of timed difficulty.",
     insights: {
-      status: "complete",
-      statusLabel: "SOURCE REVIEWED",
       summary:
         "A deterministic 50 FPS game loop coordinates ADC input, floating-point object motion, collision pools, a monochrome framebuffer, non-blocking sound patterns, and non-volatile scores.",
       diagram: {
@@ -127,10 +113,6 @@ const projectsBySlug = {
           body: "A non-blocking LEDC sequencer plays distinct frequency patterns for shots, collisions, streaks, death, and menus. The Preferences library stores a sorted top-10 initials table in ESP32 non-volatile storage.",
         },
       ],
-      evidence: [
-        "The checked-in firmware defines TARGET_FPS = 50, a 128×64 SSD1306 display, LEDC tone patterns, bounded entity pools, and Preferences-backed scores.",
-        "No fixed-point implementation is claimed because the current motion structs use floats.",
-      ],
     },
     links: [{ label: "github", url: "https://github.com/maxi-cmyk/asteriods" }],
   },
@@ -142,8 +124,6 @@ const projectsBySlug = {
     description:
       "Two ESP32 nodes split sensing from image capture: motion raises a Blynk event, while an ESP32-CAM serves a live stream and flash-assisted JPEG endpoint.",
     insights: {
-      status: "complete",
-      statusLabel: "SOURCE REVIEWED",
       summary:
         "The sensor node owns PIR, alarm, and panic state; Blynk virtual pins bridge that state to a camera node that temporarily pauses its stream for a higher-resolution capture.",
       diagram: {
@@ -170,10 +150,6 @@ const projectsBySlug = {
           body: "The current firmware polls the PIR input in its main loop and uses Blynk virtual pins—not MQTT or a hardware interrupt. The repository contains no measured power profile, so none is published here.",
         },
       ],
-      evidence: [
-        "The firmware exposes multipart MJPEG at / and a single JPEG response at /capture on the camera node's HTTP server.",
-        "The sensor firmware implements armed, silent-monitoring, and manual-panic behavior.",
-      ],
     },
     links: [{ label: "github", url: "https://github.com/maxi-cmyk/sentinel" }],
   },
@@ -185,8 +161,6 @@ const projectsBySlug = {
     description:
       "An ESP32 runs a 32×8 toroidal simulation on a MAX7219 matrix while a React dashboard receives live metrics, analyzes sessions, and exports results.",
     insights: {
-      status: "complete",
-      statusLabel: "SOURCE REVIEWED",
       summary:
         "Each of the eight rows is packed into one 32-bit integer, so neighbor reads, births, deaths, population counts, and state hashes stay compact while the board drives both physical and browser views.",
       diagram: {
@@ -212,10 +186,6 @@ const projectsBySlug = {
           title: "Session analysis",
           body: "The firmware ends runs on extinction, repeated-state stagnation, or a generation cap and persists up to 30 summaries. The dashboard charts density, entropy, autocorrelation, peak population, and exports CSV or JSON.",
         },
-      ],
-      evidence: [
-        "The firmware contains packed row operations, toroidal neighbor reads, popcount metrics, configurable hash history, and Preferences-backed session summaries.",
-        "The frontend subscribes to /events with EventSource and implements CSV and JSON export.",
       ],
     },
     links: [
@@ -274,8 +244,6 @@ export const allProjects = selectProjects(
   "conway-game-of-life",
 );
 
-export function getCaseStudyLinkLabel(project) {
-  return project.insights?.status === "complete"
-    ? "case study ↗"
-    : "insights [source pending] ↗";
+export function getCaseStudyLinkLabel() {
+  return "case study ↗";
 }
