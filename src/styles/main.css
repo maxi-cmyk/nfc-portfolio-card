@@ -449,8 +449,12 @@ input {
   color: #cfcec5;
 }
 
-.project-entry .terminal-link {
-  margin-top: 0.45em;
+.project-entry-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin-top: 0.65em;
 }
 
 .terminal-link {
@@ -1988,9 +1992,23 @@ footer a:hover {
 }
 
 .project-card-links {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 12px 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.project-card-outbound-links {
   display: flex;
+  min-width: 0;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 8px 16px;
+}
+
+.project-card-outbound-links .terminal-link {
+  overflow-wrap: anywhere;
 }
 
 .subpage-footer {
@@ -2018,22 +2036,55 @@ footer a:hover {
 /* -------------------------------------------------- */
 
 .project-insights-btn {
-  border: none;
-  background: transparent;
-  padding: 0;
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--acid);
+  padding: 7px 10px;
+  background: var(--panel);
+  background: color-mix(in srgb, var(--acid) 10%, var(--panel));
   cursor: pointer;
-  font: inherit;
+  font:
+    500 12px "DM Mono",
+    monospace;
   color: var(--acid);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
 }
 
-.project-insights-btn:hover {
-  text-decoration: underline;
+.project-insights-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-width: 1.25;
+}
+
+.project-insights-btn:hover,
+.project-insights-btn:focus-visible {
+  background: var(--acid);
+  color: var(--bg);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.project-insights-btn:active {
+  transform: translateY(0);
 }
 
 .project-insights-btn:focus-visible,
 .modal-close-btn:focus-visible {
   outline: 2px solid var(--acid);
-  outline-offset: 4px;
+  outline-offset: 3px;
 }
 
 .project-modal {
@@ -2288,6 +2339,14 @@ footer a:hover {
 }
 
 @media (max-width: 760px) {
+  .project-card-links {
+    grid-template-columns: 1fr;
+  }
+
+  .project-insights-btn {
+    justify-self: start;
+  }
+
   .project-modal {
     width: calc(100% - 16px);
     max-height: calc(100dvh - 16px);

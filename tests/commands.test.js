@@ -221,7 +221,11 @@ test("every project publishes a visitor-facing case study", () => {
   assert.equal(allProjects.length, 5);
 
   for (const project of allProjects) {
-    assert.equal(getCaseStudyLinkLabel(project), "case study ↗", project.name);
+    assert.equal(
+      getCaseStudyLinkLabel(project),
+      "view case study",
+      project.name,
+    );
     assert.equal(project.insights.diagram.nodes.length, 5, project.name);
     assert.equal(project.insights.sections.length, 3, project.name);
     assert.equal("status" in project.insights, false, project.name);

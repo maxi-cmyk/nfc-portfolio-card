@@ -100,8 +100,8 @@ This document tracks completed work and the remaining implementation priorities 
 #### 4.4 Button layout for projects needs visual improvement
 
 - `.project-insights-btn` is currently styled identically to `.terminal-link` (no border, no background, underline on hover), so the "Case Study" modal trigger is visually indistinguishable from real outbound GitHub/Devpost links even though it behaves differently (opens a modal vs. navigates away).
-- [ ] Give the case-study trigger a distinct affordance (background chip, bracket/box treatment, icon) separate from the plain `label → url` treatment used for real outbound links.
-- [ ] Consider separating the two groups visually within `.project-card-links` (e.g. real links together, case-study action on its own row or right-aligned) rather than one undifferentiated row.
+- [x] Gave the case-study trigger a bordered, icon-led button treatment separate from the plain `label → url` treatment used for real outbound links.
+- [x] Grouped outbound links together and positioned the case-study action separately, with a stacked layout on narrow screens.
 
 #### 4.5 Independently designed case studies
 
@@ -113,5 +113,5 @@ This document tracks completed work and the remaining implementation priorities 
   - [x] Every focus category shows a complete, non-duplicated language/tool list backed by its linked projects.
   - [x] The hackathons focus area's presentation is deliberately chosen (broadened list or narrative) rather than left as a mismatched generic stack.
   - [x] Case study modals no longer surface internal verification/audit language to visitors.
-  - [ ] The case-study button is visually distinguishable from outbound project links at a glance.
+  - [x] The case-study button is visually distinguishable from outbound project links at a glance.
   - [ ] At least one project (Conway's Game of Life) has a bespoke explanatory section beyond the shared template.

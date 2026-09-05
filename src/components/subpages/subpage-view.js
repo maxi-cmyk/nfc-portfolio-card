@@ -1,6 +1,6 @@
-import { focusCategories, getCaseStudyLinkLabel } from "../../data/projects.js";
-import { openProjectModal } from "./project-modal.js";
+import { focusCategories } from "../../data/projects.js";
 import { createFocusTooling } from "../focus-tooling.js";
+import { createProjectInsightsButton } from "../project-insights-button.js";
 
 const landingView = document.querySelector("#landing-view");
 const fullSubpageView = document.querySelector("#full-subpage-view");
@@ -64,6 +64,9 @@ export function renderSubpage(focusId) {
     const linksContainer = document.createElement("div");
     linksContainer.className = "project-card-links";
 
+    const outboundLinks = document.createElement("div");
+    outboundLinks.className = "project-card-outbound-links";
+
     if (links && Array.isArray(links)) {
       links.forEach(({ label, url }) => {
         const linkEl = document.createElement("a");
@@ -72,19 +75,14 @@ export function renderSubpage(focusId) {
         linkEl.target = "_blank";
         linkEl.rel = "noreferrer";
         linkEl.textContent = `${label.padEnd(9, " ")}→ ${url.replace("https://", "")}`;
-        linksContainer.append(linkEl);
+        outboundLinks.append(linkEl);
       });
     }
 
+    linksContainer.append(outboundLinks);
+
     if (slug) {
-      const insightsBtn = document.createElement("button");
-      insightsBtn.type = "button";
-      insightsBtn.className = "terminal-link project-insights-btn";
-      insightsBtn.textContent = getCaseStudyLinkLabel(project);
-      insightsBtn.addEventListener("click", () => {
-        openProjectModal(slug);
-      });
-      linksContainer.append(insightsBtn);
+      linksContainer.append(createProjectInsightsButton(project));
     }
 
     card.append(headerContainer, descEl, tagsContainer, linksContainer);

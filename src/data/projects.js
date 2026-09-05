@@ -245,5 +245,5 @@ export const allProjects = selectProjects(
 );
 
 export function getCaseStudyLinkLabel() {
-  return "case study ↗";
+  return "view case study";
 }

@@ -1,7 +1,6 @@
 import { resolveCommand } from "../../terminal/commands/index.js";
 import { getLatestResultScrollOptions } from "../../terminal/scroll.js";
-import { getCaseStudyLinkLabel } from "../../data/projects.js";
-import { openProjectModal } from "../subpages/project-modal.js";
+import { createProjectInsightsButton } from "../project-insights-button.js";
 
 const output = document.querySelector("#output");
 const terminalContainer = document.querySelector("#terminal");
@@ -61,18 +60,15 @@ export function appendCommand(command) {
         return projectLink;
       });
 
+      const projectLinksContainer = document.createElement("div");
+      projectLinksContainer.className = "project-entry-links";
+      projectLinksContainer.append(...projectLinks);
+
       if (slug) {
-        const insightsBtn = document.createElement("button");
-        insightsBtn.type = "button";
-        insightsBtn.className = "terminal-link project-insights-btn";
-        insightsBtn.textContent = getCaseStudyLinkLabel(projectData);
-        insightsBtn.addEventListener("click", () => {
-          openProjectModal(slug);
-        });
-        projectLinks.push(insightsBtn);
+        projectLinksContainer.append(createProjectInsightsButton(projectData));
       }
 
-      project.append(title, summary, ...projectLinks);
+      project.append(title, summary, projectLinksContainer);
       resultRow.append(project);
     });
   } else if (result.links) {
