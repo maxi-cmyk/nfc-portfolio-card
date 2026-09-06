@@ -2089,7 +2089,7 @@ footer a:hover {
 
 .project-modal {
   box-sizing: border-box;
-  width: min(960px, calc(100% - 32px));
+  width: min(960px, calc(100vw - 32px));
   max-width: 960px;
   max-height: calc(100dvh - 32px);
   margin: auto;
@@ -2208,11 +2208,134 @@ footer a:hover {
 }
 
 .insights-summary {
+  max-width: 72ch;
   margin: 0;
   color: var(--muted);
   font-family: "Outfit", sans-serif;
   font-size: 15px;
   line-height: 1.6;
+}
+
+.insights-how-it-works {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(180px, 0.72fr) minmax(0, 1.6fr);
+  grid-template-rows: auto auto 1fr;
+  gap: 12px clamp(24px, 4vw, 44px);
+  padding: clamp(18px, 3vw, 28px) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.insights-how-it-works > h4 {
+  margin: 0;
+  color: var(--acid);
+  font:
+    500 clamp(17px, 2.4vw, 22px) "DM Mono",
+    monospace;
+  line-height: 1.25;
+}
+
+.insights-how-intro {
+  margin: 0;
+  color: var(--ink);
+  font-family: "Outfit", sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.insights-how-sequence {
+  display: flex;
+  grid-column: 2;
+  grid-row: 1 / span 4;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.insights-how-step {
+  display: grid;
+  position: relative;
+  min-width: 0;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 14px;
+  padding: 0 0 22px;
+}
+
+.insights-how-step:last-child {
+  padding-bottom: 0;
+}
+
+.insights-how-step:not(:last-child)::before {
+  position: absolute;
+  top: 30px;
+  bottom: 2px;
+  left: 16px;
+  border-left: 1px solid var(--line);
+  content: "";
+}
+
+.insights-how-marker {
+  display: flex;
+  z-index: 1;
+  width: 32px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--acid);
+  background: var(--acid);
+  color: var(--bg);
+  font:
+    500 10px "DM Mono",
+    monospace;
+}
+
+.insights-how-copy {
+  min-width: 0;
+}
+
+.insights-how-copy h5 {
+  margin: 2px 0 6px;
+  color: var(--ink);
+  font:
+    500 13px "DM Mono",
+    monospace;
+}
+
+.insights-how-copy p {
+  max-width: 68ch;
+  margin: 0;
+  color: var(--muted);
+  font-family: "Outfit", sans-serif;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.insights-how-copy code {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 8px;
+  padding: 5px 7px;
+  background: var(--panel);
+  color: var(--acid);
+  font:
+    11px "DM Mono",
+    monospace;
+  overflow-wrap: anywhere;
+}
+
+.insights-how-takeaway {
+  align-self: end;
+  margin: 4px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font:
+    11px/1.5 "DM Mono",
+    monospace;
 }
 
 .insights-visual {
@@ -2348,7 +2471,8 @@ footer a:hover {
   }
 
   .project-modal {
-    width: calc(100% - 16px);
+    width: calc(100vw - 16px);
+    max-width: calc(100vw - 16px);
     max-height: calc(100dvh - 16px);
   }
 
@@ -2359,6 +2483,22 @@ footer a:hover {
   .insights-flow,
   .insights-detail-grid {
     grid-template-columns: 1fr;
+  }
+
+  .insights-how-it-works {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 12px;
+  }
+
+  .insights-how-sequence {
+    grid-column: 1;
+    grid-row: auto;
+    margin-top: 8px;
+  }
+
+  .insights-how-takeaway {
+    margin-top: 10px;
   }
 
   .insights-flow {

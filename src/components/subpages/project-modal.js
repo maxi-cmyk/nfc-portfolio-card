@@ -56,6 +56,79 @@ function createInsightSection({ title, body }) {
   return section;
 }
 
+function createHowItWorks({ title, intro, steps, takeaway }) {
+  const section = document.createElement("section");
+  section.className = "insights-how-it-works";
+
+  const heading = document.createElement("h4");
+  heading.textContent = title;
+
+  const introduction = document.createElement("p");
+  introduction.className = "insights-how-intro";
+  introduction.textContent = intro;
+
+  const sequence = document.createElement("ol");
+  sequence.className = "insights-how-sequence";
+
+  steps.forEach(({ title: stepTitle, body, code }, index) => {
+    const item = document.createElement("li");
+    item.className = "insights-how-step";
+
+    const marker = document.createElement("span");
+    marker.className = "insights-how-marker";
+    marker.textContent = String(index + 1).padStart(2, "0");
+    marker.setAttribute("aria-hidden", "true");
+
+    const copy = document.createElement("div");
+    copy.className = "insights-how-copy";
+
+    const stepHeading = document.createElement("h5");
+    stepHeading.textContent = stepTitle;
+
+    const paragraph = document.createElement("p");
+    paragraph.textContent = body;
+
+    copy.append(stepHeading, paragraph);
+
+    if (code) {
+      const expression = document.createElement("code");
+      expression.textContent = code;
+      copy.append(expression);
+    }
+
+    item.append(marker, copy);
+    sequence.append(item);
+  });
+
+  section.append(heading, introduction, sequence);
+
+  if (takeaway) {
+    const outcome = document.createElement("p");
+    outcome.className = "insights-how-takeaway";
+    outcome.textContent = takeaway;
+    section.append(outcome);
+  }
+
+  return section;
+}
+
+const defaultInsightOrder = ["summary", "diagram", "howItWorks", "sections"];
+
+export function getInsightContentOrder(insights = {}) {
+  const requestedOrder = insights.contentOrder || defaultInsightOrder;
+  const available = {
+    summary: Boolean(insights.summary),
+    diagram: Boolean(insights.diagram),
+    howItWorks: Boolean(insights.howItWorks),
+    sections: Boolean(insights.sections?.length),
+  };
+
+  return requestedOrder.filter(
+    (block, index) =>
+      available[block] && requestedOrder.indexOf(block) === index,
+  );
+}
+
 function ensureModal() {
   if (modalEl) return modalEl;
 
@@ -167,27 +240,34 @@ export function openProjectModal(slug) {
   insightsTitle.className = "insights-title";
   insightsTitle.innerHTML = '<span class="prompt">//</span> SYSTEM CASE STUDY';
 
-  const insightsSummary = document.createElement("p");
-  insightsSummary.className = "insights-summary";
-  insightsSummary.textContent =
-    project.insights?.summary || project.description;
+  const insights = project.insights || { summary: project.description };
+  insightsSection.append(insightsTitle);
 
-  const diagram = project.insights?.diagram
-    ? createFlowDiagram(project.insights.diagram)
-    : null;
+  getInsightContentOrder(insights).forEach((block) => {
+    if (block === "summary") {
+      const summary = document.createElement("p");
+      summary.className = "insights-summary";
+      summary.textContent = insights.summary;
+      insightsSection.append(summary);
+    }
 
-  const details = document.createElement("div");
-  details.className = "insights-detail-grid";
-  (project.insights?.sections || []).forEach((section) => {
-    details.append(createInsightSection(section));
+    if (block === "diagram") {
+      insightsSection.append(createFlowDiagram(insights.diagram));
+    }
+
+    if (block === "howItWorks") {
+      insightsSection.append(createHowItWorks(insights.howItWorks));
+    }
+
+    if (block === "sections") {
+      const details = document.createElement("div");
+      details.className = "insights-detail-grid";
+      insights.sections.forEach((section) => {
+        details.append(createInsightSection(section));
+      });
+      insightsSection.append(details);
+    }
   });
-
-  insightsSection.append(
-    insightsTitle,
-    insightsSummary,
-    ...(diagram ? [diagram] : []),
-    details,
-  );
 
   // Links
   const linksContainer = document.createElement("div");

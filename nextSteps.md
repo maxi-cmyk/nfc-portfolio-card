@@ -106,12 +106,12 @@ This document tracks completed work and the remaining implementation priorities 
 #### 4.5 Independently designed case studies
 
 - Every case study currently uses the same fixed template (summary → flow diagram → generic `sections` grid), which flattens projects with an actual algorithm worth explaining — e.g. Conway's Game of Life's toroidal wraparound neighbor counting and bit-packed row representation deserve a focused explanation beyond the shared structure.
-- [ ] Add a per-project "how it works" narrative slot (distinct from the generic `sections` grid) for algorithm/design explanation. Start with Conway's Game of Life as the pilot.
-- [ ] Extend the `insights` schema in `projects.js` to support this optional explanatory content, and update the modal template to render variable/optional sections per project rather than one rigid layout for all five.
+- [x] Added a per-project "how it works" narrative slot (distinct from the generic `sections` grid) for algorithm/design explanation, with Conway's Game of Life as the pilot.
+- [x] Extended the `insights` schema in `projects.js` with optional explanatory content and project-defined content order; the modal now renders only the blocks each project provides.
 
 - **Acceptance criteria**:
   - [x] Every focus category shows a complete, non-duplicated language/tool list backed by its linked projects.
   - [x] The hackathons focus area's presentation is deliberately chosen (broadened list or narrative) rather than left as a mismatched generic stack.
   - [x] Case study modals no longer surface internal verification/audit language to visitors.
   - [x] The case-study button is visually distinguishable from outbound project links at a glance.
-  - [ ] At least one project (Conway's Game of Life) has a bespoke explanatory section beyond the shared template.
+  - [x] Conway's Game of Life has a bespoke read-count-commit algorithm narrative beyond the shared template.

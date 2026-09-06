@@ -163,6 +163,31 @@ const projectsBySlug = {
     insights: {
       summary:
         "Each of the eight rows is packed into one 32-bit integer, so neighbor reads, births, deaths, population counts, and state hashes stay compact while the board drives both physical and browser views.",
+      contentOrder: ["summary", "howItWorks", "diagram", "sections"],
+      howItWorks: {
+        title: "How 256 cells become eight integers",
+        intro:
+          "The simulation does not store 256 booleans. It treats every row as a 32-bit strip, then advances the whole board through a read, decide, commit sequence.",
+        steps: [
+          {
+            title: "Wrap the coordinates",
+            body: "For each cell, row and column offsets loop across the opposite edge. A cell on the far left can therefore count neighbors from the far right, making the 32×8 board a torus rather than a box.",
+            code: "wrapped = (index + size) % size",
+          },
+          {
+            title: "Read and count bits",
+            body: "A shift moves the requested cell into the least-significant position and a mask extracts its state. Repeating that read across the eight surrounding coordinates produces the neighbor count.",
+            code: "cell = (rows[y] >> x) & 1",
+          },
+          {
+            title: "Commit the next generation",
+            body: "Live cells survive with two or three neighbors; dead cells are born with exactly three. Results are written into a separate eight-row buffer so early updates cannot affect later decisions.",
+            code: "B3 / S23  →  nextRows[8]",
+          },
+        ],
+        takeaway:
+          "One generation reads a stable 32-byte board, writes the next 32-byte board, then swaps them before display and analysis.",
+      },
       diagram: {
         label: "Simulation, display, and analysis flow",
         nodes: [

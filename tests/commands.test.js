@@ -8,6 +8,7 @@ import {
   focusCategories,
   getCaseStudyLinkLabel,
 } from "../src/data/projects.js";
+import { getInsightContentOrder } from "../src/components/subpages/project-modal.js";
 import {
   focusTechnologyGroups,
   formatFocusToolsForTerminal,
@@ -232,6 +233,28 @@ test("every project publishes a visitor-facing case study", () => {
     assert.equal("statusLabel" in project.insights, false, project.name);
     assert.equal("evidence" in project.insights, false, project.name);
   }
+});
+
+test("case studies support project-specific optional narrative blocks", () => {
+  const conway = allProjects.find(
+    (project) => project.slug === "conway-game-of-life",
+  );
+  const itspeak = allProjects.find((project) => project.slug === "itspeak");
+
+  assert.deepEqual(getInsightContentOrder(conway.insights), [
+    "summary",
+    "howItWorks",
+    "diagram",
+    "sections",
+  ]);
+  assert.equal(conway.insights.howItWorks.steps.length, 3);
+  assert.match(conway.insights.howItWorks.steps[0].body, /torus/i);
+  assert.deepEqual(getInsightContentOrder(itspeak.insights), [
+    "summary",
+    "diagram",
+    "sections",
+  ]);
+  assert.equal("howItWorks" in itspeak.insights, false);
 });
 
 test("focus categories reuse the canonical project records", () => {
