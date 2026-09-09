@@ -2,7 +2,10 @@ import {
   renderSubpage,
   hideSubpage,
 } from "../components/subpages/subpage-view.js";
-import { openProjectModal } from "../components/subpages/project-modal.js";
+import {
+  closeProjectModal,
+  openProjectModal,
+} from "../components/subpages/project-modal.js";
 
 export function handleRoute() {
   const hash = window.location.hash;
@@ -13,6 +16,8 @@ export function handleRoute() {
       return;
     }
   }
+
+  closeProjectModal();
 
   if (hash.startsWith("#focus/")) {
     const focusId = hash.replace("#focus/", "");

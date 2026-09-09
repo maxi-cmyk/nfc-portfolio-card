@@ -3,26 +3,58 @@ const projectsBySlug = {
     slug: "itspeak",
     name: "it'sPEAK",
     meta: "2nd place · first full-stack app",
-    tags: ["Python", "FastAPI", "Celery", "MediaPipe", "OpenAI"],
+    tags: [
+      "Python",
+      "FastAPI",
+      "Celery",
+      "Redis",
+      "Railway",
+      "MediaPipe",
+      "OpenAI",
+    ],
     description:
       "Private web coach for rehearsing presentations. I owned the backend, persistence, media-analysis pipeline, and production deployment work.",
     insights: {
+      layout: "pipeline",
       summary:
         "An asynchronous analysis system that turns an uploaded rehearsal into separate delivery and voice signals, normalized scores, and focused coaching cards.",
-      diagram: {
-        label: "Upload-to-feedback system flow",
-        nodes: [
-          { label: "Web client", detail: "private rehearsal upload" },
-          { label: "FastAPI", detail: "validates and creates a job" },
-          { label: "Celery worker", detail: "processes media off-request" },
-          { label: "Analysis", detail: "MediaPipe + audio telemetry" },
-          { label: "Coaching", detail: "scored feedback + safe fallback" },
+      contentOrder: ["summary", "pipeline", "sections"],
+      pipeline: {
+        title: "One upload, two analysis paths",
+        intro:
+          "FastAPI hands the rehearsal to a Celery worker, where visual delivery and vocal delivery are analyzed separately before their scores meet one coaching contract.",
+        source: {
+          label: "Private rehearsal",
+          detail: "Validated upload becomes an asynchronous analysis job.",
+        },
+        lanes: [
+          {
+            label: "Visual delivery",
+            steps: [
+              "Decode video frames",
+              "Derive MediaPipe signals",
+              "Normalize delivery scores",
+            ],
+          },
+          {
+            label: "Voice delivery",
+            steps: [
+              "Extract the audio track",
+              "Measure pace, pitch, pauses, and fillers",
+              "Normalize voice scores",
+            ],
+          },
         ],
+        merge: {
+          label: "Coaching contract",
+          detail:
+            "Validated LLM cards are the primary output; provider failures activate deterministic rule-based cards.",
+        },
       },
       sections: [
         {
           title: "Processing boundary",
-          body: "FastAPI handles upload and job orchestration while Celery performs the expensive media work outside the request lifecycle. Redis carries job state between the API and worker.",
+          body: "FastAPI handles upload and job orchestration while Celery performs the expensive media work outside the request lifecycle. Railway hosts the deployed backend services, and Redis carries job state between the API and worker.",
         },
         {
           title: "Signals and scoring",
@@ -50,16 +82,40 @@ const projectsBySlug = {
     description:
       "Adaptive reminiscence PWA for people with cognitive impairment. I built the backend, database, and feed logic around familiar media, narration, recall, and accessible interaction.",
     insights: {
+      layout: "lifecycle",
       summary:
         "A caregiver-reviewed media pipeline turns personal photos and videos into approved memories, then presents them through a low-friction feed with narration, recall prompts, cooldowns, and adaptive voice controls.",
-      diagram: {
-        label: "Media-to-memory delivery flow",
-        nodes: [
-          { label: "Caregiver", detail: "uploads and reviews media" },
-          { label: "Supabase", detail: "storage, PostgreSQL, RLS" },
-          { label: "Local LLaVA", detail: "extracts memory context" },
-          { label: "Approved feed", detail: "cooldown + recall state" },
-          { label: "Adaptive output", detail: "voice, narration, warm mode" },
+      contentOrder: ["summary", "lifecycle", "sections"],
+      lifecycle: {
+        title: "A memory is reviewed before it becomes familiar",
+        intro:
+          "A caregiver approves generated context before delivery, and later interactions adapt how approved memories are presented.",
+        steps: [
+          {
+            title: "Upload",
+            body: "A caregiver adds a personal photo or video to private storage.",
+          },
+          {
+            title: "Extract context",
+            body: "Local LLaVA proposes a summary, people, place, and date context.",
+          },
+          {
+            title: "Caregiver review",
+            body: "The memory remains in needs-review state until its context is approved.",
+            state: "gate",
+          },
+          {
+            title: "Familiar delivery",
+            body: "The approved feed presents the memory with optional narration and cooldown rules.",
+          },
+          {
+            title: "Recall",
+            body: "A meaningful interaction can schedule a later active-recall prompt.",
+          },
+          {
+            title: "Adapt access",
+            body: "Missed taps and time settings can enable larger voice controls or a warmer mode.",
+          },
         ],
       },
       sections: [
@@ -87,17 +143,41 @@ const projectsBySlug = {
     description:
       "A breadboard arcade game with a 128×64 OLED, calibrated joystick input, PWM audio, persistent high scores, and five stages of timed difficulty.",
     insights: {
+      layout: "frame-loop",
       summary:
         "A deterministic 50 FPS game loop coordinates ADC input, floating-point object motion, collision pools, a monochrome framebuffer, non-blocking sound patterns, and non-volatile scores.",
-      diagram: {
-        label: "Embedded game loop and output flow",
-        nodes: [
-          { label: "Joystick + fire", detail: "ADC and active-low input" },
-          { label: "50 FPS loop", detail: "state, motion, collisions" },
-          { label: "SSD1306", detail: "128×64 I²C framebuffer" },
-          { label: "LEDC audio", detail: "timed tone sequences" },
-          { label: "Preferences", detail: "top-10 score table" },
+      contentOrder: ["frameLoop", "summary", "sections"],
+      frameLoop: {
+        title: "Everything playable fits around a 20 ms tick",
+        intro:
+          "Each frame advances input, simulation, drawing, and timed sound state. Fixed-size pools keep the amount of per-frame object work bounded.",
+        budget: "20 ms",
+        phases: [
+          {
+            label: "Sample",
+            detail:
+              "Read the calibrated, smoothed joystick and active-low fire input.",
+          },
+          {
+            label: "Update",
+            detail: "Advance motion and collisions across capped object pools.",
+          },
+          {
+            label: "Render",
+            detail:
+              "Draw the complete scene into the 128×64 framebuffer, then flush once.",
+          },
+          {
+            label: "Sound",
+            detail:
+              "Advance LEDC tone patterns from their current timed state.",
+          },
         ],
+        after: {
+          label: "Outside the live loop:",
+          detail:
+            "Preferences keeps the sorted top-10 initials table in non-volatile storage.",
+        },
       },
       sections: [
         {
@@ -124,16 +204,57 @@ const projectsBySlug = {
     description:
       "Two ESP32 nodes split sensing from image capture: motion raises a Blynk event, while an ESP32-CAM serves a live stream and flash-assisted JPEG endpoint.",
     insights: {
+      layout: "event-sequence",
       summary:
         "The sensor node owns PIR, alarm, and panic state; Blynk virtual pins bridge that state to a camera node that temporarily pauses its stream for a higher-resolution capture.",
-      diagram: {
-        label: "Motion event and camera capture flow",
-        nodes: [
-          { label: "PIR node", detail: "motion, arm, panic, siren" },
-          { label: "Blynk V6", detail: "edge-style camera trigger" },
-          { label: "ESP32-CAM", detail: "QVGA stream / VGA capture" },
-          { label: "HTTP server", detail: "MJPEG / and JPEG /capture" },
-          { label: "Blynk app", detail: "alert and capture URL" },
+      contentOrder: ["summary", "eventSequence", "sections"],
+      eventSequence: {
+        title: "Detection and capture stay on separate devices",
+        intro:
+          "The PIR node raises the intrusion event, Blynk V6 carries the handoff, and the ESP32-CAM manages capture and stream state.",
+        devices: [
+          {
+            id: "sensor",
+            label: "PIR node",
+            detail: "sensing, arming, panic, siren",
+          },
+          {
+            id: "camera",
+            label: "ESP32-CAM",
+            detail: "MJPEG stream, flash, JPEG capture",
+          },
+        ],
+        steps: [
+          {
+            actor: "sensor",
+            actorLabel: "PIR node",
+            title: "Motion is detected",
+            body: "The armed sensor node reads PIR state and raises the intrusion alarm.",
+          },
+          {
+            actor: "bridge",
+            actorLabel: "Blynk V6",
+            title: "Blynk V6 carries the trigger",
+            body: "A short virtual-pin pulse and logged event cross the device boundary.",
+          },
+          {
+            actor: "camera",
+            actorLabel: "ESP32-CAM",
+            title: "The live stream pauses",
+            body: "The camera handler temporarily stops QVGA streaming and switches to VGA.",
+          },
+          {
+            actor: "camera",
+            actorLabel: "ESP32-CAM",
+            title: "Flash-assisted JPEG is captured",
+            body: "The node enables the flash, captures the frame, and publishes its URL.",
+          },
+          {
+            actor: "camera",
+            actorLabel: "ESP32-CAM",
+            title: "The stream is restored",
+            body: "Flash is disabled and the camera returns to its QVGA live-stream state.",
+          },
         ],
       },
       sections: [
@@ -146,8 +267,8 @@ const projectsBySlug = {
           body: "Motion writes a short pulse to Blynk virtual pin V6 and logs an intrusion event. The camera's V6 handler pauses streaming, switches from QVGA to VGA, enables the flash, captures a JPEG, publishes its URL, then restores QVGA streaming.",
         },
         {
-          title: "Evidence boundary",
-          body: "The current firmware polls the PIR input in its main loop and uses Blynk virtual pins—not MQTT or a hardware interrupt. The repository contains no measured power profile, so none is published here.",
+          title: "Firmware behavior",
+          body: "The current firmware polls PIR input in its main loop and routes camera triggers through Blynk virtual pin V6.",
         },
       ],
     },
@@ -161,17 +282,18 @@ const projectsBySlug = {
     description:
       "An ESP32 runs a 32×8 toroidal simulation on a MAX7219 matrix while a React dashboard receives live metrics, analyzes sessions, and exports results.",
     insights: {
+      layout: "algorithm",
       summary:
         "Each of the eight rows is packed into one 32-bit integer, so neighbor reads, births, deaths, population counts, and state hashes stay compact while the board drives both physical and browser views.",
       contentOrder: ["summary", "howItWorks", "diagram", "sections"],
       howItWorks: {
         title: "How 256 cells become eight integers",
         intro:
-          "The simulation does not store 256 booleans. It treats every row as a 32-bit strip, then advances the whole board through a read, decide, commit sequence.",
+          "The simulation packs each row into a 32-bit strip and advances the whole board through a read, decide, commit sequence.",
         steps: [
           {
             title: "Wrap the coordinates",
-            body: "For each cell, row and column offsets loop across the opposite edge. A cell on the far left can therefore count neighbors from the far right, making the 32×8 board a torus rather than a box.",
+            body: "For each cell, row and column offsets loop across the opposite edge. A cell on the far left can therefore count neighbors from the far right, forming a 32×8 torus.",
             code: "wrapped = (index + size) % size",
           },
           {
@@ -181,7 +303,7 @@ const projectsBySlug = {
           },
           {
             title: "Commit the next generation",
-            body: "Live cells survive with two or three neighbors; dead cells are born with exactly three. Results are written into a separate eight-row buffer so early updates cannot affect later decisions.",
+            body: "Live cells survive with two or three neighbors; dead cells are born with exactly three. A separate eight-row buffer keeps every decision tied to the same source generation.",
             code: "B3 / S23  →  nextRows[8]",
           },
         ],

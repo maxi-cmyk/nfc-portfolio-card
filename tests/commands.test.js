@@ -60,18 +60,15 @@ test("skills returns categorised capabilities and stack matrix", () => {
   assert.equal(stackResult.kind, "skills");
 });
 
-test("skills use unique tools and languages in focus order", () => {
+test("skills use project-backed tools and languages in focus order", () => {
   assert.deepEqual(
     focusTechnologyGroups.map((group) => group.title),
     ["Cybersecurity", "Engineering", "AI & Math", "Hackathons"],
   );
 
-  const entries = focusTechnologyGroups.flatMap((group) => [
-    ...group.languages,
-    ...group.tools,
-  ]);
-  const normalizedEntries = entries.map((entry) => entry.toLowerCase());
-  assert.equal(new Set(normalizedEntries).size, normalizedEntries.length);
+  const tools = focusTechnologyGroups.flatMap((group) => group.tools);
+  const normalizedTools = tools.map((entry) => entry.toLowerCase());
+  assert.equal(new Set(normalizedTools).size, normalizedTools.length);
 
   focusTechnologyGroups.forEach((group) => {
     assert.ok(group.tools.length > 0);
@@ -99,7 +96,12 @@ test("hackathon tooling reflects the shipped project stacks", () => {
   const hackathons = getFocusTechnologyGroup("hackathons");
 
   assert.equal(hackathons.variant, "expanded");
-  assert.deepEqual(hackathons.languages, ["TypeScript"]);
+  assert.deepEqual(hackathons.languages, [
+    "TypeScript",
+    "JavaScript",
+    "Python",
+    "SQL",
+  ]);
   [
     "FastAPI",
     "Celery",
@@ -114,12 +116,12 @@ test("hackathon tooling reflects the shipped project stacks", () => {
   ].forEach((tool) => assert.ok(hackathons.tools.includes(tool)));
 });
 
-test("every focus has a distinct project-backed language classification", () => {
+test("every focus lists the languages used by its linked work", () => {
   const expectedLanguages = new Map([
     ["cybersecurity", ["C++"]],
-    ["engineering", ["JavaScript"]],
-    ["ai-math", ["Python"]],
-    ["hackathons", ["TypeScript"]],
+    ["engineering", ["C++", "JavaScript"]],
+    ["ai-math", ["Python", "C++", "JavaScript"]],
+    ["hackathons", ["TypeScript", "JavaScript", "Python", "SQL"]],
   ]);
 
   focusTechnologyGroups.forEach((group) => {
@@ -154,7 +156,6 @@ test("resume returns the downloadable PDF and profile links", () => {
       url: "/assets/Max_Leong_Resume.pdf",
       download: "Max_Leong_Resume.pdf",
     },
-    { label: "open in new tab", url: "/assets/Max_Leong_Resume.pdf" },
     { label: "linkedin", url: "https://linkedin.com/in/maxleongruisheng" },
     { label: "github", url: "https://github.com/maxi-cmyk" },
   ]);
@@ -220,6 +221,7 @@ test("projects lists the selected hardware and maths builds", () => {
 
 test("every project publishes a visitor-facing case study", () => {
   assert.equal(allProjects.length, 5);
+  assert.equal(new Set(allProjects.map(({ insights }) => insights.layout)).size, 5);
 
   for (const project of allProjects) {
     assert.equal(
@@ -227,19 +229,22 @@ test("every project publishes a visitor-facing case study", () => {
       "view case study",
       project.name,
     );
-    assert.equal(project.insights.diagram.nodes.length, 5, project.name);
     assert.equal(project.insights.sections.length, 3, project.name);
+    assert.ok(project.insights.contentOrder.length >= 3, project.name);
     assert.equal("status" in project.insights, false, project.name);
     assert.equal("statusLabel" in project.insights, false, project.name);
     assert.equal("evidence" in project.insights, false, project.name);
   }
 });
 
-test("case studies support project-specific optional narrative blocks", () => {
+test("case studies define project-specific narrative structures and order", () => {
   const conway = allProjects.find(
     (project) => project.slug === "conway-game-of-life",
   );
   const itspeak = allProjects.find((project) => project.slug === "itspeak");
+  const echo = allProjects.find((project) => project.slug === "echo");
+  const asteroids = allProjects.find((project) => project.slug === "asteroids");
+  const sentinel = allProjects.find((project) => project.slug === "sentinel");
 
   assert.deepEqual(getInsightContentOrder(conway.insights), [
     "summary",
@@ -251,10 +256,62 @@ test("case studies support project-specific optional narrative blocks", () => {
   assert.match(conway.insights.howItWorks.steps[0].body, /torus/i);
   assert.deepEqual(getInsightContentOrder(itspeak.insights), [
     "summary",
-    "diagram",
+    "pipeline",
     "sections",
   ]);
-  assert.equal("howItWorks" in itspeak.insights, false);
+  assert.equal(itspeak.insights.pipeline.lanes.length, 2);
+  assert.match(itspeak.insights.pipeline.merge.detail, /deterministic/i);
+  assert.deepEqual(getInsightContentOrder(echo.insights), [
+    "summary",
+    "lifecycle",
+    "sections",
+  ]);
+  assert.equal(echo.insights.lifecycle.steps.length, 6);
+  assert.equal(echo.insights.lifecycle.steps[2].state, "gate");
+  assert.deepEqual(getInsightContentOrder(asteroids.insights), [
+    "frameLoop",
+    "summary",
+    "sections",
+  ]);
+  assert.equal(asteroids.insights.frameLoop.budget, "20 ms");
+  assert.match(
+    asteroids.insights.frameLoop.phases.map(({ detail }) => detail).join(" "),
+    /capped object pools.*framebuffer.*LEDC/s,
+  );
+  assert.deepEqual(getInsightContentOrder(sentinel.insights), [
+    "summary",
+    "eventSequence",
+    "sections",
+  ]);
+  assert.deepEqual(
+    sentinel.insights.eventSequence.devices.map(({ id }) => id),
+    ["sensor", "camera"],
+  );
+  assert.deepEqual(
+    sentinel.insights.eventSequence.steps.map(({ actor }) => actor),
+    ["sensor", "bridge", "camera", "camera", "camera"],
+  );
+  assert.deepEqual(
+    sentinel.insights.eventSequence.steps.map(({ actorLabel }) => actorLabel),
+    ["PIR node", "Blynk V6", "ESP32-CAM", "ESP32-CAM", "ESP32-CAM"],
+  );
+});
+
+test("case-study ordering skips absent, duplicate, and unknown blocks", () => {
+  assert.deepEqual(
+    getInsightContentOrder({
+      contentOrder: [
+        "summary",
+        "lifecycle",
+        "lifecycle",
+        "unknown",
+        "sections",
+      ],
+      lifecycle: { steps: [] },
+      sections: [],
+    }),
+    ["lifecycle"],
+  );
 });
 
 test("focus categories reuse the canonical project records", () => {

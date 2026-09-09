@@ -8,7 +8,7 @@ export const focusTechnologyGroups = [
   {
     id: "engineering",
     title: "Engineering",
-    languages: ["JavaScript"],
+    languages: ["C++", "JavaScript"],
     tools: [
       "ESP32",
       "SSD1306 OLED",
@@ -22,18 +22,19 @@ export const focusTechnologyGroups = [
   {
     id: "ai-math",
     title: "AI & Math",
-    languages: ["Python"],
+    languages: ["Python", "C++", "JavaScript"],
     tools: ["NumPy", "pandas", "SciPy", "scikit-learn", "Jupyter"],
   },
   {
     id: "hackathons",
     title: "Hackathons",
     variant: "expanded",
-    languages: ["TypeScript"],
+    languages: ["TypeScript", "JavaScript", "Python", "SQL"],
     tools: [
       "FastAPI",
       "Celery",
       "Redis",
+      "Railway",
       "MediaPipe",
       "OpenAI",
       "Next.js",

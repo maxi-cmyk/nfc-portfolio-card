@@ -87,7 +87,7 @@ export function appendCommand(command) {
         link.target = "_blank";
         link.rel = "noreferrer";
       }
-      link.textContent = `${label.padEnd(9, " ")}→ ${url.replace("https://", "")}`;
+      link.textContent = `${label} → ${url.replace("https://", "")}`;
       resultRow.append(link);
     });
   } else if (result.kind === "sudo") {

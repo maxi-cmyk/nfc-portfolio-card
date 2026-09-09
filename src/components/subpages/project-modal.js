@@ -112,20 +112,226 @@ function createHowItWorks({ title, intro, steps, takeaway }) {
   return section;
 }
 
+function createNarrativeHeading(title, intro) {
+  const header = document.createElement("header");
+  header.className = "insights-narrative-header";
+
+  const heading = document.createElement("h4");
+  heading.textContent = title;
+
+  const copy = document.createElement("p");
+  copy.textContent = intro;
+
+  header.append(heading, copy);
+  return header;
+}
+
+function createPipeline({ title, intro, source, lanes, merge }) {
+  const section = document.createElement("section");
+  section.className = "insights-pipeline";
+  section.append(createNarrativeHeading(title, intro));
+
+  const map = document.createElement("div");
+  map.className = "insights-pipeline-map";
+
+  const sourceNode = document.createElement("div");
+  sourceNode.className = "insights-pipeline-terminal insights-pipeline-source";
+  const sourceLabel = document.createElement("strong");
+  sourceLabel.textContent = source.label;
+  const sourceDetail = document.createElement("span");
+  sourceDetail.textContent = source.detail;
+  sourceNode.append(sourceLabel, sourceDetail);
+
+  const laneList = document.createElement("div");
+  laneList.className = "insights-pipeline-lanes";
+  lanes.forEach(({ label, steps }) => {
+    const lane = document.createElement("section");
+    lane.className = "insights-pipeline-lane";
+
+    const laneTitle = document.createElement("h5");
+    laneTitle.textContent = label;
+
+    const sequence = document.createElement("ol");
+    steps.forEach((step) => {
+      const item = document.createElement("li");
+      item.textContent = step;
+      sequence.append(item);
+    });
+
+    lane.append(laneTitle, sequence);
+    laneList.append(lane);
+  });
+
+  const mergeNode = document.createElement("div");
+  mergeNode.className = "insights-pipeline-terminal insights-pipeline-merge";
+  const mergeLabel = document.createElement("strong");
+  mergeLabel.textContent = merge.label;
+  const mergeDetail = document.createElement("span");
+  mergeDetail.textContent = merge.detail;
+  mergeNode.append(mergeLabel, mergeDetail);
+
+  map.append(sourceNode, laneList, mergeNode);
+  section.append(map);
+  return section;
+}
+
+function createLifecycle({ title, intro, steps }) {
+  const section = document.createElement("section");
+  section.className = "insights-lifecycle";
+  section.append(createNarrativeHeading(title, intro));
+
+  const sequence = document.createElement("ol");
+  sequence.className = "insights-lifecycle-sequence";
+
+  steps.forEach(({ title: stepTitle, body, state }, index) => {
+    const item = document.createElement("li");
+    item.className = "insights-lifecycle-step";
+    if (state) item.dataset.state = state;
+
+    const marker = document.createElement("span");
+    marker.className = "insights-lifecycle-marker";
+    marker.textContent = String(index + 1).padStart(2, "0");
+    marker.setAttribute("aria-hidden", "true");
+
+    const heading = document.createElement("h5");
+    heading.textContent = stepTitle;
+
+    const copy = document.createElement("p");
+    copy.textContent = body;
+
+    item.append(marker, heading, copy);
+    sequence.append(item);
+  });
+
+  section.append(sequence);
+  return section;
+}
+
+function createFrameLoop({ title, intro, budget, phases, after }) {
+  const section = document.createElement("section");
+  section.className = "insights-frame-loop";
+  section.append(createNarrativeHeading(title, intro));
+
+  const frame = document.createElement("div");
+  frame.className = "insights-frame";
+
+  const timing = document.createElement("div");
+  timing.className = "insights-frame-budget";
+  const timingValue = document.createElement("strong");
+  timingValue.textContent = budget;
+  const timingLabel = document.createElement("span");
+  timingLabel.textContent = "frame budget";
+  timing.append(timingValue, timingLabel);
+
+  const phaseList = document.createElement("ol");
+  phaseList.className = "insights-frame-phases";
+  phases.forEach(({ label, detail }) => {
+    const item = document.createElement("li");
+    const phaseLabel = document.createElement("strong");
+    phaseLabel.textContent = label;
+    const phaseDetail = document.createElement("span");
+    phaseDetail.textContent = detail;
+    item.append(phaseLabel, phaseDetail);
+    phaseList.append(item);
+  });
+
+  frame.append(timing, phaseList);
+
+  const persistence = document.createElement("p");
+  persistence.className = "insights-frame-after";
+  const persistenceLabel = document.createElement("strong");
+  persistenceLabel.textContent = after.label;
+  persistence.append(persistenceLabel, ` ${after.detail}`);
+
+  section.append(frame, persistence);
+  return section;
+}
+
+function createEventSequence({ title, intro, devices, steps }) {
+  const section = document.createElement("section");
+  section.className = "insights-event-sequence";
+  section.append(createNarrativeHeading(title, intro));
+
+  const boundaries = document.createElement("div");
+  boundaries.className = "insights-device-boundaries";
+
+  const boundariesTitle = document.createElement("h5");
+  boundariesTitle.className = "insights-event-section-label";
+  boundariesTitle.textContent = "Device responsibilities";
+  section.append(boundariesTitle);
+
+  devices.forEach(({ id, label, detail }) => {
+    const device = document.createElement("div");
+    device.className = "insights-device";
+    device.dataset.device = id;
+
+    const deviceLabel = document.createElement("strong");
+    deviceLabel.textContent = label;
+    const deviceDetail = document.createElement("span");
+    deviceDetail.textContent = detail;
+    device.append(deviceLabel, deviceDetail);
+    boundaries.append(device);
+  });
+
+  const sequence = document.createElement("ol");
+  sequence.className = "insights-event-list";
+
+  const sequenceTitle = document.createElement("h5");
+  sequenceTitle.className = "insights-event-section-label";
+  sequenceTitle.textContent = "Event sequence";
+
+  steps.forEach(({ actor, actorLabel, title: stepTitle, body }, index) => {
+    const item = document.createElement("li");
+    item.className = "insights-event-step";
+    item.dataset.actor = actor;
+
+    const marker = document.createElement("span");
+    marker.className = "insights-event-marker";
+    marker.textContent = String(index + 1).padStart(2, "0");
+    marker.setAttribute("aria-hidden", "true");
+
+    const owner = document.createElement("span");
+    owner.className = "insights-event-actor";
+    owner.textContent = actorLabel;
+
+    const copy = document.createElement("div");
+    copy.className = "insights-event-copy";
+    const heading = document.createElement("h5");
+    heading.textContent = stepTitle;
+    const paragraph = document.createElement("p");
+    paragraph.textContent = body;
+    copy.append(heading, paragraph);
+
+    item.append(marker, owner, copy);
+    sequence.append(item);
+  });
+
+  section.append(boundaries, sequenceTitle, sequence);
+  return section;
+}
+
+const insightRenderers = {
+  diagram: createFlowDiagram,
+  howItWorks: createHowItWorks,
+  pipeline: createPipeline,
+  lifecycle: createLifecycle,
+  frameLoop: createFrameLoop,
+  eventSequence: createEventSequence,
+};
+
 const defaultInsightOrder = ["summary", "diagram", "howItWorks", "sections"];
 
 export function getInsightContentOrder(insights = {}) {
   const requestedOrder = insights.contentOrder || defaultInsightOrder;
-  const available = {
-    summary: Boolean(insights.summary),
-    diagram: Boolean(insights.diagram),
-    howItWorks: Boolean(insights.howItWorks),
-    sections: Boolean(insights.sections?.length),
+  const available = (block) => {
+    if (block === "summary") return Boolean(insights.summary);
+    if (block === "sections") return Boolean(insights.sections?.length);
+    return Boolean(insightRenderers[block] && insights[block]);
   };
 
   return requestedOrder.filter(
     (block, index) =>
-      available[block] && requestedOrder.indexOf(block) === index,
+      available(block) && requestedOrder.indexOf(block) === index,
   );
 }
 
@@ -168,7 +374,7 @@ function ensureModal() {
   return modalEl;
 }
 
-export function openProjectModal(slug) {
+export function openProjectModal(slug, returnFocusElement) {
   const project = allProjects.find(
     (p) => p.slug === slug || p.name.toLowerCase().includes(slug.toLowerCase()),
   );
@@ -176,7 +382,10 @@ export function openProjectModal(slug) {
   if (!project) return false;
 
   const modal = ensureModal();
-  previousActiveElement = document.activeElement;
+  const isAlreadyOpen = modal.open || modal.hasAttribute("open");
+  if (!isAlreadyOpen) {
+    previousActiveElement = returnFocusElement || document.activeElement;
+  }
 
   modal.replaceChildren();
 
@@ -233,14 +442,14 @@ export function openProjectModal(slug) {
   desc.textContent = project.description;
 
   // Deep-dive case study
+  const insights = project.insights || { summary: project.description };
   const insightsSection = document.createElement("section");
-  insightsSection.className = "modal-insights-box";
+  insightsSection.className = `modal-insights-box insights-layout--${insights.layout || "default"}`;
 
   const insightsTitle = document.createElement("h3");
   insightsTitle.className = "insights-title";
   insightsTitle.innerHTML = '<span class="prompt">//</span> SYSTEM CASE STUDY';
 
-  const insights = project.insights || { summary: project.description };
   insightsSection.append(insightsTitle);
 
   getInsightContentOrder(insights).forEach((block) => {
@@ -251,14 +460,6 @@ export function openProjectModal(slug) {
       insightsSection.append(summary);
     }
 
-    if (block === "diagram") {
-      insightsSection.append(createFlowDiagram(insights.diagram));
-    }
-
-    if (block === "howItWorks") {
-      insightsSection.append(createHowItWorks(insights.howItWorks));
-    }
-
     if (block === "sections") {
       const details = document.createElement("div");
       details.className = "insights-detail-grid";
@@ -266,6 +467,10 @@ export function openProjectModal(slug) {
         details.append(createInsightSection(section));
       });
       insightsSection.append(details);
+    }
+
+    if (insightRenderers[block]) {
+      insightsSection.append(insightRenderers[block](insights[block]));
     }
   });
 
@@ -294,11 +499,14 @@ export function openProjectModal(slug) {
     linksContainer,
   );
   modal.append(container);
+  modal.scrollTop = 0;
 
-  if (typeof modal.showModal === "function") {
-    modal.showModal();
-  } else {
-    modal.setAttribute("open", "");
+  if (!isAlreadyOpen) {
+    if (typeof modal.showModal === "function") {
+      modal.showModal();
+    } else {
+      modal.setAttribute("open", "");
+    }
   }
 
   closeBtn.focus();

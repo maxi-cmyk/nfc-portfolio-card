@@ -27,8 +27,8 @@ export function createProjectInsightsButton(project) {
   icon.append(iconPath);
 
   button.append(label, icon);
-  button.addEventListener("click", () => {
-    openProjectModal(project.slug);
+  button.addEventListener("click", (event) => {
+    openProjectModal(project.slug, event.currentTarget);
   });
 
   return button;
