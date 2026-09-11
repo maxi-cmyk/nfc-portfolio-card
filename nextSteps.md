@@ -26,18 +26,18 @@ and source-level checks below as the audit authority.
 
 ## 1. Remove the terminal keyboard trap [P1]
 
-`src/main.js` currently calls `preventDefault()` for every `Tab` keypress in the
-terminal input. Once keyboard focus enters the input, standard forward and
-backward tab navigation cannot leave it.
+At audit time, `src/main.js` called `preventDefault()` for every `Tab` keypress
+in the terminal input, so standard forward and backward tab navigation could
+not leave it.
 
-- [ ] Always allow `Shift+Tab` to move to the previous control.
-- [ ] When the terminal input is empty, let plain `Tab` follow the normal page
+- [x] Always allow `Shift+Tab` to move to the previous control.
+- [x] When the terminal input is empty, let plain `Tab` follow the normal page
       focus order instead of opening autocomplete.
-- [ ] Keep terminal-style autocomplete for non-empty commands without making it
+- [x] Keep terminal-style autocomplete for non-empty commands without making it
       the only available keyboard behavior.
-- [ ] Add tests for empty `Tab`, `Shift+Tab`, single-match completion, and
+- [x] Add tests for empty `Tab`, `Shift+Tab`, single-match completion, and
       multi-match suggestions.
-- [ ] Verify a keyboard-only route from the mascot through the terminal, quick
+- [x] Verify a keyboard-only route from the mascot through the terminal, quick
       commands, focus links, certificate actions, and footer links.
 
 Acceptance: no keyboard focus trap remains; autocomplete still works; focus can
@@ -45,16 +45,17 @@ move both forward and backward using standard keys. This addresses WCAG 2.1.2.
 
 ## 2. Correct normal-text contrast [P1]
 
-Two System 7 foreground/background pairs miss the WCAG AA 4.5:1 requirement:
+The audit found two System 7 foreground/background pairs below the WCAG AA
+4.5:1 requirement:
 
 - Terminal placeholder `#777` on `#e7e6df`: **3.58:1**.
 - Terminal error `#d83a3a` on `#f4f3ed`: **4.12:1**.
 
-- [ ] Replace both values with darker System 7-compatible colors that reach at
+- [x] Replace both values with darker System 7-compatible colors that reach at
       least 4.5:1 in their actual rendered contexts.
-- [ ] Promote the corrected placeholder and error colors to named semantic
+- [x] Promote the corrected placeholder and error colors to named semantic
       variables instead of introducing more local literals.
-- [ ] Recheck hover, focus, disabled-looking placeholder, and error states in the
+- [x] Recheck hover, focus, disabled-looking placeholder, and error states in the
       active retro theme.
 
 Acceptance: automated or calculated contrast is at least 4.5:1 for both states,

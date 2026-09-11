@@ -9,6 +9,7 @@ import {
   getTerminalPlaceholder,
 } from "./terminal/easter-eggs.js";
 import {
+  getTerminalTabAction,
   shouldAutoFocusTerminal,
   shouldFocusTerminalAfterQuickCommand,
 } from "./terminal/input.js";
@@ -19,7 +20,6 @@ import {
   appendSuggestions,
 } from "./components/terminal/runner.js";
 import { CommandHistory } from "./terminal/history.js";
-import { getAutocompleteResult } from "./terminal/autocomplete.js";
 import { initCertificates } from "./components/certificates.js";
 import { initFocusTooling } from "./components/focus-tooling.js";
 
@@ -161,8 +161,14 @@ form.addEventListener("submit", (event) => {
 
 input.addEventListener("keydown", (event) => {
   if (event.key === "Tab") {
+    const action = getTerminalTabAction(input.value, {
+      shiftKey: event.shiftKey,
+    });
+
+    if (!action.preventDefault) return;
+
     event.preventDefault();
-    const result = getAutocompleteResult(input.value);
+    const result = action.autocomplete;
 
     if (!result.hasMatch) {
       input.classList.add("is-autocomplete-empty");

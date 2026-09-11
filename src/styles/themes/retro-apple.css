@@ -8,6 +8,8 @@
   --acid: #1e4f9e;
   --warm: #7a2e5d;
   --red: #d83a3a;
+  --terminal-placeholder: #66645f;
+  --terminal-error: #b93434;
 }
 
 html {
@@ -235,7 +237,7 @@ body::before {
 }
 
 .command-line input::placeholder {
-  color: #777;
+  color: var(--terminal-placeholder);
 }
 
 .quick-links {
