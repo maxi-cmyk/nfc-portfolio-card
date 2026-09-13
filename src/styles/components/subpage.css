@@ -1,0 +1,191 @@
+.full-subpage-view {
+  min-height: 100vh;
+  padding: clamp(32px, 6vw, 64px) 0 clamp(64px, 10vw, 120px);
+}
+
+.subpage-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: clamp(32px, 5vw, 56px);
+  color: var(--muted);
+  font:
+    12px "DM Mono",
+    monospace;
+  letter-spacing: 0.05em;
+}
+
+.subpage-topbar nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.subpage-topbar span {
+  color: var(--muted);
+}
+
+.subpage-topbar #subpage-category-label {
+  color: var(--acid);
+}
+
+.subpage-hero {
+  margin-bottom: clamp(36px, 6vw, 64px);
+}
+
+.subpage-command-path {
+  margin: 0 0 12px;
+  color: var(--acid);
+  font:
+    clamp(13px, 1.8vw, 15px) "DM Mono",
+    monospace;
+}
+
+.subpage-hero h1 {
+  margin: 0 0 16px;
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(32px, 5vw, 54px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.subpage-lede {
+  max-width: 680px;
+  margin: 0;
+  color: var(--muted);
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(16px, 2.2vw, 20px);
+  line-height: 1.6;
+}
+
+.subpage-hero .focus-tooling {
+  max-width: 760px;
+  margin-top: 24px;
+}
+
+.full-subpage-projects {
+  display: grid;
+  gap: clamp(20px, 3vw, 32px);
+  margin-bottom: clamp(48px, 8vw, 80px);
+}
+
+.full-project-card {
+  padding: clamp(20px, 3.5vw, 32px);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.full-project-card:hover {
+  border-color: var(--acid);
+  transform: translateY(-2px);
+}
+
+.project-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.project-card-title {
+  margin: 0;
+  color: var(--acid);
+  font:
+    500 clamp(18px, 2.2vw, 24px) "DM Mono",
+    monospace;
+}
+
+.project-card-meta {
+  color: var(--muted);
+  font:
+    12px "DM Mono",
+    monospace;
+  letter-spacing: 0.03em;
+}
+
+.project-card-desc {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-family: "Outfit", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.project-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.tech-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--acid);
+  font:
+    11px "DM Mono",
+    monospace;
+  letter-spacing: 0.03em;
+}
+
+.project-card-links {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 12px 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.project-card-outbound-links {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+
+.project-entry-links > .terminal-link,
+.project-card-outbound-links .terminal-link,
+.modal-links .terminal-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+}
+
+.project-card-outbound-links .terminal-link,
+.modal-links .terminal-link {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.subpage-footer {
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.subpage-back-btn {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  color: var(--acid);
+  font:
+    14px "DM Mono",
+    monospace;
+  text-decoration: none;
+}
+
+.subpage-back-btn:hover {
+  text-decoration: underline;
+}

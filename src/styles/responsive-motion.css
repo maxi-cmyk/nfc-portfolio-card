@@ -1,0 +1,191 @@
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 650px) {
+  .shell {
+    width: min(100% - 28px, 1120px);
+  }
+
+  .masthead {
+    padding: 19px 0;
+  }
+
+  .status {
+    font-size: 10px;
+  }
+
+  .boot-screen {
+    padding: 14px;
+  }
+
+  .boot-terminal {
+    min-height: 300px;
+    box-shadow: 6px 6px 0 #0a0c09;
+  }
+
+  .boot-topline {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+
+  .intro {
+    padding: 80px 0 48px;
+  }
+
+  .terminal {
+    box-shadow: 6px 6px 0 #0a0c09;
+  }
+
+  .output {
+    min-height: 0;
+    padding: 18px;
+    font-size: 12px;
+  }
+
+  .result {
+    font-size: 12px;
+  }
+
+  .command-line {
+    padding: 4px 18px;
+    font-size: 16px;
+  }
+
+  .command-line input {
+    font-size: 16px;
+  }
+
+  .quick-links {
+    margin: 27px 0 100px;
+  }
+
+  .focus {
+    padding-bottom: 80px;
+  }
+
+  .focus-heading {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-bottom: 42px;
+  }
+
+  .field-art-card {
+    min-height: 128px;
+    padding: 9px;
+  }
+
+  .field-art-card svg {
+    height: 70px;
+  }
+
+  .field-art-label,
+  .field-art-caption {
+    font-size: 8px;
+  }
+
+  .field-trio .field-art-card {
+    min-height: 0;
+    padding: 0;
+  }
+
+  .field-trio .field-art-card svg {
+    height: 100%;
+  }
+
+  .focus-index article {
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 12px;
+    padding: 20px 0;
+  }
+
+  .focus-kind {
+    display: none;
+  }
+
+  .focus-command {
+    font-size: 12px;
+  }
+
+  .certificates-heading,
+  .certificate-entry {
+    grid-template-columns: 1fr;
+  }
+
+  .certificates-heading {
+    gap: 18px;
+  }
+
+  .focus-tooling {
+    font-size: 10px;
+  }
+
+  .focus-tooling > div {
+    grid-template-columns: 66px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .certificate-entry {
+    gap: 28px;
+  }
+
+  .certificate-atmosphere {
+    inset: -36px 0 0;
+  }
+
+  .certificate-art {
+    opacity: 0.16;
+  }
+
+  .certificate-art-credential {
+    top: 4px;
+    right: -18px;
+    width: 142px;
+  }
+
+  .certificate-art-verification {
+    bottom: 76px;
+    left: -40px;
+    width: 168px;
+  }
+
+  .certificate-details h3 {
+    font-size: 30px;
+  }
+
+  footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .art-packet {
+    display: none;
+  }
+
+  .credential-sheet,
+  .credential-scan,
+  .credential-seal,
+  .credential-check,
+  .credential-ribbon,
+  .verification-path,
+  .verification-core,
+  .verification-check {
+    animation: none !important;
+  }
+
+  .credential-scan {
+    opacity: 0;
+  }
+}

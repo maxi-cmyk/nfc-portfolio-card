@@ -69,12 +69,12 @@ are 26 px high, certificate actions are 17 px, footer links are 16 px, modal
 outbound links are 21–42 px, the terminal input is 23 px, and the case-study
 button is 40 px.
 
-- [ ] Give frequently used links and buttons a minimum 44 px hit area using
+- [x] Give frequently used links and buttons a minimum 44 px hit area using
       padding or pseudo-element expansion; do not inflate the visible typography.
-- [ ] Prioritize focus-category links, certificate actions, footer links,
+- [x] Prioritize focus-category links, certificate actions, footer links,
       project outbound links, case-study buttons, and terminal suggestions.
-- [ ] Keep adequate separation where adjacent inline links share a row.
-- [ ] Confirm that larger targets do not disrupt the compact System 7 rhythm or
+- [x] Keep adequate separation where adjacent inline links share a row.
+- [x] Confirm that larger targets do not disrupt the compact System 7 rhythm or
       cause new wrapping/overflow at 320 px and 390 px.
 
 Acceptance: primary touch controls meet a 44 × 44 px target or have an equivalent

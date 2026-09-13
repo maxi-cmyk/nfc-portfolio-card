@@ -1,0 +1,123 @@
+.masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  color: var(--ink);
+  font:
+    600 20px "DM Mono",
+    monospace;
+  text-decoration: none;
+}
+
+.brand span {
+  color: var(--acid);
+}
+
+.status,
+.eyebrow {
+  color: var(--muted);
+  font:
+    12px "DM Mono",
+    monospace;
+  letter-spacing: 0.07em;
+}
+
+.status span {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: var(--acid);
+  box-shadow: 0 0 12px var(--acid);
+}
+
+.intro {
+  max-width: 850px;
+  padding: clamp(76px, 13vw, 160px) 0 48px;
+}
+
+.panda {
+  display: block;
+  margin-bottom: 12px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--acid);
+  cursor: pointer;
+  font:
+    42px "DM Mono",
+    monospace;
+  transition:
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.panda:hover,
+.panda:focus-visible,
+.panda.has-hint {
+  color: var(--warm);
+  outline: none;
+  transform: translateY(-2px);
+}
+
+@keyframes pandaCelebrate {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    color: var(--acid);
+  }
+  25% {
+    transform: translateY(-8px) scale(1.15) rotate(-6deg);
+    color: var(--warm);
+  }
+  50% {
+    transform: translateY(0) scale(1.05) rotate(0deg);
+    color: var(--acid);
+  }
+  75% {
+    transform: translateY(-6px) scale(1.12) rotate(6deg);
+    color: var(--warm);
+  }
+}
+
+.panda.is-celebrating {
+  animation: pandaCelebrate 600ms ease-in-out infinite;
+}
+
+.mascot-hint {
+  margin: 0 0 18px;
+  color: var(--warm);
+  font:
+    12px "DM Mono",
+    monospace;
+}
+
+.eyebrow {
+  margin: 0 0 18px;
+}
+
+.intro h1 {
+  margin: 0;
+  font-size: clamp(56px, 11vw, 132px);
+  line-height: 0.82;
+  letter-spacing: -0.075em;
+}
+
+.lede {
+  max-width: 650px;
+  margin: 38px 0 0;
+  color: #c7c4bb;
+  font-size: clamp(19px, 2.4vw, 27px);
+  line-height: 1.4;
+}
+
+.lede em {
+  color: var(--acid);
+  font-style: normal;
+}

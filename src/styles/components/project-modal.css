@@ -1,0 +1,213 @@
+/* -------------------------------------------------- */
+/* Project Modal & Case Studies                       */
+/* -------------------------------------------------- */
+
+.project-insights-btn {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--acid);
+  padding: 7px 10px;
+  background: var(--panel);
+  background: color-mix(in srgb, var(--acid) 10%, var(--panel));
+  cursor: pointer;
+  font:
+    500 12px "DM Mono",
+    monospace;
+  color: var(--acid);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.project-insights-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-width: 1.25;
+}
+
+.project-insights-btn:hover,
+.project-insights-btn:focus-visible {
+  background: var(--acid);
+  color: var(--bg);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.project-insights-btn:active {
+  transform: translateY(0);
+}
+
+.project-insights-btn:focus-visible,
+.modal-close-btn:focus-visible {
+  outline: 2px solid var(--acid);
+  outline-offset: 3px;
+}
+
+.project-modal {
+  box-sizing: border-box;
+  width: min(960px, calc(100vw - 32px));
+  max-width: 960px;
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+  overflow: auto;
+  overflow-x: hidden;
+  scrollbar-color: var(--acid) var(--panel);
+}
+
+.project-modal::backdrop {
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+}
+
+.modal-dialog-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  gap: clamp(16px, 2.5vw, 24px);
+  padding: clamp(20px, 3.5vw, 32px);
+}
+
+.modal-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 12px;
+}
+
+.modal-badge {
+  min-width: 0;
+  color: var(--muted);
+  font:
+    11px "DM Mono",
+    monospace;
+  letter-spacing: 0.05em;
+  overflow-wrap: anywhere;
+}
+
+.modal-close-btn {
+  flex: 0 0 auto;
+  min-height: 44px;
+  border: none;
+  padding: 8px 4px;
+  background: transparent;
+  color: var(--acid);
+  cursor: pointer;
+  font:
+    12px "DM Mono",
+    monospace;
+}
+
+.modal-close-btn:hover {
+  text-decoration: underline;
+}
+
+.modal-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modal-title {
+  margin: 0;
+  color: var(--acid);
+  font:
+    500 clamp(20px, 3vw, 28px) "DM Mono",
+    monospace;
+}
+
+.modal-meta {
+  margin: 0;
+  color: var(--muted);
+  font:
+    12px "DM Mono",
+    monospace;
+}
+
+.modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.modal-desc {
+  margin: 0;
+  color: var(--ink);
+  font-family: "Outfit", sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.modal-insights-box {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: clamp(16px, 2.5vw, 24px);
+  padding: clamp(16px, 2.5vw, 24px);
+  border: 1px solid var(--line);
+  background: var(--bg);
+}
+
+.insights-title {
+  min-width: 0;
+  margin: 0;
+  color: var(--ink);
+  font:
+    500 13px "DM Mono",
+    monospace;
+  letter-spacing: 0.04em;
+}
+
+.insights-summary {
+  max-width: 72ch;
+  margin: 0;
+  color: var(--muted);
+  font-family: "Outfit", sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.insights-narrative-header {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.72fr) minmax(0, 1.6fr);
+  gap: 12px clamp(24px, 4vw, 44px);
+}
+
+.insights-narrative-header h4,
+.insights-narrative-header p {
+  margin: 0;
+}
+
+.insights-narrative-header h4 {
+  color: var(--acid);
+  font:
+    500 clamp(17px, 2.4vw, 22px) "DM Mono",
+    monospace;
+  line-height: 1.25;
+}
+
+.insights-narrative-header p {
+  max-width: 68ch;
+  color: var(--ink);
+  font-family: "Outfit", sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+}
