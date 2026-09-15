@@ -6,7 +6,7 @@ export const certificates = [
     summary:
       "A seven-course professional certificate covering practical AI use across research, writing, content creation, data analysis, and app building.",
     pdfUrl: "/assets/AI-professional.pdf",
-    previewUrl: "/assets/AI-professional-preview.png",
+    previewUrl: "/assets/AI-professional-preview.webp",
     previewAlt:
       "Google AI Professional Certificate awarded to Max Leong on June 22, 2026",
   },

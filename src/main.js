@@ -1,3 +1,5 @@
+import { initMotion } from "./components/motion.js";
+import { initLedMatrix } from "./components/led-matrix.js";
 import {
   getBootDelay,
   getBootSteps,
@@ -39,7 +41,8 @@ const railSections = document.querySelectorAll(
 
 const commandHistory = new CommandHistory();
 let mascotClicks = 0;
-let aliasTeaserStarted = false;
+let aliasTeaserTimer;
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 function flashAliasPlaceholder() {
   input.placeholder = getTerminalPlaceholder(true);
@@ -51,11 +54,16 @@ function flashAliasPlaceholder() {
   }, 500);
 }
 
-function startAliasTeaser() {
-  if (aliasTeaserStarted) return;
-
-  aliasTeaserStarted = true;
-  window.setInterval(flashAliasPlaceholder, 4000);
+function startAliasTeaser(active) {
+  window.clearInterval(aliasTeaserTimer);
+  input.placeholder = getTerminalPlaceholder(false);
+  input.classList.remove("is-alias-teaser");
+  if (!active) return;
+  aliasTeaserTimer = window.setInterval(() => {
+    const bounds = input.getBoundingClientRect();
+    if (bounds.bottom > 0 && bounds.top < window.innerHeight)
+      flashAliasPlaceholder();
+  }, 12000);
 }
 
 function handleMascotClick() {
@@ -104,7 +112,6 @@ function revealPortfolio() {
 
   bootScreen.classList.add("is-complete");
   main.hidden = false;
-  startAliasTeaser();
   startSystemRail();
   initRouter();
   window.setTimeout(() => bootScreen.remove(), exitDelay);
@@ -116,9 +123,10 @@ function revealPortfolio() {
 
 async function runBootSequence() {
   const { typingDelay, completionDelay } = getBootTiming();
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  ).matches;
+  if (reducedMotion.matches) {
+    revealPortfolio();
+    return;
+  }
 
   for (const step of getBootSteps()) {
     const text =
@@ -130,19 +138,19 @@ async function runBootSequence() {
     for (const frame of getTypingFrames(text)) {
       line.textContent = frame;
 
-      if (!prefersReducedMotion) {
+      if (!reducedMotion.matches) {
         await new Promise((resolve) => window.setTimeout(resolve, typingDelay));
       }
     }
 
-    if (!prefersReducedMotion) {
+    if (!reducedMotion.matches) {
       await new Promise((resolve) =>
         window.setTimeout(resolve, getBootDelay()),
       );
     }
   }
 
-  if (!prefersReducedMotion) {
+  if (!reducedMotion.matches) {
     await new Promise((resolve) => window.setTimeout(resolve, completionDelay));
   }
 
@@ -234,4 +242,7 @@ pandaMascot.addEventListener("click", handleMascotClick);
 skipBoot.addEventListener("click", revealPortfolio);
 initCertificates();
 initFocusTooling();
+const motion = initMotion();
+motion.register(input, startAliasTeaser);
+initLedMatrix(motion);
 runBootSequence();

@@ -7,7 +7,7 @@ current System 7 visual language, factual project copy, terminal interaction,
 and five project-specific case-study layouts. Do not reopen completed review
 corrections unless a regression is found.
 
-## Audit snapshot
+## Audit snapshot (September 10; historical)
 
 | Dimension                |            Score | Evidence                                                                                                                                   |
 | ------------------------ | ---------------: | ------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -82,37 +82,60 @@ spaced hit area; all audited narrow layouts remain overflow-free.
 
 ## 4. Reduce certificate preview transfer cost [P2]
 
-The single lazy-loaded certificate preview is approximately **930 KB**, which is
-large for a below-the-fold image on a compact portfolio.
+The audit found a **930,054-byte PNG** preview. Completed September 15, 2026:
+the page now requests a **161,504-byte WebP**, saving **768,550 bytes (82.6%)**.
 
-- [ ] Generate a visually faithful WebP or AVIF derivative sized for its maximum
+- [x] Generate a visually faithful WebP or AVIF derivative sized for its maximum
       rendered width while keeping the PDF as the full-resolution source.
-- [ ] Add an appropriate `srcset`/`sizes` contract if more than one raster size is
+- [x] Add an appropriate `srcset`/`sizes` contract if more than one raster size is
       justified; otherwise ship one right-sized derivative.
-- [ ] Preserve explicit width and height, lazy loading, async decoding, alt text,
+- [x] Preserve explicit width and height, lazy loading, async decoding, alt text,
       and the existing certificate-window presentation.
-- [ ] Record the before/after transfer size and visually compare desktop and
+- [x] Record the before/after transfer size and visually compare desktop and
       mobile rendering.
 
 Acceptance: the preview is materially smaller with no visible certificate-text
 degradation at its rendered size and no layout shift.
 
+Implementation and evidence:
+
+- Retained one 1400 × 1082 derivative for crisp high-density display at a maximum
+  layout width of approximately 618 CSS px. Multiple raster sizes are unnecessary
+  for this single 162 KB, below-the-fold preview; no `srcset`/`sizes` was added.
+- Encoded with `cwebp -q 90 -m 6 -sharp_yuv
+public/assets/AI-professional-preview.png -o
+public/assets/AI-professional-preview.webp` (one shell command).
+- Kept the original PNG for regeneration and the unchanged PDF for full-resolution
+  viewing. Only the WebP is requested by the certificate component.
+- Local Chrome comparison at 1440, 650, 390, and 320 px with 2× pixel density:
+  unchanged image geometry, no horizontal overflow, and no visible certificate-text
+  degradation in the desktop/mobile comparison. Explicit dimensions and the
+  existing aspect ratio continue to reserve the same space before decoding.
+- Browser resource timing confirmed the 161,504-byte WebP response. All 47 tests,
+  production build, targeted Prettier checks, and `git diff --check` passed.
+
 ## 5. Preserve feedback in reduced-motion mode [P2]
 
-The current reduced-motion rule removes every transition and animation globally.
-This prevents motion, but it also removes useful state-change feedback from
-controls.
+Completed September 15, 2026. Reduced motion disables decorative loops,
+scrolling and spatial hover effects while preserving immediate color, border,
+outline, and native dialog feedback. Autocomplete suggestions receive a static
+outline; success/failure retain their state colors. Boot reveals immediately and
+the recurring alias-placeholder timer is stopped.
 
-- [ ] Keep decorative loops, CRT effects, smooth scrolling, and boot typing
+- [x] Keep decorative loops, CRT effects, smooth scrolling, and boot typing
       disabled for reduced-motion users.
-- [ ] Restore immediate, non-moving feedback for hover, focus, autocomplete
+- [x] Restore immediate, non-moving feedback for hover, focus, autocomplete
       success/failure, and modal state changes.
-- [ ] Prefer color, border, underline, or static icon changes over transforms.
-- [ ] Add a reduced-motion check that confirms the portfolio reveals immediately
+- [x] Prefer color, border, underline, or static icon changes over transforms.
+- [x] Add a reduced-motion check that confirms the portfolio reveals immediately
       and interactive state remains perceivable.
 
 Acceptance: no decorative motion remains under `prefers-reduced-motion: reduce`,
 while focus and interaction state changes are still obvious.
+
+Verification: local Chrome confirmed immediate reveal, zero active animations,
+static matrix content, visible autocomplete feedback, and stationary keyboard
+focus. Live preference changes pause/resume motion without reloading the page.
 
 ## 6. Document and consolidate the incumbent design system [P2]
 
@@ -133,6 +156,38 @@ existing semantic color variables.
 Acceptance: future work has a concise source of truth, shared functional colors
 come from tokens, and the rendered interface is unchanged apart from intentional
 accessibility fixes.
+
+## Animation improvements — completed September 15, 2026
+
+- Replaced the decorative Conway cells with a 32 × 8 LED matrix: four 8 × 8
+  modules, dark unlit dots, restrained amber pixels, and discrete scrolling
+  `HELLO, WORLD!`. It rests on `HELLO` for 10 seconds between passes; reduced
+  motion always shows that static frame.
+- Restored the original pre-review scattered positions, sizes, rotations, opacity,
+  and responsive placement rules at the user's request. The LED matrix occupies
+  the former Conway model's footprint. The matrix and Asteroids were then moved
+  down to AI & math at the user's request, with positions following that section
+  as content reflows. Removed the later local
+  anchors, extra whitespace, enlargement, and contrast changes. Original
+  background placement can overlap content, as it did before the review. The
+  restored layout was checked at 1440, 768, 390, and 320 px; the original
+  certificate atmosphere extends past the viewport at 768 px.
+- Added shared viewport, hidden-document, and reduced-motion handling for model,
+  certificate, mascot, terminal, boot, and placeholder effects. CSS loops pause
+  without recreating their animations; the matrix timer stops offscreen.
+- Added resting phases to lock, packet, LED, Asteroids, and certificate loops.
+  Removed the certificate's perpetual floating motion.
+- Verified at 1440, 768, 390, and 320 px: 256 matrix dots, no model/text rectangle
+  intersections in the earlier reserved-space layout, no horizontal overflow,
+  offscreen CSS/timer pausing, and no
+  browser JavaScript exceptions. Observed matrix scrolling and tested live
+  reduced-motion changes. Hidden-document handling was checked with a simulated
+  visibility event; this is not a physical-device battery/performance benchmark.
+- All 49 tests, production build, formatting, and diff checks pass. The design
+  detector returned no findings in degraded regex mode; browser checks are the
+  visual evidence.
+
+Boot-once-per-session remains an optional suggestion, not an implemented change.
 
 ## Final verification gate
 

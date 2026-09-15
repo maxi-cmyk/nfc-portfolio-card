@@ -1,0 +1,39 @@
+/* Keep animation instances alive while paused, preserving their current frame. */
+.motion-region:not([data-motion-running="true"]),
+.motion-region:not([data-motion-running="true"]) * {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  /* State remains visible through the existing color, outline and border styles. */
+  a:hover,
+  a:focus-visible,
+  a:active,
+  button:hover,
+  button:focus-visible,
+  button:active,
+  .certificate-preview:hover,
+  .certificate-preview:focus-visible,
+  .system-rail a.is-active,
+  .panda.has-hint {
+    transform: none !important;
+  }
+  .art-packet,
+  .credential-scan,
+  .asteroid-shot,
+  .asteroid-burst {
+    visibility: hidden;
+  }
+  .result.suggestions.is-flash {
+    outline: 1px solid var(--acid);
+    outline-offset: 3px;
+    text-decoration: underline;
+  }
+}

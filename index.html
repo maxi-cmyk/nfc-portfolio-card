@@ -140,13 +140,7 @@
                   <circle class="art-node" cx="51" cy="47" r="7" />
                   <circle class="art-node" cx="76" cy="20" r="7" />
                   <circle class="art-node" cx="91" cy="67" r="7" />
-                  <circle class="art-packet" r="3">
-                    <animateMotion
-                      dur="4.8s"
-                      path="M20 69 L51 47 L76 20 L51 47 L91 67"
-                      repeatCount="indefinite"
-                    />
-                  </circle>
+                  <circle class="art-packet" r="3" />
                   <g class="art-lock-pendulum">
                     <path
                       class="art-lock"
@@ -218,68 +212,12 @@
                 </svg>
                 <span class="field-art-caption">signal online</span>
               </div>
-              <div class="field-art-card conway-art">
-                <span class="field-art-label">LIFE</span>
-                <svg viewBox="0 0 120 94" focusable="false">
-                  <g class="conway-grid">
-                    <path
-                      d="M18 18h66v66H18zM29 18v66m11-66v66m11-66v66m11-66v66m11-66v66M18 29h66M18 40h66M18 51h66M18 62h66M18 73h66"
-                    />
-                  </g>
-                  <g class="conway-cells">
-                    <rect
-                      class="life-cell cell-a"
-                      x="31"
-                      y="31"
-                      width="8"
-                      height="8"
-                    />
-                    <rect
-                      class="life-cell cell-b"
-                      x="42"
-                      y="31"
-                      width="8"
-                      height="8"
-                    />
-                    <rect
-                      class="life-cell cell-c"
-                      x="53"
-                      y="31"
-                      width="8"
-                      height="8"
-                    />
-                    <rect
-                      class="life-cell cell-d"
-                      x="42"
-                      y="42"
-                      width="8"
-                      height="8"
-                    />
-                    <rect
-                      class="life-cell cell-e"
-                      x="53"
-                      y="53"
-                      width="8"
-                      height="8"
-                    />
-                    <rect
-                      class="life-cell cell-f"
-                      x="64"
-                      y="53"
-                      width="8"
-                      height="8"
-                    />
-                    <rect
-                      class="life-cell cell-g"
-                      x="53"
-                      y="64"
-                      width="8"
-                      height="8"
-                    />
-                  </g>
-                  <path class="conway-arrow" d="M94 41v20m0 0-5-5m5 5 5-5" />
-                </svg>
-                <span class="field-art-caption">generation +1</span>
+              <div class="field-art-card matrix-art">
+                <svg
+                  id="led-matrix"
+                  viewBox="0 0 344 96"
+                  focusable="false"
+                ></svg>
               </div>
               <div class="field-art-card camera-art">
                 <svg viewBox="0 0 150 108" focusable="false">

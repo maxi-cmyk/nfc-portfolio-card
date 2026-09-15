@@ -90,61 +90,51 @@
   fill: var(--warm);
 }
 
-.certificate-atmosphere.is-animating .credential-sheet {
-  animation: credential-float 7s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+.certificate-atmosphere .credential-sheet {
+  transform: none;
 }
 
-.certificate-atmosphere.is-animating .credential-scan {
-  animation: credential-scan 5.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+.certificate-atmosphere .credential-scan {
+  animation: credential-scan 16s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
-.certificate-atmosphere.is-animating .credential-seal,
-.certificate-atmosphere.is-animating .credential-check,
-.certificate-atmosphere.is-animating .credential-ribbon {
-  animation: credential-verify 5.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+.certificate-atmosphere .credential-seal,
+.certificate-atmosphere .credential-check,
+.certificate-atmosphere .credential-ribbon {
+  animation: credential-verify 16s cubic-bezier(0.16, 1, 0.3, 1) infinite;
   transform-box: fill-box;
   transform-origin: center;
 }
 
-.certificate-atmosphere.is-animating .verification-path {
-  animation: verification-flow 8s linear infinite;
+.certificate-atmosphere .verification-path {
+  animation: verification-flow 16s linear infinite;
 }
 
-.certificate-atmosphere.is-animating .verification-core,
-.certificate-atmosphere.is-animating .verification-check {
-  animation: verification-confirm 4.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+.certificate-atmosphere .verification-core,
+.certificate-atmosphere .verification-check {
+  animation: verification-confirm 16s cubic-bezier(0.16, 1, 0.3, 1) infinite;
   transform-box: fill-box;
   transform-origin: center;
-}
-
-@keyframes credential-float {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-
-  50% {
-    transform: translateY(-8px) rotate(-1.5deg);
-  }
 }
 
 @keyframes credential-scan {
   0%,
-  12% {
+  6% {
     opacity: 0;
     transform: translateY(0);
   }
 
-  22% {
+  11% {
     opacity: 0.9;
   }
 
-  62% {
+  31% {
     opacity: 0.9;
     transform: translateY(94px);
   }
 
-  72%,
+  36%,
+  50%,
   100% {
     opacity: 0;
     transform: translateY(94px);
@@ -153,35 +143,38 @@
 
 @keyframes credential-verify {
   0%,
-  58%,
+  29%,
+  50%,
   100% {
     opacity: 0.42;
     transform: scale(0.94);
   }
 
-  70%,
-  82% {
+  35%,
+  41% {
     opacity: 1;
     transform: scale(1.08);
   }
 }
 
 @keyframes verification-flow {
-  to {
+  30%,
+  100% {
     stroke-dashoffset: -60;
   }
 }
 
 @keyframes verification-confirm {
   0%,
-  52%,
+  26%,
+  50%,
   100% {
     opacity: 0.35;
     transform: scale(0.85);
   }
 
-  64%,
-  78% {
+  32%,
+  39% {
     opacity: 1;
     transform: scale(1.15);
   }
