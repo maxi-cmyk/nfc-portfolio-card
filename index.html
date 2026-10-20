@@ -8,6 +8,13 @@
       content="Max Leong — cybersecurity, mathematics, engineering, and AI."
     />
     <title>Max Leong — Portfolio</title>
+    <meta property="og:title" content="Max Leong — Portfolio" />
+    <meta property="og:description" content="Fourier mathematics, embedded systems, and AI. Explore the projects and the thinking behind them." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/assets/social-preview.png" />
+    <meta property="og:image:alt" content="Max Leong — mathematics, hardware, AI. Selected projects: music_LEDs, cya, and it'sPEAK." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,11 +23,15 @@
     />
     <link rel="stylesheet" href="./src/styles/main.css" />
     <link rel="stylesheet" href="./src/styles/themes/retro-apple.css" />
+    <link rel="stylesheet" href="./src/styles/components/work.css" />
   </head>
   <body>
+    <a class="skip-link" href="#work">Skip to selected work</a>
+    <nav class="compact-nav" aria-label="Main navigation"><a href="#home">Max Leong</a><a href="#work">Work</a><a href="#terminal">Terminal</a><a href="/assets/Max_Leong_Resume.pdf">Resume</a><a href="#contact">Contact</a></nav>
     <section
       id="boot-screen"
       class="boot-screen"
+      hidden
       aria-label="Portfolio startup"
     >
       <div class="boot-terminal">
@@ -33,7 +44,7 @@
       </div>
     </section>
 
-    <main id="portfolio" class="shell" aria-labelledby="site-title" hidden>
+    <main id="portfolio" class="shell" aria-labelledby="site-title">
       <nav
         class="system-rail system-rail-left"
         aria-label="Desktop section navigation"
@@ -43,7 +54,7 @@
         <a href="#terminal" data-rail-target="terminal"
           ><span>02</span> TERMINAL</a
         >
-        <a href="#focus" data-rail-target="focus"><span>03</span> FOCUS</a>
+        <a href="#work" data-rail-target="work"><span>03</span> WORK</a>
         <a href="#certificates" data-rail-target="certificates"
           ><span>04</span> CERTS</a
         >
@@ -52,6 +63,7 @@
         >
       </nav>
       <div id="landing-view">
+        <aside id="route-notice" class="route-notice" role="status" tabindex="-1" hidden>That page could not be found. <a href="#work">Browse all projects →</a></aside>
         <!-- alias: banana + chip -->
         <section id="home" class="intro" aria-labelledby="site-title">
           <div class="intro-tools">
@@ -67,13 +79,16 @@
             <div class="retro-monitor" aria-hidden="true"><span>ML</span></div>
           </div>
           <p id="mascot-hint" class="mascot-hint" aria-live="polite" hidden></p>
-          <p class="eyebrow">// PORTFOLIO</p>
           <h1 id="site-title">MAX LEONG</h1>
           <p class="lede">
             CS student building at the intersection of <em>cybersecurity</em>,
             <em>math</em>, <em>engineering</em>, and <em>AI</em>.
           </p>
+          <div class="intro-actions"><a href="#work">Explore my work →</a><a href="/assets/Max_Leong_Resume.pdf" download="Max_Leong_Resume.pdf">Download resume ↓</a><a href="#contact">Get in touch ↗</a></div>
         </section>
+        <!-- generated:featured:start -->
+<section class="featured-work" aria-labelledby="featured-title"><div class="section-heading"><h2 id="featured-title">A few things I’ve built.</h2><a href="#work">Explore all 7 projects →</a></div><div class="featured-list"><article class="featured-project"><div><p class="project-categories">Engineering · AI &amp; Math</p><h3>music_LEDs</h3><p class="featured-subject">Fourier mathematics, made visible.</p><p>Custom DFT/FFT and a browser walkthrough connect linear algebra to an ESP32 RGB visualiser.</p></div><a class="terminal-link project-insights-btn" id="case-study-featured-music-leds" href="#project/music-leds" data-project="music-leds" aria-label="Open music_LEDs case study" aria-haspopup="dialog" aria-controls="project-modal">View case study <span aria-hidden="true">↗</span></a></article><article class="featured-project"><div><p class="project-categories">AI &amp; Math · Hackathons</p><h3>cya</h3><p class="featured-subject">Image detection beyond clean inputs.</p><p>My work spans data, models, evaluation, and inference. Reported held-out result: 140/141 images correct.</p></div><a class="terminal-link project-insights-btn" id="case-study-featured-cya" href="#project/cya" data-project="cya" aria-label="Open cya case study" aria-haspopup="dialog" aria-controls="project-modal">View case study <span aria-hidden="true">↗</span></a></article><article class="featured-project"><div><p class="project-categories">AI &amp; Math · Hackathons</p><h3>it&#39;sPEAK</h3><p class="featured-subject">From rehearsal to useful feedback.</p><p>I built the backend and analysis pipeline for this presentation coach. 2nd place; my first full-stack app.</p></div><a class="terminal-link project-insights-btn" id="case-study-featured-itspeak" href="#project/itspeak" data-project="itspeak" aria-label="Open it&#39;sPEAK case study" aria-haspopup="dialog" aria-controls="project-modal">View case study <span aria-hidden="true">↗</span></a></article></div></section>
+<!-- generated:featured:end -->
 
         <section
           id="terminal"
@@ -103,9 +118,11 @@
               ls focus · cd focus/&lt;category&gt; · clear
             </p>
           </div>
+          <p class="js-note">The interactive terminal needs JavaScript. You can browse all projects and follow their links below.</p>
           <form id="terminal-form" class="command-line">
             <label class="prompt" for="command-input">max@portfolio:~$</label>
             <input
+              disabled
               id="command-input"
               name="command"
               autocomplete="off"
@@ -118,286 +135,76 @@
         </section>
 
         <nav class="quick-links" aria-label="Quick terminal commands">
-          <button type="button" data-command="about">about</button>
-          <button type="button" data-command="skills">skills</button>
-          <button type="button" data-command="projects">projects</button>
-          <button type="button" data-command="resume">resume</button>
-          <button type="button" data-command="contact">contact</button>
+          <button type="button" disabled data-command="about">about</button>
+          <button type="button" disabled data-command="skills">skills</button>
+          <button type="button" disabled data-command="projects">projects</button>
+          <button type="button" disabled data-command="resume">resume</button>
+          <button type="button" disabled data-command="contact">contact</button>
         </nav>
 
-        <section id="focus" class="focus" aria-labelledby="focus-title">
-          <div class="focus-heading">
-            <div>
-              <p class="eyebrow">// CURRENT FOCUS</p>
-              <h2 id="focus-title">Build systems that meet the real world.</h2>
-            </div>
-            <aside class="field-trio" aria-hidden="true">
-              <div class="field-art-card cyber-art">
-                <span class="field-art-label">NET</span>
-                <svg viewBox="0 0 120 94" focusable="false">
-                  <path class="art-wire" d="M20 69 51 47 91 67M51 47 76 20" />
-                  <circle class="art-node" cx="20" cy="69" r="7" />
-                  <circle class="art-node" cx="51" cy="47" r="7" />
-                  <circle class="art-node" cx="76" cy="20" r="7" />
-                  <circle class="art-node" cx="91" cy="67" r="7" />
-                  <circle class="art-packet" r="3" />
-                  <g class="art-lock-pendulum">
-                    <path
-                      class="art-lock"
-                      d="M70 73v-8a8 8 0 0 1 16 0v8m-19 0h22v15H67z"
-                    />
-                  </g>
-                </svg>
-                <span class="field-art-caption">secure link</span>
-              </div>
-              <div class="field-art-card esp32-art">
-                <span class="field-art-label">ESP32</span>
-                <svg viewBox="0 0 120 220" focusable="false">
-                  <rect
-                    class="esp-board"
-                    x="23"
-                    y="9"
-                    width="74"
-                    height="202"
-                    rx="4"
-                  />
-                  <rect
-                    class="esp-usb"
-                    x="47"
-                    y="5"
-                    width="26"
-                    height="20"
-                    rx="2"
-                  />
-                  <rect
-                    class="esp-module"
-                    x="36"
-                    y="43"
-                    width="48"
-                    height="58"
-                    rx="2"
-                  />
-                  <path class="esp-antenna-trace" d="M41 48h38v12H41z" />
-                  <rect class="esp-chip" x="44" y="67" width="32" height="23" />
-                  <circle class="esp-led" cx="84" cy="33" r="4" />
-                  <circle class="esp-button" cx="36" cy="34" r="5" />
-                  <path
-                    class="esp-trace"
-                    d="M47 119h-11v17h-7m18-17v20m11-20v20m11-20v20m11-20v17h7v-17M47 154h-11v16h-7m18-16v20m11-20v20m11-20v20m11-20v16h7v-16"
-                  />
-                  <g class="esp-pins">
-                    <circle cx="25" cy="55" r="2" />
-                    <circle cx="25" cy="67" r="2" />
-                    <circle cx="25" cy="79" r="2" />
-                    <circle cx="25" cy="91" r="2" />
-                    <circle cx="25" cy="103" r="2" />
-                    <circle cx="25" cy="115" r="2" />
-                    <circle cx="25" cy="127" r="2" />
-                    <circle cx="25" cy="139" r="2" />
-                    <circle cx="25" cy="151" r="2" />
-                    <circle cx="25" cy="163" r="2" />
-                    <circle cx="25" cy="175" r="2" />
-                    <circle cx="95" cy="55" r="2" />
-                    <circle cx="95" cy="67" r="2" />
-                    <circle cx="95" cy="79" r="2" />
-                    <circle cx="95" cy="91" r="2" />
-                    <circle cx="95" cy="103" r="2" />
-                    <circle cx="95" cy="115" r="2" />
-                    <circle cx="95" cy="127" r="2" />
-                    <circle cx="95" cy="139" r="2" />
-                    <circle cx="95" cy="151" r="2" />
-                    <circle cx="95" cy="163" r="2" />
-                    <circle cx="95" cy="175" r="2" />
-                  </g>
-                </svg>
-                <span class="field-art-caption">signal online</span>
-              </div>
-              <div class="field-art-card matrix-art">
-                <svg
-                  id="led-matrix"
-                  viewBox="0 0 344 96"
-                  focusable="false"
-                ></svg>
-              </div>
-              <div class="field-art-card camera-art">
-                <svg viewBox="0 0 150 108" focusable="false">
-                  <rect
-                    class="camera-board"
-                    x="13"
-                    y="16"
-                    width="124"
-                    height="76"
-                    rx="4"
-                  />
-                  <rect
-                    class="camera-module"
-                    x="42"
-                    y="25"
-                    width="50"
-                    height="51"
-                    rx="3"
-                  />
-                  <circle class="camera-lens-ring" cx="67" cy="50" r="16" />
-                  <circle class="camera-lens" cx="67" cy="50" r="10" />
-                  <path
-                    class="camera-trace"
-                    d="M25 34h12m-12 12h12m-12 12h12m58-24h19m-19 12h19m-19 12h19M52 86v-9m11 9v-9m11 9v-9"
-                  />
-                  <g class="camera-pins">
-                    <circle cx="20" cy="27" r="2" />
-                    <circle cx="20" cy="39" r="2" />
-                    <circle cx="20" cy="51" r="2" />
-                    <circle cx="20" cy="63" r="2" />
-                    <circle cx="20" cy="75" r="2" />
-                    <circle cx="130" cy="27" r="2" />
-                    <circle cx="130" cy="39" r="2" />
-                    <circle cx="130" cy="51" r="2" />
-                    <circle cx="130" cy="63" r="2" />
-                    <circle cx="130" cy="75" r="2" />
-                  </g>
-                  <path
-                    class="camera-frame"
-                    d="M38 14h-9v9m54-9h9v9m-63 58h9v9m54-9v9"
-                  />
-                </svg>
-              </div>
-              <div class="field-art-card asteroids-art">
-                <svg viewBox="0 0 150 108" focusable="false">
-                  <rect
-                    class="oled-frame"
-                    x="12"
-                    y="15"
-                    width="126"
-                    height="78"
-                    rx="5"
-                  />
-                  <rect
-                    class="oled-screen"
-                    x="21"
-                    y="25"
-                    width="108"
-                    height="56"
-                    rx="1"
-                  />
-                  <g class="asteroids-ship">
-                    <path class="asteroid-ship" d="m75 64 9 18-9-5-9 5z" />
-                  </g>
-                  <path
-                    class="asteroid-rock rock-target"
-                    d="m70 33 7-6 8 4 1 9-7 6-9-4z"
-                  />
-                  <path
-                    class="asteroid-rock rock-spawn-a"
-                    d="m35 37 6-5 7 4 1 8-6 5-8-4z"
-                  />
-                  <path
-                    class="asteroid-rock rock-spawn-b"
-                    d="m103 42 5-4 6 3 1 7-5 4-7-3z"
-                  />
-                  <path
-                    class="asteroid-rock rock-spawn-c"
-                    d="m45 57 4-4 5 3 1 5-4 4-5-2z"
-                  />
-                  <circle class="asteroid-shot" cx="75" cy="61" r="1.2" />
-                  <path
-                    class="asteroid-burst"
-                    d="m75 42 0-7m0 14v7m-7-14 5-5m5 10 5 5m-10-10-5 5m10-10 5-5"
-                  />
-                  <circle class="oled-button" cx="34" cy="100" r="4" />
-                  <circle class="oled-button" cx="48" cy="100" r="4" />
-                </svg>
-              </div>
-            </aside>
-          </div>
-          <div class="focus-terminal">
-            <p class="focus-command">
-              <span class="prompt">max@portfolio:~$</span>
-              <span class="command">ls focus/</span>
-            </p>
-            <div class="focus-index">
-              <article>
-                <span class="focus-number">01</span>
-                <div>
-                  <h3>
-                    <a
-                      href="#focus/cybersecurity"
-                      class="focus-header-btn"
-                      data-focus="cybersecurity"
-                    >
-                      cybersecurity/
-                    </a>
-                  </h3>
-                  <p>
-                    Understand systems, identify weaknesses, and build with
-                    privacy in mind.
-                  </p>
-                  <div data-focus-tools="cybersecurity"></div>
-                </div>
-                <span class="focus-kind">dir</span>
-              </article>
-              <article>
-                <span class="focus-number">02</span>
-                <div>
-                  <h3>
-                    <a
-                      href="#focus/engineering"
-                      class="focus-header-btn"
-                      data-focus="engineering"
-                    >
-                      engineering/
-                    </a>
-                  </h3>
-                  <p>
-                    Hardware, sensors, embedded systems, and interactive
-                    physical computing.
-                  </p>
-                  <div data-focus-tools="engineering"></div>
-                </div>
-                <span class="focus-kind">dir</span>
-              </article>
-              <article>
-                <span class="focus-number">03</span>
-                <div>
-                  <h3>
-                    <a
-                      href="#focus/ai-math"
-                      class="focus-header-btn"
-                      data-focus="ai-math"
-                    >
-                      ai & math/
-                    </a>
-                  </h3>
-                  <p>
-                    Use models and mathematical thinking to turn noisy inputs
-                    into useful tools.
-                  </p>
-                  <div data-focus-tools="ai-math"></div>
-                </div>
-                <span class="focus-kind">dir</span>
-              </article>
-              <article>
-                <span class="focus-number">04</span>
-                <div>
-                  <h3>
-                    <a
-                      href="#focus/hackathons"
-                      class="focus-header-btn"
-                      data-focus="hackathons"
-                    >
-                      hackathons/
-                    </a>
-                  </h3>
-                  <p>
-                    Rapid prototyping, building under constraints, and shipping
-                    award-winning products.
-                  </p>
-                  <div data-focus-tools="hackathons"></div>
-                </div>
-                <span class="focus-kind">dir</span>
-              </article>
-            </div>
-          </div>
-        </section>
+        <!-- generated:work:start -->
+<section id="work" class="work" aria-labelledby="work-title"><div class="section-heading"><div><h2 id="work-title" tabindex="-1">Selected work</h2><p>One collection. Explore the connections between disciplines.</p></div></div>
+    <div id="work-filters" class="work-filters" role="group" aria-label="Filter projects by category" hidden><button type="button" data-work-filter="" aria-pressed="true">All work</button><button type="button" data-work-filter="cybersecurity" aria-pressed="false">Cybersecurity</button><button type="button" data-work-filter="engineering" aria-pressed="false">Engineering</button><button type="button" data-work-filter="ai-math" aria-pressed="false">AI &amp; Math</button><button type="button" data-work-filter="hackathons" aria-pressed="false">Hackathons</button></div>
+    <p id="work-count" class="work-count" role="status" aria-live="polite" aria-atomic="true">7 projects</p>
+    <div id="work-projects" class="work-projects"><article class="full-project-card" data-project-slug="music-leds" data-categories="engineering ai-math" id="project/music-leds">
+    <header class="project-card-header"><h3 class="project-card-title">music_LEDs</h3><span class="project-card-meta">Fourier mathematics · linear algebra · hardware</span></header>
+    <p class="project-categories">Engineering · AI &amp; Math</p>
+    <p class="project-card-desc">A Fourier and linear algebra teaching project that connects sampled sound, complex basis vectors, and frequency coefficients. A custom ESP32 FFT drives an RGB visualiser, while a browser walkthrough makes the mathematics inspectable.</p>
+    <div class="project-card-tags" aria-label="Technologies"><span class="tech-badge">C++</span><span class="tech-badge">JavaScript</span><span class="tech-badge">ESP32</span><span class="tech-badge">DFT / FFT</span><span class="tech-badge">Web Serial</span></div>
+    <div class="project-card-links"><div class="project-card-outbound-links"><a class="terminal-link" href="https://github.com/maxi-cmyk/music_LED" target="_blank" rel="noreferrer">View source on GitHub ↗</a></div><a class="terminal-link project-insights-btn" id="case-study-work-music-leds" href="#project/music-leds" data-project="music-leds" aria-label="Open music_LEDs case study" aria-haspopup="dialog" aria-controls="project-modal">View case study <span aria-hidden="true">↗</span></a></div>
+    <details class="static-case-study"><summary>Read case study</summary><p>The central idea is a change of coordinates: one vector describes sound samples in time; another describes their frequency components. A readable direct DFT exposes the Fourier-matrix calculation, and a radix-2 FFT computes the same transform efficiently for the hardware visualiser.</p><h4>One transform, two implementations</h4><p>The firmware implements both a direct DFT and an iterative radix-2 FFT. Known-signal tests and coefficient comparisons check agreement; an RGB light alone cannot establish that the mathematics is correct. With 128 samples at a nominal 6.4 kHz, bins are 50 Hz apart and Nyquist is 3.2 kHz.</p><h4>Hardware as a visualiser</h4><p>An ESP32 reads an analog microphone and maps selected band strengths to a common-cathode RGB LED: 50–250 Hz to red, 300–1000 Hz to green, and 1050–2500 Hz to blue. The physical path is speaker → air → microphone → ESP32; the browser does not inject test samples into the firmware.</p><h4>Make a frame explainable</h4><p>The browser&#39;s Demo and Presenter views connect tone generation, Web Serial telemetry, and the linear algebra walkthrough. A captured frame keeps samples, Fourier coefficients, and RGB output together so the direct DFT and seven FFT stages can be traced against the same input. A labelled seeded frame supports explanation when the board is unavailable.</p></details>
+  </article>
+<article class="full-project-card" data-project-slug="cya" data-categories="ai-math hackathons" id="project/cya">
+    <header class="project-card-header"><h3 class="project-card-title">cya</h3><span class="project-card-meta">TechJam 26 · participant</span></header>
+    <p class="project-categories">AI &amp; Math · Hackathons</p>
+    <p class="project-card-desc">A team project distinguishing fully authentic from fully AI-generated images, with robustness to compression, blur, and resizing. I built the data pipeline, detector baselines, evaluation tooling, inference backend and CLI, and submission integration.</p>
+    <div class="project-card-tags" aria-label="Technologies"><span class="tech-badge">Python</span><span class="tech-badge">PyTorch</span><span class="tech-badge">CLIP / RINE</span><span class="tech-badge">FastAPI</span><span class="tech-badge">React</span></div>
+    <div class="project-card-links"><div class="project-card-outbound-links"><a class="terminal-link" href="https://github.com/maxi-cmyk/cya-techjam26" target="_blank" rel="noreferrer">View source on GitHub ↗</a></div><a class="terminal-link project-insights-btn" id="case-study-work-cya" href="#project/cya" data-project="cya" aria-label="Open cya case study" aria-haspopup="dialog" aria-controls="project-modal">View case study <span aria-hidden="true">↗</span></a></div>
+    <details class="static-case-study"><summary>Read case study</summary><p>cya asks whether an image detector still works after everyday transformations. The retained controlled-RINE model uses intermediate features from a frozen CLIP backbone and a trained linear head; candidate additions were rejected when they failed the robustness gate.</p><h4>My contribution and the team</h4><p>I built the repository infrastructure, reproducible configuration, Colab workflows, image-data pipeline, CLIP/RINE baselines, evaluation and robustness tooling, physical-feature experiments, inference backend and CLI, and final-test/submission integration. Rae developed augmentation and the texture candidate; Shan He built initial feature extractors and the React/Vite frontend.</p><h4>Results with their context</h4><p>The submission reports a 99.81% mean selection score across three seeds, combining 100.00% clean accuracy with 99.62% mean robustness accuracy. The separate, single-run held-out test reached 99.29% on 141 images. The selection score is not the held-out result or an event ranking.</p><h4>Scope and limitations</h4><p>The task covers fully authentic versus fully AI-generated images, not localisation of partial edits. The CLI and FastAPI service share model inference, while React provides the demonstration interface. Outputs are raw, uncalibrated sigmoid scores at T=1; they should not be interpreted as calibrated probabilities or proof of an image&#39;s origin.</p></details>
+  </article>
+<article class="full-project-card" data-project-slug="itspeak" data-categories="ai-math hackathons" id="project/itspeak">
+    <header class="project-card-header"><h3 class="project-card-title">it&#39;sPEAK</h3><span class="project-card-meta">2nd place · first full-stack app</span></header>
+    <p class="project-categories">AI &amp; Math · Hackathons</p>
+    <p class="project-card-desc">Private web coach for rehearsing presentations. I owned the backend, persistence, media-analysis pipeline, and production deployment work.</p>
+    <div class="project-card-tags" aria-label="Technologies"><span class="tech-badge">Python</span><span class="tech-badge">FastAPI</span><span class="tech-badge">Celery</span><span class="tech-badge">Redis</span><span class="tech-badge">Railway</span><span class="tech-badge">MediaPipe</span><span class="tech-badge">OpenAI</span></div>
+    <div class="project-card-links"><div class="project-card-outbound-links"><a class="terminal-link" href="https://github.com/maxi-cmyk/it-sPeak" target="_blank" rel="noreferrer">View source on GitHub ↗</a><a class="terminal-link" href="https://devpost.com/software/itspeak?ref_content=my-projects-tab&amp;ref_feature=my_projects" target="_blank" rel="noreferrer">devpost ↗</a></div><a class="terminal-link project-insights-btn" id="case-study-work-itspeak" href="#project/itspeak" data-project="itspeak" aria-label="Open it&#39;sPEAK case study" aria-haspopup="dialog" aria-controls="project-modal">View case study <span aria-hidden="true">↗</span></a></div>
+    <details class="static-case-study"><summary>Read case study</summary><p>An asynchronous analysis system that turns an uploaded rehearsal into separate delivery and voice signals, normalized scores, and focused coaching cards.</p><h4>Processing boundary</h4><p>FastAPI handles upload and job orchestration while Celery performs the expensive media work outside the request lifecycle. Railway hosts the deployed backend services, and Redis carries job state between the API and worker.</p><h4>Signals and scoring</h4><p>Video analysis derives eye-contact, expression, posture, gesture, movement, and spatial-use signals. The audio path measures pacing, pitch variation, pauses, and filler words before producing normalized delivery scores.</p><h4>Coaching contract</h4><p>The coaching layer receives scored telemetry and the chosen speaking archetype. It validates structured LLM output and falls back to deterministic rule-based cards if the provider is unavailable.</p></details>
+  </article>
+<article class="full-project-card" data-project-slug="echo" data-categories="hackathons" id="project/echo">
+    <header class="project-card-header"><h3 class="project-card-title">Echo</h3><span class="project-card-meta">iNTUition 2026 · Best Freshmen Award</span></header>
+    <p class="project-categories">Hackathons</p>
+    <p class="project-card-desc">Adaptive reminiscence PWA for people with cognitive impairment. I built the backend, database, and feed logic around familiar media, narration, recall, and accessible interaction.</p>
+    <div class="project-card-tags" aria-label="Technologies"><span class="tech-badge">Next.js</span><span class="tech-badge">Supabase</span><span class="tech-badge">PostgreSQL</span><span class="tech-badge">LLaVA</span><span class="tech-badge">ElevenLabs</span></div>
+    <div class="project-card-links"><div class="project-card-outbound-links"><a class="terminal-link" href="https://github.com/maxi-cmyk/echo" target="_blank" rel="noreferrer">View source on GitHub ↗</a></div><a class="terminal-link project-insights-btn" id="case-study-work-echo" href="#project/echo" data-project="echo" aria-label="Open Echo case study" aria-haspopup="dialog" aria-controls="project-modal">View case study <span aria-hidden="true">↗</span></a></div>
+    <details class="static-case-study"><summary>Read case study</summary><p>A caregiver-reviewed media pipeline turns personal photos and videos into approved memories, then presents them through a low-friction feed with narration, recall prompts, cooldowns, and adaptive voice controls.</p><h4>Review before delivery</h4><p>Uploads enter Supabase Storage, then a Next.js route asks a locally hosted LLaVA model for summary, people, place, and date context. The resulting memory stays in needs-review state until a caregiver approves it.</p><h4>Familiarity loop</h4><p>Approved memories are filtered by cooldown before display. A Like hides an item for 24 hours to reduce repetition; Recall records a meaningful interaction and can surface a later active-recall prompt.</p><h4>Adaptive access</h4><p>Repeated missed taps can switch the interface into a larger voice-control mode. A time-based sundowning setting activates a warmer presentation, while ElevenLabs provides generated or familiar-voice narration.</p></details>
+  </article>
+<article class="full-project-card" data-project-slug="asteroids" data-categories="engineering" id="project/asteroids">
+    <header class="project-card-header"><h3 class="project-card-title">Asteroids</h3><span class="project-card-meta">ESP32 + web</span></header>
+    <p class="project-categories">Engineering</p>
+    <p class="project-card-desc">Two versions of an arcade shooter: an ESP32 hardware game and a WebAssembly browser game playable with a PS4 controller or keyboard and mouse.</p>
+    <div class="project-card-tags" aria-label="Technologies"><span class="tech-badge">C++</span><span class="tech-badge">ESP32</span><span class="tech-badge">WebAssembly</span><span class="tech-badge">Canvas</span><span class="tech-badge">Gamepad API</span></div>
+    <div class="project-card-links"><div class="project-card-outbound-links"><a class="terminal-link" href="https://github.com/maxi-cmyk/asteriods" target="_blank" rel="noreferrer">View source on GitHub ↗</a></div><a class="terminal-link project-insights-btn" id="case-study-work-asteroids" href="#project/asteroids" data-project="asteroids" aria-label="Open Asteroids case study" aria-haspopup="dialog" aria-controls="project-modal">View case study <span aria-hidden="true">↗</span></a></div>
+    <details class="static-case-study"><summary>Read case study</summary><p>Two playable versions share a C++ gameplay core: an ESP32 game with a joystick and OLED, and a pixel-art browser game with PS4 controller or keyboard and mouse controls. The browser version adds a larger world and aimed combat.</p><h4>ESP32 version</h4><p>The ESP32 drives a 128×64 OLED, joystick, fire button, and buzzer. Escalating waves add entrance patterns and faster rocks; score chains, multishot, shields, and saved initials make each run more than a survival timer.</p><h4>Web version</h4><p>Play in a browser using a PS4 controller or keyboard and mouse. WebAssembly runs the shared C++ gameplay, while Canvas renders a 480×270 pixel-art world. Aiming, a charged laser, manual shields, and precision movement are browser-specific additions.</p><h4>Practice without changing the leaderboard</h4><p>The browser adds remappable controls, saved settings, run statistics, and a practice mode that cannot write ranked scores. Browser and ESP32 score tables stay separate, and each platform supplies its own randomness, audio, and storage adapters.</p></details>
+  </article>
+<article class="full-project-card" data-project-slug="sentinel" data-categories="cybersecurity engineering" id="project/sentinel">
+    <header class="project-card-header"><h3 class="project-card-title">Sentinel</h3><span class="project-card-meta">hardware</span></header>
+    <p class="project-categories">Cybersecurity · Engineering</p>
+    <p class="project-card-desc">Two ESP32 nodes split sensing from image capture: motion raises a Blynk event, while an ESP32-CAM serves a live stream and flash-assisted JPEG endpoint.</p>
+    <div class="project-card-tags" aria-label="Technologies"><span class="tech-badge">ESP32</span><span class="tech-badge">ESP32-CAM</span><span class="tech-badge">C++</span><span class="tech-badge">Blynk</span><span class="tech-badge">MJPEG</span></div>
+    <div class="project-card-links"><div class="project-card-outbound-links"><a class="terminal-link" href="https://github.com/maxi-cmyk/sentinel" target="_blank" rel="noreferrer">View source on GitHub ↗</a></div><a class="terminal-link project-insights-btn" id="case-study-work-sentinel" href="#project/sentinel" data-project="sentinel" aria-label="Open Sentinel case study" aria-haspopup="dialog" aria-controls="project-modal">View case study <span aria-hidden="true">↗</span></a></div>
+    <details class="static-case-study"><summary>Read case study</summary><p>The sensor node owns PIR, alarm, and panic state; Blynk virtual pins bridge that state to a camera node that temporarily pauses its stream for a higher-resolution capture.</p><h4>Two-node boundary</h4><p>A standard ESP32 reads the PIR sensor and controls the buzzer and status LED. The ESP32-CAM remains independently responsible for camera initialization, HTTP streaming, and capture state.</p><h4>Event bridge</h4><p>Motion writes a short pulse to Blynk virtual pin V6 and logs an intrusion event. The camera&#39;s V6 handler pauses streaming, switches from QVGA to VGA, enables the flash, captures a JPEG, publishes its URL, then restores QVGA streaming.</p><h4>Firmware behavior</h4><p>The current firmware polls PIR input in its main loop and routes camera triggers through Blynk virtual pin V6.</p></details>
+  </article>
+<article class="full-project-card" data-project-slug="conway-game-of-life" data-categories="engineering ai-math" id="project/conway-game-of-life">
+    <header class="project-card-header"><h3 class="project-card-title">Conway&#39;s Game of Life</h3><span class="project-card-meta">maths + hardware</span></header>
+    <p class="project-categories">Engineering · AI &amp; Math</p>
+    <p class="project-card-desc">An ESP32 runs a 32×8 toroidal simulation on a MAX7219 matrix while a React dashboard receives live metrics, analyzes sessions, and exports results.</p>
+    <div class="project-card-tags" aria-label="Technologies"><span class="tech-badge">ESP32</span><span class="tech-badge">C++</span><span class="tech-badge">MAX7219</span><span class="tech-badge">SSE</span><span class="tech-badge">React</span></div>
+    <div class="project-card-links"><div class="project-card-outbound-links"><a class="terminal-link" href="https://github.com/maxi-cmyk/conway_game_of_life" target="_blank" rel="noreferrer">View source on GitHub ↗</a></div><a class="terminal-link project-insights-btn" id="case-study-work-conway-game-of-life" href="#project/conway-game-of-life" data-project="conway-game-of-life" aria-label="Open Conway&#39;s Game of Life case study" aria-haspopup="dialog" aria-controls="project-modal">View case study <span aria-hidden="true">↗</span></a></div>
+    <details class="static-case-study"><summary>Read case study</summary><p>Each of the eight rows is packed into one 32-bit integer, so neighbor reads, births, deaths, population counts, and state hashes stay compact while the board drives both physical and browser views.</p><h4>Packed simulation</h4><p>Eight uint32_t rows represent all 256 cells. Wrapped row and column indices create the torus; bit shifts read neighbors, while popcount computes population, births, and deaths efficiently.</p><h4>Physical and live outputs</h4><p>The MD_MAX72XX driver updates four chained FC-16 modules as one 32×8 display. The local HTTP service publishes changed snapshots over one Server-Sent Events stream to the React dashboard.</p><h4>Session analysis</h4><p>The firmware ends runs on extinction, repeated-state stagnation, or a generation cap and persists up to 30 summaries. The dashboard charts density, entropy, autocorrelation, peak population, and exports CSV or JSON.</p></details>
+  </article></div>
+    <details class="tool-disclosure"><summary>Tools & languages by focus</summary><div class="focus-summaries"><section><h3><a href="#focus/cybersecurity">Cybersecurity</a></h3><p>Understand systems, identify weaknesses, and build with privacy in mind.</p><div data-focus-tools="cybersecurity"></div></section><section><h3><a href="#focus/engineering">Engineering</a></h3><p>Hardware, sensors, embedded systems, and interactive physical computing.</p><div data-focus-tools="engineering"></div></section><section><h3><a href="#focus/ai-math">AI &amp; Math</a></h3><p>Use models and mathematical thinking to turn noisy inputs into useful tools.</p><div data-focus-tools="ai-math"></div></section><section><h3><a href="#focus/hackathons">Hackathons</a></h3><p>Rapid prototyping, building under constraints, and shipping award-winning products.</p><div data-focus-tools="hackathons"></div></section></div></details>
+  </section>
+<!-- generated:work:end -->
 
         <section
           id="certificates"
@@ -461,11 +268,15 @@
           <div class="certificates-heading">
             <h2 id="certificates-title">Certificates</h2>
           </div>
-          <div id="certificate-list" class="certificate-list"></div>
+          <div id="certificate-list" class="certificate-list">
+<!-- generated:certificates:start -->
+<article class="certificate-entry"><a class="certificate-preview" href="/assets/AI-professional.pdf"><img src="/assets/AI-professional-preview.webp" alt="Google AI Professional Certificate awarded to Max Leong on June 22, 2026" width="1400" height="1082" loading="lazy" decoding="async"></a><div class="certificate-details"><p>Google · Coursera · June 2026</p><h3>Google AI Professional Certificate</h3><p>A seven-course professional certificate covering practical AI use across research, writing, content creation, data analysis, and app building.</p><a href="/assets/AI-professional.pdf">Open certificate PDF ↗</a></div></article>
+<!-- generated:certificates:end -->
+</div>
         </section>
 
         <footer id="contact">
-          <p>Built for the curious.</p>
+          <p>Have a project in mind? Let’s build something useful.</p>
           <div>
             <a
               href="https://github.com/maxi-cmyk"
@@ -488,52 +299,13 @@
         </footer>
       </div>
 
-      <section
-        id="full-subpage-view"
-        class="full-subpage-view"
-        hidden
-        aria-labelledby="full-subpage-title"
-      >
-        <div class="subpage-topbar">
-          <span class="subpage-breadcrumb"
-            >INDEX / FOCUS /
-            <span id="subpage-category-label">SUBPAGE</span></span
-          >
-        </div>
-
-        <div class="subpage-hero">
-          <p class="focus-command">
-            <span class="prompt">max@portfolio:~$</span>
-            <span id="full-subpage-path" class="command"
-              >cd focus/hackathons</span
-            >
-          </p>
-          <h1 id="full-subpage-title">hackathons/</h1>
-          <p id="full-subpage-desc" class="subpage-lede">
-            Rapid prototyping, building under constraints, and shipping
-            award-winning products.
-          </p>
-          <div id="full-subpage-tools"></div>
-        </div>
-
-        <div
-          id="full-subpage-projects"
-          class="full-subpage-projects-grid"
-        ></div>
-
-        <div class="subpage-footer">
-          <a href="#focus" class="subpage-back-btn"
-            >← cd .. (back to focus index)</a
-          >
-        </div>
-      </section>
-
       <dialog
         id="project-modal"
         class="project-modal"
         aria-labelledby="modal-project-title"
       ></dialog>
     </main>
+    <noscript><p class="noscript-note">You can browse every project and read its case study below. Interactive filters and the terminal need JavaScript.</p></noscript>
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>

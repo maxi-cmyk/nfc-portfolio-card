@@ -1,7 +1,6 @@
 import { allProjects } from "../../data/projects.js";
 
 let modalEl = null;
-let previousActiveElement = null;
 
 function createFlowDiagram(diagram) {
   const figure = document.createElement("figure");
@@ -9,6 +8,7 @@ function createFlowDiagram(diagram) {
 
   const flow = document.createElement("div");
   flow.className = "insights-flow";
+  flow.style.setProperty("--flow-count", diagram.nodes.length);
   flow.setAttribute("role", "img");
   flow.setAttribute(
     "aria-label",
@@ -310,7 +310,39 @@ function createEventSequence({ title, intro, devices, steps }) {
   return section;
 }
 
+function createResultsTable(results) {
+  const table = document.createElement("table");
+  table.className = "results-table";
+  const caption = document.createElement("caption");
+  caption.textContent = results.caption;
+  table.append(caption);
+  const head = document.createElement("thead");
+  const header = document.createElement("tr");
+  for (const label of ["Evaluation", "Accuracy", "Context"]) {
+    const th = document.createElement("th");
+    th.scope = "col";
+    th.textContent = label;
+    header.append(th);
+  }
+  head.append(header);
+  table.append(head);
+  const body = document.createElement("tbody");
+  for (const values of results.rows) {
+    const row = document.createElement("tr");
+    values.forEach((value, index) => {
+      const cell = document.createElement(index === 0 ? "th" : "td");
+      if (index === 0) cell.scope = "row";
+      cell.textContent = value;
+      row.append(cell);
+    });
+    body.append(row);
+  }
+  table.append(body);
+  return table;
+}
+
 const insightRenderers = {
+  results: createResultsTable,
   diagram: createFlowDiagram,
   howItWorks: createHowItWorks,
   pipeline: createPipeline,
@@ -335,6 +367,10 @@ export function getInsightContentOrder(insights = {}) {
   );
 }
 
+function requestProjectClose() {
+  document.dispatchEvent(new CustomEvent("portfolio:close-project"));
+}
+
 function ensureModal() {
   if (modalEl) return modalEl;
 
@@ -355,37 +391,25 @@ function ensureModal() {
       rect.left <= event.clientX &&
       event.clientX <= rect.left + rect.width;
     if (!isInDialog) {
-      closeProjectModal();
+      requestProjectClose();
     }
   });
 
-  modalEl.addEventListener("close", () => {
-    if (window.location.hash.startsWith("#project/")) {
-      history.replaceState(null, "", window.location.pathname);
-    }
-    if (
-      previousActiveElement &&
-      typeof previousActiveElement.focus === "function"
-    ) {
-      previousActiveElement.focus();
-    }
+  modalEl.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    requestProjectClose();
   });
 
   return modalEl;
 }
 
 export function openProjectModal(slug, returnFocusElement) {
-  const project = allProjects.find(
-    (p) => p.slug === slug || p.name.toLowerCase().includes(slug.toLowerCase()),
-  );
+  const project = allProjects.find((p) => p.slug === slug);
 
   if (!project) return false;
 
   const modal = ensureModal();
   const isAlreadyOpen = modal.open || modal.hasAttribute("open");
-  if (!isAlreadyOpen) {
-    previousActiveElement = returnFocusElement || document.activeElement;
-  }
 
   modal.replaceChildren();
 
@@ -405,7 +429,7 @@ export function openProjectModal(slug, returnFocusElement) {
   closeBtn.className = "modal-close-btn";
   closeBtn.textContent = "[ESC / ✕]";
   closeBtn.setAttribute("aria-label", "Close project details");
-  closeBtn.addEventListener("click", closeProjectModal);
+  closeBtn.addEventListener("click", requestProjectClose);
 
   topbar.append(topLabel, closeBtn);
 
@@ -423,6 +447,12 @@ export function openProjectModal(slug, returnFocusElement) {
   meta.textContent = project.meta;
 
   header.append(title, meta);
+  if (project.feature) {
+    const result = document.createElement("p");
+    result.className = "modal-result";
+    result.textContent = project.feature.note;
+    header.append(result);
+  }
 
   // Tags
   const tagsContainer = document.createElement("div");
@@ -484,7 +514,7 @@ export function openProjectModal(slug, returnFocusElement) {
       link.href = url;
       link.target = "_blank";
       link.rel = "noreferrer";
-      link.textContent = `${label.padEnd(9, " ")}→ ${url.replace("https://", "")}`;
+      link.textContent = `${label === "github" ? "View source on GitHub" : label} ↗`;
       link.setAttribute("aria-label", `Open ${project.name} ${label}`);
       linksContainer.append(link);
     });

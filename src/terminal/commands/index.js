@@ -1,3 +1,4 @@
+import { workHash } from "../../navigation/routes.js";
 import { aboutCommand } from "./about.js";
 import { contactCommand } from "./contact.js";
 import { helpCommand } from "./help.js";
@@ -49,7 +50,7 @@ export function resolveCommand(rawCommand) {
     return {
       kind: "nav",
       output: "Navigating to focus index...",
-      navTarget: "#focus",
+      navTarget: workHash(),
     };
   }
 
@@ -76,7 +77,7 @@ export function resolveCommand(rawCommand) {
     return {
       kind: "projects",
       output: `Navigating to ${category.path}...`,
-      navTarget: `#focus/${matchedCategoryKey}`,
+      navTarget: workHash([matchedCategoryKey]),
       projects: category.projects,
     };
   }

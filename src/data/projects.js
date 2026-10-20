@@ -1,6 +1,162 @@
 const projectsBySlug = {
+  "music-leds": {
+    slug: "music-leds",
+    feature: {
+      subject: "Fourier mathematics, made visible.",
+      note: "Custom DFT/FFT and a browser walkthrough connect linear algebra to an ESP32 RGB visualiser.",
+    },
+    categories: ["engineering", "ai-math"],
+    name: "music_LEDs",
+    meta: "Fourier mathematics · linear algebra · hardware",
+    tags: ["C++", "JavaScript", "ESP32", "DFT / FFT", "Web Serial"],
+    description:
+      "A Fourier and linear algebra teaching project that connects sampled sound, complex basis vectors, and frequency coefficients. A custom ESP32 FFT drives an RGB visualiser, while a browser walkthrough makes the mathematics inspectable.",
+    insights: {
+      layout: "algorithm",
+      summary:
+        "The central idea is a change of coordinates: one vector describes sound samples in time; another describes their frequency components. A readable direct DFT exposes the Fourier-matrix calculation, and a radix-2 FFT computes the same transform efficiently for the hardware visualiser.",
+      contentOrder: ["summary", "howItWorks", "diagram", "sections"],
+      howItWorks: {
+        title: "From a sample vector to frequency coordinates",
+        intro:
+          "Treat one audio frame as a vector, measure its alignment with complex sinusoidal basis vectors, then collect the coefficients into a frequency-domain vector.",
+        steps: [
+          {
+            title: "Build the input vector",
+            body: "The microphone supplies 128 samples at a nominal 6.4 kHz. Subtracting the mean removes the DC offset; a Hamming window reduces leakage before the transform. The prepared samples become the entries of x.",
+            code: "x = [x[0], x[1], …, x[N−1]]ᵀ",
+          },
+          {
+            title: "Project onto a Fourier basis",
+            body: "For each bin k, the direct DFT multiplies the samples by complex sinusoidal weights and adds them. This is an inner product with a basis vector; stacking the weighted rows gives the Fourier matrix F and the equation X = Fx.",
+            code: "X[k] = Σ x[n] exp(−2πikn/N)",
+          },
+          {
+            title: "Reconstruct and visualise",
+            body: "The inverse transform combines the complex coefficients with their basis vectors to reconstruct the prepared signal. The live visualiser instead uses magnitudes from selected frequency bands to control red, green, and blue intensity; colour shows band strength rather than the complete signal.",
+            code: "x = F*X / N   (F* is the conjugate transpose)",
+          },
+        ],
+        takeaway:
+          "DFT and FFT describe the same linear transformation. The direct method exposes the matrix; the FFT reuses smaller calculations, reducing O(N²) work to O(N log N).",
+      },
+      diagram: {
+        label: "Sound, Fourier mathematics, and visible output",
+        nodes: [
+          { label: "Microphone", detail: "128 time-domain samples" },
+          { label: "Prepare x", detail: "Centre + Hamming window" },
+          { label: "DFT / FFT", detail: "Complex coefficients X" },
+          {
+            label: "RGB + browser",
+            detail: "Band strengths + coefficient walkthrough",
+          },
+        ],
+      },
+      sections: [
+        {
+          title: "One transform, two implementations",
+          body: "The firmware implements both a direct DFT and an iterative radix-2 FFT. Known-signal tests and coefficient comparisons check agreement; an RGB light alone cannot establish that the mathematics is correct. With 128 samples at a nominal 6.4 kHz, bins are 50 Hz apart and Nyquist is 3.2 kHz.",
+        },
+        {
+          title: "Hardware as a visualiser",
+          body: "An ESP32 reads an analog microphone and maps selected band strengths to a common-cathode RGB LED: 50–250 Hz to red, 300–1000 Hz to green, and 1050–2500 Hz to blue. The physical path is speaker → air → microphone → ESP32; the browser does not inject test samples into the firmware.",
+        },
+        {
+          title: "Make a frame explainable",
+          body: "The browser's Demo and Presenter views connect tone generation, Web Serial telemetry, and the linear algebra walkthrough. A captured frame keeps samples, Fourier coefficients, and RGB output together so the direct DFT and seven FFT stages can be traced against the same input. A labelled seeded frame supports explanation when the board is unavailable.",
+        },
+      ],
+    },
+    links: [{ label: "github", url: "https://github.com/maxi-cmyk/music_LED" }],
+  },
+  cya: {
+    slug: "cya",
+    feature: {
+      subject: "Image detection beyond clean inputs.",
+      note: "My work spans data, models, evaluation, and inference. Reported held-out result: 140/141 images correct.",
+    },
+    categories: ["ai-math", "hackathons"],
+    name: "cya",
+    meta: "TechJam 26 · participant",
+    tags: ["Python", "PyTorch", "CLIP / RINE", "FastAPI", "React"],
+    description:
+      "A team project distinguishing fully authentic from fully AI-generated images, with robustness to compression, blur, and resizing. I built the data pipeline, detector baselines, evaluation tooling, inference backend and CLI, and submission integration.",
+    insights: {
+      layout: "algorithm",
+      summary:
+        "cya asks whether an image detector still works after everyday transformations. The retained controlled-RINE model uses intermediate features from a frozen CLIP backbone and a trained linear head; candidate additions were rejected when they failed the robustness gate.",
+      contentOrder: ["summary", "results", "diagram", "howItWorks", "sections"],
+      results: {
+        caption:
+          "Repository-reported evaluation; selection and held-out sets are separate",
+        rows: [
+          ["Clean validation", "100.00%", "Mean across 3 seeds"],
+          ["Transformed validation", "99.62%", "Mean robustness accuracy"],
+          ["Held-out final test", "99.29%", "140 / 141 images · single run"],
+        ],
+      },
+      diagram: {
+        label: "Shared inference behind the CLI and image-upload demo",
+        nodes: [
+          { label: "Image input", detail: "Directory CLI or React upload" },
+          {
+            label: "Shared inference",
+            detail: "Python package + FastAPI adapter",
+          },
+          {
+            label: "CLIP / RINE",
+            detail: "Frozen features + trained linear head",
+          },
+          { label: "Prediction", detail: "Class + raw model score" },
+        ],
+      },
+      howItWorks: {
+        title: "Select for robustness, then evaluate once",
+        intro:
+          "A strong clean-image result is only one part of the evaluation. The model also has to retain its performance when the image changes.",
+        steps: [
+          {
+            title: "Train a compact decision layer",
+            body: "Keep CLIP's ViT-L/14-336 backbone frozen and combine intermediate-layer representations from layers 6, 12, 18, and 24. Train a lightweight linear head under a balanced clean-or-one-transform sampler.",
+          },
+          {
+            title: "Test common transformations",
+            body: "Evaluate clean images and transformed versions under JPEG recompression, blur, and resizing. Model selection weights clean accuracy and mean transform accuracy equally; frequency, colour, PRNU, and texture additions were not retained when they failed the selection gate.",
+          },
+          {
+            title: "Keep the final test separate",
+            body: "The submission reports 140 correct predictions out of 141 held-out images: 69 of 69 AI-generated images and 71 of 72 authentic images. The single error was an authentic image classified as AI-generated.",
+          },
+        ],
+        takeaway:
+          "Reported held-out accuracy: 99.29% on 141 images. This describes that evaluation set, not guaranteed accuracy on new generators or image distributions.",
+      },
+      sections: [
+        {
+          title: "My contribution and the team",
+          body: "I built the repository infrastructure, reproducible configuration, Colab workflows, image-data pipeline, CLIP/RINE baselines, evaluation and robustness tooling, physical-feature experiments, inference backend and CLI, and final-test/submission integration. Rae developed augmentation and the texture candidate; Shan He built initial feature extractors and the React/Vite frontend.",
+        },
+        {
+          title: "Results with their context",
+          body: "The submission reports a 99.81% mean selection score across three seeds, combining 100.00% clean accuracy with 99.62% mean robustness accuracy. The separate, single-run held-out test reached 99.29% on 141 images. The selection score is not the held-out result or an event ranking.",
+        },
+        {
+          title: "Scope and limitations",
+          body: "The task covers fully authentic versus fully AI-generated images, not localisation of partial edits. The CLI and FastAPI service share model inference, while React provides the demonstration interface. Outputs are raw, uncalibrated sigmoid scores at T=1; they should not be interpreted as calibrated probabilities or proof of an image's origin.",
+        },
+      ],
+    },
+    links: [
+      { label: "github", url: "https://github.com/maxi-cmyk/cya-techjam26" },
+    ],
+  },
   itspeak: {
     slug: "itspeak",
+    feature: {
+      subject: "From rehearsal to useful feedback.",
+      note: "I built the backend and analysis pipeline for this presentation coach. 2nd place; my first full-stack app.",
+    },
+    categories: ["ai-math", "hackathons"],
     name: "it'sPEAK",
     meta: "2nd place · first full-stack app",
     tags: [
@@ -76,6 +232,7 @@ const projectsBySlug = {
   },
   echo: {
     slug: "echo",
+    categories: ["hackathons"],
     name: "Echo",
     meta: "iNTUition 2026 · Best Freshmen Award",
     tags: ["Next.js", "Supabase", "PostgreSQL", "LLaVA", "ElevenLabs"],
@@ -137,60 +294,62 @@ const projectsBySlug = {
   },
   asteroids: {
     slug: "asteroids",
-    name: "ESP32 Asteroids",
-    meta: "hardware",
-    tags: ["ESP32", "C++", "SSD1306", "PWM Audio", "Preferences"],
+    categories: ["engineering"],
+    name: "Asteroids",
+    meta: "ESP32 + web",
+    tags: ["C++", "ESP32", "WebAssembly", "Canvas", "Gamepad API"],
     description:
-      "A breadboard arcade game with a 128×64 OLED, calibrated joystick input, PWM audio, persistent high scores, and five stages of timed difficulty.",
+      "Two versions of an arcade shooter: an ESP32 hardware game and a WebAssembly browser game playable with a PS4 controller or keyboard and mouse.",
     insights: {
       layout: "frame-loop",
       summary:
-        "A deterministic 50 FPS game loop coordinates ADC input, floating-point object motion, collision pools, a monochrome framebuffer, non-blocking sound patterns, and non-volatile scores.",
-      contentOrder: ["frameLoop", "summary", "sections"],
+        "Two playable versions share a C++ gameplay core: an ESP32 game with a joystick and OLED, and a pixel-art browser game with PS4 controller or keyboard and mouse controls. The browser version adds a larger world and aimed combat.",
+      contentOrder: ["summary", "frameLoop", "sections"],
       frameLoop: {
-        title: "Everything playable fits around a 20 ms tick",
+        title: "Shared gameplay, two ways to play",
         intro:
-          "Each frame advances input, simulation, drawing, and timed sound state. Fixed-size pools keep the amount of per-frame object work bounded.",
+          "Both versions advance simulation in 20 ms steps. Platform adapters connect the gameplay to physical controls or browser input, rendering, audio, and storage.",
         budget: "20 ms",
         phases: [
           {
             label: "Sample",
             detail:
-              "Read the calibrated, smoothed joystick and active-low fire input.",
+              "Read joystick/button input or keyboard, mouse, and gamepad controls.",
           },
           {
             label: "Update",
-            detail: "Advance motion and collisions across capped object pools.",
+            detail:
+              "Advance waves, collisions, and pickups across capped object pools.",
           },
           {
             label: "Render",
             detail:
-              "Draw the complete scene into the 128×64 framebuffer, then flush once.",
+              "Draw the OLED framebuffer or export entity state for the Canvas sprite renderer.",
           },
           {
             label: "Sound",
             detail:
-              "Advance LEDC tone patterns from their current timed state.",
+              "Play non-blocking sound patterns through LEDC or Web Audio.",
           },
         ],
         after: {
-          label: "Outside the live loop:",
+          label: "Separate score tables:",
           detail:
-            "Preferences keeps the sorted top-10 initials table in non-volatile storage.",
+            "The top five initials/scores persist in ESP32 Preferences or a browser-specific localStorage table.",
         },
       },
       sections: [
         {
-          title: "Input and timing",
-          body: "The ESP32 calibrates the joystick from 32 startup samples, smooths each axis over four readings, applies a dead zone, and advances the game on a 20 ms frame budget.",
+          title: "ESP32 version",
+          body: "The ESP32 drives a 128×64 OLED, joystick, fire button, and buzzer. Escalating waves add entrance patterns and faster rocks; score chains, multishot, shields, and saved initials make each run more than a survival timer.",
         },
         {
-          title: "Rendering and motion",
-          body: "Ships, bullets, asteroids, particles, and saucers are drawn into the Adafruit SSD1306 buffer before one display flush. Motion uses floating-point positions with capped object pools to keep work bounded.",
+          title: "Web version",
+          body: "Play in a browser using a PS4 controller or keyboard and mouse. WebAssembly runs the shared C++ gameplay, while Canvas renders a 480×270 pixel-art world. Aiming, a charged laser, manual shields, and precision movement are browser-specific additions.",
         },
         {
-          title: "Audio and persistence",
-          body: "A non-blocking LEDC sequencer plays distinct frequency patterns for shots, collisions, streaks, death, and menus. The Preferences library stores a sorted top-10 initials table in ESP32 non-volatile storage.",
+          title: "Practice without changing the leaderboard",
+          body: "The browser adds remappable controls, saved settings, run statistics, and a practice mode that cannot write ranked scores. Browser and ESP32 score tables stay separate, and each platform supplies its own randomness, audio, and storage adapters.",
         },
       ],
     },
@@ -198,6 +357,7 @@ const projectsBySlug = {
   },
   sentinel: {
     slug: "sentinel",
+    categories: ["cybersecurity", "engineering"],
     name: "Sentinel",
     meta: "hardware",
     tags: ["ESP32", "ESP32-CAM", "C++", "Blynk", "MJPEG"],
@@ -276,6 +436,7 @@ const projectsBySlug = {
   },
   "conway-game-of-life": {
     slug: "conway-game-of-life",
+    categories: ["engineering", "ai-math"],
     name: "Conway's Game of Life",
     meta: "maths + hardware",
     tags: ["ESP32", "C++", "MAX7219", "SSE", "React"],
@@ -355,7 +516,9 @@ export const focusCategories = {
     path: "focus/cybersecurity",
     description:
       "Understand systems, identify weaknesses, and build with privacy in mind.",
-    projects: selectProjects("sentinel"),
+    get projects() {
+      return getFilteredProjects([this.id]);
+    },
   },
   engineering: {
     id: "engineering",
@@ -363,7 +526,9 @@ export const focusCategories = {
     path: "focus/engineering",
     description:
       "Hardware, sensors, embedded systems, and interactive physical computing.",
-    projects: selectProjects("asteroids", "sentinel", "conway-game-of-life"),
+    get projects() {
+      return getFilteredProjects([this.id]);
+    },
   },
   "ai-math": {
     id: "ai-math",
@@ -371,7 +536,9 @@ export const focusCategories = {
     path: "focus/ai-math",
     description:
       "Use models and mathematical thinking to turn noisy inputs into useful tools.",
-    projects: selectProjects("conway-game-of-life", "itspeak"),
+    get projects() {
+      return getFilteredProjects([this.id]);
+    },
   },
   hackathons: {
     id: "hackathons",
@@ -379,11 +546,15 @@ export const focusCategories = {
     path: "focus/hackathons",
     description:
       "Rapid prototyping, building under constraints, and shipping award-winning products.",
-    projects: selectProjects("itspeak", "echo"),
+    get projects() {
+      return getFilteredProjects([this.id]);
+    },
   },
 };
 
 export const allProjects = selectProjects(
+  "music-leds",
+  "cya",
   "itspeak",
   "echo",
   "asteroids",
@@ -394,3 +565,26 @@ export const allProjects = selectProjects(
 export function getCaseStudyLinkLabel() {
   return "view case study";
 }
+
+export function normalizeCategories(categories = []) {
+  return Object.keys(focusCategories).filter((id) => categories.includes(id));
+}
+
+export function getFilteredProjects(categories = []) {
+  const selected = normalizeCategories(categories);
+  return allProjects.filter(
+    (project) =>
+      !selected.length ||
+      project.categories.some((id) => selected.includes(id)),
+  );
+}
+
+export function categoryLabel(id) {
+  return id === "ai-math"
+    ? "AI & Math"
+    : id.charAt(0).toUpperCase() + id.slice(1);
+}
+
+export const featuredProjects = ["music-leds", "cya", "itspeak"].map(
+  (slug) => projectsBySlug[slug],
+);

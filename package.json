@@ -7,10 +7,20 @@
     "dev": "vite",
     "build": "vite build",
     "test": "node --test",
-    "format": "prettier --write \"*.{html,json}\" \"src/**/*.{js,css,md}\" \"tests/**/*.js\""
+    "format": "prettier --write \"*.{html,json}\" \"src/**/*.{js,css,md}\" \"tests/**/*.js\"",
+    "content": "node scripts/generate-content.mjs",
+    "predev": "npm run content",
+    "prebuild": "npm run content",
+    "preview": "vite preview --host 127.0.0.1",
+    "verify:content": "node scripts/generate-content.mjs --check",
+    "verify:assets": "node scripts/verify-assets.mjs",
+    "verify": "npm run verify:content && npm test && npm run build && npm run verify:assets"
   },
   "devDependencies": {
-    "prettier": "^3.9.6",
-    "vite": "latest"
+    "prettier": "3.9.6",
+    "vite": "8.1.5"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
   }
 }

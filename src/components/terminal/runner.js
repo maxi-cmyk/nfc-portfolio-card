@@ -56,7 +56,7 @@ export function appendCommand(command) {
         projectLink.href = url;
         projectLink.target = "_blank";
         projectLink.rel = "noreferrer";
-        projectLink.textContent = `${label.padEnd(9, " ")}→ ${url.replace("https://", "")}`;
+        projectLink.textContent = `${label === "github" ? "View source on GitHub" : label} ↗`;
         return projectLink;
       });
 

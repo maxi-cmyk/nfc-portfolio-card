@@ -1,9 +1,10 @@
 import { getCaseStudyLinkLabel } from "../data/projects.js";
-import { openProjectModal } from "./subpages/project-modal.js";
 
-export function createProjectInsightsButton(project) {
-  const button = document.createElement("button");
-  button.type = "button";
+export function createProjectInsightsButton(project, context = "terminal") {
+  const button = document.createElement("a");
+  button.href = `#project/${project.slug}`;
+  button.dataset.project = project.slug;
+  button.id = `case-study-${context}-${project.slug}`;
   button.className = "terminal-link project-insights-btn";
   button.setAttribute("aria-haspopup", "dialog");
   button.setAttribute("aria-controls", "project-modal");
@@ -27,9 +28,6 @@ export function createProjectInsightsButton(project) {
   icon.append(iconPath);
 
   button.append(label, icon);
-  button.addEventListener("click", (event) => {
-    openProjectModal(project.slug, event.currentTarget);
-  });
 
   return button;
 }

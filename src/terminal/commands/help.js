@@ -7,7 +7,7 @@ export const helpCommand = {
   resume                View curriculum vitae & profile links
   contact               Show social & profile links
   ls focus              List focus categories
-  cd focus/<category>   Navigate to focus subpage (e.g. cd focus/hackathons)
+  cd focus/<category>   Filter selected work (e.g. cd focus/hackathons)
   cd ..                 Return to main index
   clear                 Clear terminal output
 

@@ -16,7 +16,7 @@ import {
   shouldFocusTerminalAfterQuickCommand,
 } from "./terminal/input.js";
 import { getActiveRailTarget } from "./navigation/system-rail.js";
-import { initRouter, handleRoute } from "./navigation/router.js";
+import { initRouter } from "./navigation/router.js";
 import {
   appendCommand,
   appendSuggestions,
@@ -27,16 +27,16 @@ import { initFocusTooling } from "./components/focus-tooling.js";
 
 const form = document.querySelector("#terminal-form");
 const input = document.querySelector("#command-input");
+input.disabled = false;
 const quickLinks = document.querySelectorAll("[data-command]");
 const bootScreen = document.querySelector("#boot-screen");
 const bootLog = document.querySelector("#boot-log");
 const skipBoot = document.querySelector("#skip-boot");
-const main = document.querySelector("#portfolio");
 const pandaMascot = document.querySelector("#panda-mascot");
 const mascotHint = document.querySelector("#mascot-hint");
 const railLinks = document.querySelectorAll("[data-rail-target]");
 const railSections = document.querySelectorAll(
-  "#home, #terminal, #focus, #certificates, #contact",
+  "#home, #terminal, #work, #certificates, #contact",
 );
 
 const commandHistory = new CommandHistory();
@@ -98,7 +98,7 @@ function startSystemRail() {
       const activeTarget = getActiveRailTarget(entries);
       if (activeTarget) setActiveRailTarget(activeTarget);
     },
-    { rootMargin: "-28% 0px -58% 0px", threshold: [0.1, 0.45, 0.8] },
+    { rootMargin: "-28% 0px -58% 0px", threshold: [0] },
   );
 
   railSections.forEach((section) => observer.observe(section));
@@ -106,14 +106,15 @@ function startSystemRail() {
 }
 
 function revealPortfolio() {
-  if (!main.hidden) return;
+  if (!bootScreen || bootScreen.hidden) return;
 
   const { exitDelay } = getBootTiming();
 
   bootScreen.classList.add("is-complete");
-  main.hidden = false;
-  startSystemRail();
-  initRouter();
+  bootScreen.hidden = true;
+  try {
+    sessionStorage.setItem("portfolio-visited", "1");
+  } catch {}
   window.setTimeout(() => bootScreen.remove(), exitDelay);
 
   if (shouldAutoFocusTerminal()) {
@@ -123,10 +124,15 @@ function revealPortfolio() {
 
 async function runBootSequence() {
   const { typingDelay, completionDelay } = getBootTiming();
-  if (reducedMotion.matches) {
-    revealPortfolio();
+  let visited = false;
+  try {
+    visited = sessionStorage.getItem("portfolio-visited") === "1";
+  } catch {}
+  if (!bootScreen || reducedMotion.matches || visited || window.location.hash)
     return;
-  }
+  bootScreen.hidden = false;
+  // The boot is a non-blocking flourish; content stays available on errors.
+  window.setTimeout(revealPortfolio, 1200);
 
   for (const step of getBootSteps()) {
     const text =
@@ -228,6 +234,7 @@ input.addEventListener("keydown", (event) => {
 });
 
 quickLinks.forEach((button) => {
+  button.disabled = false;
   button.addEventListener("click", () => {
     commandHistory.push(button.dataset.command);
     appendCommand(button.dataset.command);
@@ -239,10 +246,13 @@ quickLinks.forEach((button) => {
 });
 
 pandaMascot.addEventListener("click", handleMascotClick);
-skipBoot.addEventListener("click", revealPortfolio);
+skipBoot?.addEventListener("click", revealPortfolio);
+initRouter();
+startSystemRail();
 initCertificates();
 initFocusTooling();
 const motion = initMotion();
 motion.register(input, startAliasTeaser);
 initLedMatrix(motion);
+document.documentElement.classList.add("is-enhanced");
 runBootSequence();

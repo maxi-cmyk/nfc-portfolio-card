@@ -519,7 +519,7 @@
 
 .insights-flow {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--flow-count, 5), minmax(0, 1fr));
   gap: 20px;
   padding: 14px;
   background: var(--panel);

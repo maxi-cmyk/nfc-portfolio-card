@@ -13,8 +13,9 @@ dist/
 # Logs and test output
 *.log
 coverage/
-/tests/
-/public/assets/
 
 # macOS metadata
 .DS_Store
+
+nextSteps.md
+.impeccable/
