@@ -243,24 +243,8 @@ input {
   width: min(100% - 40px, 1040px);
   margin: 24px auto;
 }
-.boot-screen {
-  min-height: 0;
-  padding: 16px 20px;
-}
-.boot-terminal {
-  min-height: 0;
-  width: min(1040px, 100%);
-  padding: 20px;
-}
-.boot-topline {
-  margin: -20px -20px 12px;
-  padding: 10px 20px;
-}
 .boot-topline button {
   min-height: 44px;
-}
-.boot-cursor {
-  display: none;
 }
 .modal-topbar {
   position: sticky;

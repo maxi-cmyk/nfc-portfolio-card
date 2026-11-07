@@ -4,9 +4,9 @@ export function getTypingFrames(text) {
 
 export function getBootTiming() {
   return {
-    typingDelay: 3,
-    lineDelay: 20,
-    completionDelay: 80,
+    typingDelay: 22.5,
+    lineDelay: 125,
+    completionDelay: 500,
     exitDelay: 125,
   };
 }

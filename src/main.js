@@ -112,9 +112,7 @@ function revealPortfolio() {
 
   bootScreen.classList.add("is-complete");
   bootScreen.hidden = true;
-  try {
-    sessionStorage.setItem("portfolio-visited", "1");
-  } catch {}
+  document.body.classList.remove("is-booting");
   window.setTimeout(() => bootScreen.remove(), exitDelay);
 
   if (shouldAutoFocusTerminal()) {
@@ -124,15 +122,12 @@ function revealPortfolio() {
 
 async function runBootSequence() {
   const { typingDelay, completionDelay } = getBootTiming();
-  let visited = false;
-  try {
-    visited = sessionStorage.getItem("portfolio-visited") === "1";
-  } catch {}
-  if (!bootScreen || reducedMotion.matches || visited || window.location.hash)
+  if (!bootScreen || reducedMotion.matches || window.location.hash)
     return;
   bootScreen.hidden = false;
-  // The boot is a non-blocking flourish; content stays available on errors.
-  window.setTimeout(revealPortfolio, 1200);
+  document.body.classList.add("is-booting");
+  // Always release the screen if an unexpected error interrupts startup.
+  const fallbackTimer = window.setTimeout(revealPortfolio, 10000);
 
   for (const step of getBootSteps()) {
     const text =
@@ -142,6 +137,10 @@ async function runBootSequence() {
     bootLog.append(line, document.createElement("br"));
 
     for (const frame of getTypingFrames(text)) {
+      if (bootScreen.hidden) {
+        window.clearTimeout(fallbackTimer);
+        return;
+      }
       line.textContent = frame;
 
       if (!reducedMotion.matches) {
@@ -160,6 +159,7 @@ async function runBootSequence() {
     await new Promise((resolve) => window.setTimeout(resolve, completionDelay));
   }
 
+  window.clearTimeout(fallbackTimer);
   revealPortfolio();
 }
 
