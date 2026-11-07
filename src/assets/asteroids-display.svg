@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 108" focusable="false">
+  <rect class="oled-frame" x="12" y="15" width="126" height="78" rx="5" />
+  <rect class="oled-screen" x="21" y="25" width="108" height="56" rx="1" />
+  <g class="asteroids-ship">
+    <path class="asteroid-ship" d="m75 64 9 18-9-5-9 5z" />
+  </g>
+  <path class="asteroid-rock rock-target" d="m70 33 7-6 8 4 1 9-7 6-9-4z" />
+  <path class="asteroid-rock rock-spawn-a" d="m35 37 6-5 7 4 1 8-6 5-8-4z" />
+  <path class="asteroid-rock rock-spawn-b" d="m103 42 5-4 6 3 1 7-5 4-7-3z" />
+  <path class="asteroid-rock rock-spawn-c" d="m45 57 4-4 5 3 1 5-4 4-5-2z" />
+  <circle class="asteroid-shot" cx="75" cy="61" r="1.2" />
+  <path
+    class="asteroid-burst"
+    d="m75 42 0-7m0 14v7m-7-14 5-5m5 10 5 5m-10-10-5 5m10-10 5-5"
+  />
+  <circle class="oled-button" cx="34" cy="100" r="4" />
+  <circle class="oled-button" cx="48" cy="100" r="4" />
+</svg>

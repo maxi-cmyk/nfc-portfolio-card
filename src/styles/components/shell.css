@@ -19,9 +19,7 @@
     display: grid;
     width: 132px;
     color: var(--muted);
-    font:
-      12px / 1.35 "DM Mono",
-      monospace;
+    font: 12px / 1.35 var(--font-mono);
     letter-spacing: 0.04em;
     transform: translateY(-50%);
   }

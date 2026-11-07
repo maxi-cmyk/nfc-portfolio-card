@@ -1,4 +1,5 @@
 import { initMotion } from "./components/motion.js";
+import { initBackgroundArt } from "./components/background-art.js";
 import { initLedMatrix } from "./components/led-matrix.js";
 import {
   getBootDelay,
@@ -251,6 +252,7 @@ initRouter();
 startSystemRail();
 initCertificates();
 initFocusTooling();
+initBackgroundArt();
 const motion = initMotion();
 motion.register(input, startAliasTeaser);
 initLedMatrix(motion);

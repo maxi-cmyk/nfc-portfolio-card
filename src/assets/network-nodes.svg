@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 94" focusable="false">
+  <path class="art-wire" d="M20 69 51 47 91 67M51 47 76 20" />
+  <circle class="art-node" cx="20" cy="69" r="7" />
+  <circle class="art-node" cx="51" cy="47" r="7" />
+  <circle class="art-node" cx="76" cy="20" r="7" />
+  <circle class="art-node" cx="91" cy="67" r="7" />
+  <circle class="art-packet" r="3" />
+  <g class="art-lock-pendulum">
+    <path class="art-lock" d="M70 73v-8a8 8 0 0 1 16 0v8m-19 0h22v15H67z" />
+  </g>
+</svg>

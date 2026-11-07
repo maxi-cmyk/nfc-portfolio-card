@@ -8,16 +8,14 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border: 1px solid var(--acid);
-  padding: 7px 10px;
+  border: var(--hair);
+  border-radius: var(--button-radius);
+  padding: 7px 14px;
   background: var(--panel);
-  background: color-mix(in srgb, var(--acid) 10%, var(--panel));
   cursor: pointer;
-  font:
-    500 12px "DM Mono",
-    monospace;
-  color: var(--acid);
-  letter-spacing: 0.04em;
+  font: 500 12px var(--font-mono);
+  color: var(--ink);
+  letter-spacing: 0.06em;
   line-height: 1;
   text-transform: uppercase;
   transition:
@@ -38,14 +36,15 @@
 
 .project-insights-btn:hover,
 .project-insights-btn:focus-visible {
-  background: var(--acid);
-  color: var(--bg);
+  border-color: var(--navy);
+  background: var(--navy);
+  color: var(--panel);
   text-decoration: none;
-  transform: translateY(-1px);
 }
 
 .project-insights-btn:active {
-  transform: translateY(0);
+  border-color: var(--ink);
+  background: var(--ink);
 }
 
 .project-insights-btn:focus-visible,
@@ -64,7 +63,7 @@
   border: 1px solid var(--line);
   background: var(--panel);
   color: var(--ink);
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+  box-shadow: var(--window-shadow);
   overflow: auto;
   overflow-x: hidden;
   scrollbar-color: var(--acid) var(--panel);
@@ -96,9 +95,7 @@
 .modal-badge {
   min-width: 0;
   color: var(--muted);
-  font:
-    11px "DM Mono",
-    monospace;
+  font: 11px var(--font-mono);
   letter-spacing: 0.05em;
   overflow-wrap: anywhere;
 }
@@ -111,9 +108,7 @@
   background: transparent;
   color: var(--acid);
   cursor: pointer;
-  font:
-    12px "DM Mono",
-    monospace;
+  font: 12px var(--font-mono);
 }
 
 .modal-close-btn:hover {
@@ -129,17 +124,13 @@
 .modal-title {
   margin: 0;
   color: var(--acid);
-  font:
-    500 clamp(20px, 3vw, 28px) "DM Mono",
-    monospace;
+  font: 500 clamp(20px, 3vw, 28px) var(--font-mono);
 }
 
 .modal-meta {
   margin: 0;
   color: var(--muted);
-  font:
-    12px "DM Mono",
-    monospace;
+  font: 12px var(--font-mono);
 }
 
 .modal-tags {
@@ -151,7 +142,7 @@
 .modal-desc {
   margin: 0;
   color: var(--ink);
-  font-family: "Outfit", sans-serif;
+  font-family: var(--font-text);
   font-size: 15px;
   line-height: 1.55;
 }
@@ -170,9 +161,7 @@
   min-width: 0;
   margin: 0;
   color: var(--ink);
-  font:
-    500 13px "DM Mono",
-    monospace;
+  font: 500 13px var(--font-mono);
   letter-spacing: 0.04em;
 }
 
@@ -180,7 +169,7 @@
   max-width: 72ch;
   margin: 0;
   color: var(--muted);
-  font-family: "Outfit", sans-serif;
+  font-family: var(--font-text);
   font-size: 15px;
   line-height: 1.6;
 }
@@ -198,16 +187,14 @@
 
 .insights-narrative-header h4 {
   color: var(--acid);
-  font:
-    500 clamp(17px, 2.4vw, 22px) "DM Mono",
-    monospace;
+  font: 500 clamp(17px, 2.4vw, 22px) var(--font-mono);
   line-height: 1.25;
 }
 
 .insights-narrative-header p {
   max-width: 68ch;
   color: var(--ink);
-  font-family: "Outfit", sans-serif;
+  font-family: var(--font-text);
   font-size: 14px;
   line-height: 1.55;
 }

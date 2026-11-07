@@ -1,0 +1,60 @@
+/* Typography and shape tokens. Colours live in themes/retro-apple.css. */
+@import "@fontsource/atkinson-hyperlegible-next/latin-400.css";
+@import "@fontsource/atkinson-hyperlegible-next/latin-600.css";
+@import "@fontsource/ibm-plex-mono/latin-400.css";
+@import "@fontsource/ibm-plex-mono/latin-500.css";
+
+@font-face {
+  font-family: "Departure Mono";
+  src: url("../../assets/fonts/DepartureMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Chrome and headlines: bitmap. Keep sizes on the 11px grid. */
+  --font-chrome: "Departure Mono", "IBM Plex Mono", ui-monospace, monospace;
+  --font-text: "Atkinson Hyperlegible Next", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* Bitmap steps (multiples of 11). */
+  --px-1: 22px;
+  --px-2: 22px;
+  --px-hero: 55px;
+
+  /* Text scale. */
+  --step--1: 12px;
+  --step-0: 14px;
+  --step-1: 17px;
+  --step-2: 22px;
+
+  /* Shapes: one hairline, one window shadow, one button radius. */
+  --hair: 1px solid var(--line);
+  --window-shadow: 1px 1px 0 var(--line);
+  --button-radius: 6px;
+}
+
+@media (min-width: 651px) {
+  :root {
+    --px-2: 33px;
+    --px-hero: 77px;
+  }
+}
+
+@media (min-width: 1000px) {
+  :root {
+    --px-hero: 99px;
+  }
+}
+
+/* Pixel type must not be smoothed, tracked or shadowed. */
+.px {
+  font-family: var(--font-chrome);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-shadow: none;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  text-rendering: optimizeSpeed;
+}

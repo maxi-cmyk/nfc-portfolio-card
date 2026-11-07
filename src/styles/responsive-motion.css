@@ -23,7 +23,7 @@
 
   .boot-terminal {
     min-height: 300px;
-    box-shadow: 6px 6px 0 #0a0c09;
+    box-shadow: var(--window-shadow);
   }
 
   .boot-topline {
@@ -38,7 +38,7 @@
   }
 
   .terminal {
-    box-shadow: 6px 6px 0 #0a0c09;
+    box-shadow: var(--window-shadow);
   }
 
   .output {

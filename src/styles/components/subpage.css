@@ -1,15 +1,11 @@
+/* Ruled index, like a manual's contents page: rules between rows, no boxes. */
 .full-project-card {
-  padding: clamp(20px, 3.5vw, 32px);
-  border: 1px solid var(--line);
-  background: var(--panel);
-  transition:
-    border-color 180ms ease,
-    transform 180ms ease;
+  padding: clamp(20px, 3.5vw, 32px) 0;
+  border-top: var(--hair);
 }
 
-.full-project-card:hover {
-  border-color: var(--acid);
-  transform: translateY(-2px);
+.full-project-card:last-child {
+  border-bottom: var(--hair);
 }
 
 .project-card-header {
@@ -23,24 +19,18 @@
 
 .project-card-title {
   margin: 0;
-  color: var(--acid);
-  font:
-    500 clamp(18px, 2.2vw, 24px) "DM Mono",
-    monospace;
 }
 
 .project-card-meta {
   color: var(--muted);
-  font:
-    12px "DM Mono",
-    monospace;
+  font: 12px var(--font-mono);
   letter-spacing: 0.03em;
 }
 
 .project-card-desc {
   margin: 0 0 14px;
   color: var(--muted);
-  font-family: "Outfit", sans-serif;
+  font-family: var(--font-text);
   font-size: 15px;
   line-height: 1.5;
 }
@@ -52,17 +42,20 @@
   margin-bottom: 18px;
 }
 
+/* Tags are plain mono text; the rule under the card already groups them. */
 .tech-badge {
   display: inline-block;
-  padding: 3px 8px;
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  background: var(--bg);
+  padding: 0;
+  border: 0;
+  background: none;
   color: var(--acid);
-  font:
-    11px "DM Mono",
-    monospace;
-  letter-spacing: 0.03em;
+  font: var(--step--1) var(--font-mono);
+}
+
+.tech-badge + .tech-badge::before {
+  margin-right: 8px;
+  color: var(--muted);
+  content: "·";
 }
 
 .project-card-links {
@@ -70,8 +63,7 @@
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
   gap: 12px 24px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line);
+  padding-top: 8px;
 }
 
 .project-card-outbound-links {

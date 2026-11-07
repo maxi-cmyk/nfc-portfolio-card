@@ -117,6 +117,7 @@
 .intro,
 .terminal,
 .quick-links,
+.work,
 .focus-heading > div,
 .focus-terminal,
 .certificates,
@@ -554,9 +555,7 @@ footer {
   margin: 0;
   padding: 16px 0;
   border-bottom: 1px solid var(--line);
-  font:
-    14px / 1.45 "DM Mono",
-    monospace;
+  font: 14px / 1.45 var(--font-mono);
 }
 
 .focus-index article {
@@ -576,9 +575,7 @@ footer {
 .focus-kind {
   padding-top: 3px;
   color: var(--acid);
-  font:
-    12px "DM Mono",
-    monospace;
+  font: 12px var(--font-mono);
 }
 
 .focus-kind {
@@ -588,9 +585,7 @@ footer {
 .focus-index h3 {
   margin: 0 0 7px;
   color: var(--ink);
-  font:
-    500 clamp(18px, 2vw, 24px) "DM Mono",
-    monospace;
+  font: 500 clamp(18px, 2vw, 24px) var(--font-mono);
 }
 
 .focus-header-btn {
@@ -612,9 +607,7 @@ footer {
   gap: 6px;
   max-width: 640px;
   margin: 14px 0 0;
-  font:
-    11px / 1.45 "DM Mono",
-    monospace;
+  font: 11px / 1.45 var(--font-mono);
 }
 
 .focus-tooling > div {

@@ -23,7 +23,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: Outfit, Arial, sans-serif;
+  font-family: var(--font-text);
 }
 
 body::before {

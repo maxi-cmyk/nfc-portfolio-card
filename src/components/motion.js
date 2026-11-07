@@ -1,25 +1,35 @@
 // One visibility policy for CSS loops and the LED display's timer.
 export function initMotion() {
-  // Keep these two models beside AI & math as preceding content reflows.
+  // Keep the restored artwork beside current project cards as filters reflow.
   const artLayer = document.querySelector(".field-trio");
-  const aiSection = document
-    .querySelector('[data-focus="ai-math"]')
-    ?.closest("article");
-  const matrix = document.querySelector(".matrix-art");
-  const asteroids = document.querySelector(".asteroids-art");
-  if (artLayer && aiSection && matrix && asteroids) {
-    const placeAiModels = () => {
-      const top =
-        aiSection.getBoundingClientRect().top -
-        artLayer.getBoundingClientRect().top;
-      matrix.style.top = `${top}px`;
-      asteroids.style.top = `${top + 60}px`;
+  const work = document.querySelector("#work");
+  if (artLayer && work) {
+    const anchors = [
+      [".esp32-art", "music-leds", 80],
+      [".matrix-art", "conway-game-of-life", 140],
+      [".camera-art", "sentinel", 200],
+      [".asteroids-art", "asteroids", 260],
+    ];
+    const placeModels = () => {
+      const origin = artLayer.getBoundingClientRect().top;
+      for (const [selector, slug, fallbackOffset] of anchors) {
+        const model = artLayer.querySelector(selector);
+        const card = work.querySelector(`[data-project-slug="${slug}"]`);
+        const anchor = card && !card.hidden ? card : work;
+        const offset = anchor === work ? fallbackOffset : 30;
+        model.style.top = `${anchor.getBoundingClientRect().top - origin + offset}px`;
+      }
     };
-    const layoutObserver = new ResizeObserver(placeAiModels);
+    const layoutObserver = new ResizeObserver(placeModels);
     layoutObserver.observe(document.querySelector("#portfolio"));
-    layoutObserver.observe(aiSection);
-    window.addEventListener("resize", placeAiModels);
-    placeAiModels();
+    layoutObserver.observe(work);
+    new MutationObserver(placeModels).observe(work, {
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["hidden"],
+    });
+    window.addEventListener("resize", placeModels);
+    placeModels();
   }
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
   const regions = new Map();
@@ -48,7 +58,7 @@ export function initMotion() {
   const register = (element, onChange) => {
     if (!element) return;
     element.classList.add("motion-region");
-    const state = { visible: false, onChange };
+    const state = { visible: !observer, onChange };
     regions.set(element, state);
     update(element, state);
     observer?.observe(element);

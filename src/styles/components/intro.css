@@ -8,9 +8,7 @@
 
 .brand {
   color: var(--ink);
-  font:
-    600 20px "DM Mono",
-    monospace;
+  font: 600 20px var(--font-mono);
   text-decoration: none;
 }
 
@@ -21,9 +19,7 @@
 .status,
 .eyebrow {
   color: var(--muted);
-  font:
-    12px "DM Mono",
-    monospace;
+  font: 12px var(--font-mono);
   letter-spacing: 0.07em;
 }
 
@@ -50,9 +46,7 @@
   background: transparent;
   color: var(--acid);
   cursor: pointer;
-  font:
-    42px "DM Mono",
-    monospace;
+  font: 42px var(--font-mono);
   transition:
     color 160ms ease,
     transform 160ms ease;
@@ -93,9 +87,7 @@
 .mascot-hint {
   margin: 0 0 18px;
   color: var(--warm);
-  font:
-    12px "DM Mono",
-    monospace;
+  font: 12px var(--font-mono);
 }
 
 .eyebrow {

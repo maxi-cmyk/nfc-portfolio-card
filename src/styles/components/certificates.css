@@ -219,11 +219,11 @@
 .certificate-preview {
   display: block;
   overflow: hidden;
-  border: 2px solid var(--line);
+  border: var(--hair);
   background: var(--panel);
   color: var(--ink);
   text-decoration: none;
-  box-shadow: 5px 5px 0 #74736d;
+  box-shadow: var(--window-shadow);
   transition:
     transform 180ms ease,
     box-shadow 180ms ease;
@@ -231,20 +231,21 @@
 
 .certificate-preview:hover,
 .certificate-preview:focus-visible {
-  outline: 3px solid var(--acid);
+  outline: 2px solid var(--acid);
   outline-offset: 4px;
-  box-shadow: 8px 8px 0 #74736d;
-  transform: translate(-3px, -3px);
+  box-shadow: var(--window-shadow);
 }
 
 .certificate-preview-bar {
   display: block;
   padding: 9px 12px;
-  border-bottom: 2px solid var(--line);
-  background: repeating-linear-gradient(0deg, #fbfaf5 0 2px, #d1d0c9 2px 4px);
-  font:
-    11px "DM Mono",
-    monospace;
+  border-bottom: var(--hair);
+  background: repeating-linear-gradient(
+    0deg,
+    var(--ink) 0 1px,
+    var(--panel) 1px 3px
+  );
+  font: 11px var(--font-mono);
 }
 
 .certificate-preview img {
@@ -261,9 +262,7 @@
 .certificate-meta {
   margin: 0 0 16px;
   color: var(--warm);
-  font:
-    500 12px "DM Mono",
-    monospace;
+  font: 500 12px var(--font-mono);
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
@@ -296,9 +295,7 @@
   min-height: 44px;
   align-items: center;
   color: var(--acid);
-  font:
-    500 13px "DM Mono",
-    monospace;
+  font: 500 13px var(--font-mono);
   text-underline-offset: 4px;
 }
 
@@ -315,9 +312,7 @@ footer {
   padding: 24px 0 42px;
   border-top: 1px solid var(--line);
   color: var(--muted);
-  font:
-    12px "DM Mono",
-    monospace;
+  font: 12px var(--font-mono);
 }
 
 footer p {

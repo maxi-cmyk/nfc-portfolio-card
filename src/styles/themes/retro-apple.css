@@ -1,4 +1,5 @@
-/* A 1990s desktop-computer theme: platinum surfaces, hard borders, and 3D controls. */
+/* A 1990s Apple technical-manual theme: platinum paper, blueprint ink, plum signals.
+   Hairline frames, flat controls, bitmap headlines. Tokens: foundations/tokens.css. */
 :root {
   --ink: #1d1d1d;
   --muted: #545454;
@@ -6,6 +7,7 @@
   --panel: #f4f3ed;
   --line: #1d1d1d;
   --acid: #1e4f9e;
+  --navy: #12376b;
   --warm: #7a2e5d;
   --red: #d83a3a;
   --terminal-placeholder: #66645f;
@@ -17,15 +19,10 @@ html {
 }
 
 body {
-  background:
-    repeating-linear-gradient(
-      0deg,
-      transparent 0 3px,
-      rgba(255, 255, 255, 0.22) 3px 4px
-    ),
-    var(--bg);
+  background: var(--bg);
   color: var(--ink);
-  font-family: Geneva, Arial, sans-serif;
+  font-family: var(--font-text);
+  font-size: var(--step-1);
 }
 
 body::before {
@@ -38,45 +35,57 @@ body::before {
 
 .boot-terminal,
 .terminal {
-  border: 2px solid var(--ink);
+  border: var(--hair);
   border-radius: 0;
   background: var(--panel);
-  box-shadow: 5px 5px 0 #74736d;
+  box-shadow: var(--window-shadow);
 }
 
 .boot-terminal {
-  font-family: "DM Mono", monospace;
+  font-family: var(--font-mono);
 }
 
+/* System 7 title bar: hairline pinstripes with the title on a plate. */
 .boot-topline,
 .terminal-bar {
-  background: repeating-linear-gradient(0deg, #fbfaf5 0 2px, #d1d0c9 2px 4px);
+  background: repeating-linear-gradient(
+    0deg,
+    var(--ink) 0 1px,
+    var(--panel) 1px 3px
+  );
 }
 
 .boot-topline {
   margin: calc(clamp(24px, 5vw, 52px) * -1);
   margin-bottom: 28px;
   padding: 12px clamp(24px, 5vw, 52px);
-  border-bottom: 2px solid var(--ink);
+  border-bottom: var(--hair);
   color: var(--ink);
-  font-weight: 700;
+  font-size: var(--step--1);
+  font-weight: 500;
+}
+
+.boot-topline p,
+.boot-topline button {
+  padding: 2px 10px;
+  background: var(--panel);
 }
 
 .boot-topline button {
   color: var(--acid);
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .boot-line.command,
 .command {
-  color: #7a2e5d;
-  font-weight: 700;
+  color: var(--warm);
+  font-weight: 500;
 }
 
 .boot-line.success,
 .prompt {
   color: var(--acid);
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .shell {
@@ -107,65 +116,18 @@ body::before {
   color: var(--acid);
 }
 
+/* Clip-art monitor retired; the panda stays as the only mascot. */
 .retro-monitor {
-  position: relative;
-  width: 76px;
-  height: 62px;
-  border: 3px solid var(--ink);
-  background: #e7e6df;
-  box-shadow: 3px 3px 0 #74736d;
-}
-
-.retro-monitor::before {
-  position: absolute;
-  inset: 7px 8px 16px;
-  border: 2px solid var(--ink);
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.55), transparent 48%), #6db4d7;
-  content: "";
-}
-
-.retro-monitor::after {
-  position: absolute;
-  right: 19px;
-  bottom: 5px;
-  left: 19px;
-  height: 4px;
-  border: 2px solid var(--ink);
-  border-top: 0;
-  background: #e7e6df;
-  content: "";
-}
-
-.retro-monitor span {
-  position: absolute;
-  top: 14px;
-  right: 0;
-  left: 0;
-  z-index: 1;
-  color: #12376b;
-  font:
-    700 14px "DM Mono",
-    monospace;
-  text-align: center;
+  display: none;
 }
 
 .eyebrow,
 .mascot-hint {
   color: var(--muted);
-  font-weight: 700;
-  letter-spacing: 0.03em;
-}
-
-.intro h1 {
-  color: #12376b;
-  font-family:
-    Arial Black,
-    Geneva,
-    Arial,
-    sans-serif;
-  letter-spacing: -0.065em;
-  text-shadow: 2px 2px 0 #fffdf6;
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .lede {
@@ -173,46 +135,52 @@ body::before {
 }
 
 .lede em {
-  color: #7a2e5d;
-  font-weight: 700;
+  color: var(--warm);
+  font-style: normal;
+  font-weight: 600;
 }
 
 .terminal-bar {
   min-height: 44px;
   padding: 9px 12px;
-  border-bottom: 2px solid var(--ink);
+  border-bottom: var(--hair);
 }
 
 .terminal-bar h2 {
-  padding: 2px 9px;
-  border: 1px solid var(--ink);
+  margin: 0 auto;
+  padding: 2px 12px;
   background: var(--panel);
   color: var(--ink);
-  font-weight: 700;
+  font-size: var(--step--1);
+  font-weight: 500;
+}
+
+/* One close box on the left, as System 7 had; the traffic lights are gone. */
+.dot.amber,
+.dot.green {
+  display: none;
 }
 
 .dot {
-  width: 11px;
-  height: 11px;
-  border: 1px solid var(--ink);
+  width: 13px;
+  height: 13px;
+  border: var(--hair);
   border-radius: 0;
 }
 
 .dot.red {
-  background: #ff5f57;
+  background: var(--panel);
 }
 
-.dot.amber {
-  background: #febc2e;
-}
-
-.dot.green {
-  background: #28c840;
+.terminal-bar::after {
+  width: 13px;
+  height: 13px;
+  content: "";
 }
 
 .output {
   color: var(--ink);
-  font-family: "DM Mono", monospace;
+  font-family: var(--font-mono);
 }
 
 .result,
@@ -227,13 +195,13 @@ body::before {
 }
 
 .command-line {
-  border-top: 2px solid var(--ink);
+  border-top: var(--hair);
   background: #e7e6df;
 }
 
 .command-line input {
-  color: #7a2e5d;
-  font-weight: 700;
+  color: var(--warm);
+  font-weight: 500;
 }
 
 .command-line input::placeholder {
@@ -244,41 +212,69 @@ body::before {
   gap: 12px;
 }
 
+/* Mac push button: flat 1px rounded rectangle, inverts on hover. */
 .quick-links button {
-  border: 2px solid var(--ink);
-  border-radius: 0;
-  background: #e7e6df;
-  box-shadow:
-    inset 2px 2px 0 #fffef7,
-    inset -2px -2px 0 #8b8a84,
-    2px 2px 0 #74736d;
+  border: var(--hair);
+  border-radius: var(--button-radius);
+  background: var(--panel);
+  box-shadow: none;
   color: var(--ink);
-  font-weight: 700;
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .quick-links button:hover,
 .quick-links button:focus-visible {
-  border-color: var(--ink);
-  background: #c8d8ed;
-  color: #12376b;
+  border-color: var(--navy);
+  background: var(--navy);
+  color: var(--panel);
 }
 
 .quick-links button:active {
-  box-shadow:
-    inset 2px 2px 0 #8b8a84,
-    inset -2px -2px 0 #fffef7;
-  transform: translate(2px, 2px);
+  background: var(--ink);
+  border-color: var(--ink);
 }
 
+/* Bitmap headlines: only at sizes on the 11px grid, never tracked or shadowed. */
+.intro h1,
+.section-heading h2,
 .focus h2,
 .focus-index h3,
+.certificates-heading h2,
+.featured-project h3,
+.project-card-title,
+.modal-title {
+  color: var(--navy);
+  font-family: var(--font-chrome);
+  font-synthesis: none;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-shadow: none;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  text-rendering: optimizeSpeed;
+}
+
+.intro h1 {
+  font-size: var(--px-hero);
+  line-height: 1;
+}
+
+.section-heading h2,
+.focus h2,
 .certificates-heading h2 {
-  color: #12376b;
-  font-family:
-    Arial Black,
-    Geneva,
-    Arial,
-    sans-serif;
+  font-size: var(--px-2);
+  line-height: 1.1;
+}
+
+.focus-index h3,
+.featured-project h3,
+.project-card-title,
+.modal-title {
+  font-size: var(--px-1);
+  line-height: 1.15;
 }
 
 .focus-terminal,
@@ -319,16 +315,6 @@ footer a {
 
   .intro-tools {
     gap: 14px;
-  }
-
-  .retro-monitor {
-    width: 65px;
-    height: 54px;
-  }
-
-  .boot-terminal,
-  .terminal {
-    box-shadow: 3px 3px 0 #74736d;
   }
 }
 

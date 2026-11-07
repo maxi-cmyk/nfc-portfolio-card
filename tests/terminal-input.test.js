@@ -64,6 +64,7 @@ function readStyleGraph(fileUrl, visited = new Set()) {
 
   const styles = readFileSync(fileUrl, "utf8");
   const importedStyles = [...styles.matchAll(/@import\s+["']([^"']+)["'];/g)]
+    .filter(([, importPath]) => importPath.startsWith("."))
     .map(([, importPath]) =>
       readStyleGraph(new URL(importPath, fileUrl), visited),
     )
