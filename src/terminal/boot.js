@@ -19,6 +19,8 @@ export function getBootSteps() {
   return [
     { kind: "command", text: "tap --card" },
     { kind: "output", text: "13.56 MHz field detected." },
+    { kind: "output", text: "rst:0x1 (POWERON_RESET) boot:0x13" },
+    { kind: "output", text: "adc: 128 samples @ 6.4 kHz · wifi: off" },
     { kind: "success", text: "System online." },
   ];
 }

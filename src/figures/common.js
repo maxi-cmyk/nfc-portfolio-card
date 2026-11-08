@@ -1,5 +1,13 @@
 // Small helpers shared by the 3D figures.
-import { Color, Group, PerspectiveCamera, Scene } from "three";
+import {
+  Box3,
+  Color,
+  Group,
+  MathUtils,
+  PerspectiveCamera,
+  Scene,
+  Vector3,
+} from "three";
 
 export function baseFigure(fov = 26, distance = 8.5) {
   const scene = new Scene();
@@ -15,13 +23,41 @@ export const colorsFrom = (palette) =>
     Object.entries(palette).map(([k, v]) => [k, new Color(v)]),
   );
 
-// Keep the whole drawing in view in a tall or a narrow host.
-export function fitCamera(camera, baseFov, width, height) {
+// The radius of the sphere, centred on the group's pivot, that holds the whole
+// drawing. A figure that spins about its pivot never leaves this sphere, so a
+// camera that fits it can never clip the figure, whatever the angle.
+export function boundingRadius(group, pad = 1.08) {
+  group.updateMatrixWorld(true);
+  const box = new Box3().setFromObject(group);
+  if (box.isEmpty()) return 3;
+  const corner = new Vector3();
+  let radius = 0;
+  for (const x of [box.min.x, box.max.x])
+    for (const y of [box.min.y, box.max.y])
+      for (const z of [box.min.z, box.max.z])
+        radius = Math.max(radius, corner.set(x, y, z).length());
+  return radius * pad;
+}
+
+// Distance at which a sphere of this radius fills the narrower side of the view.
+export function fitDistance(radius, fovDegrees, aspect) {
+  const half = MathUtils.degToRad(fovDegrees / 2);
+  const limit = Math.min(half, Math.atan(Math.tan(half) * aspect));
+  return radius / Math.sin(limit);
+}
+
+// Keep the whole drawing in view, at any angle, in a tall or a narrow host.
+export function fitCamera(camera, baseFov, width, height, radius) {
   camera.aspect = width / height;
-  camera.fov =
-    camera.aspect < 1.25
-      ? baseFov * (1.3 / Math.max(camera.aspect, 0.55))
-      : baseFov;
+  if (radius) {
+    camera.fov = baseFov;
+    camera.position.z = fitDistance(radius, baseFov, camera.aspect);
+  } else {
+    camera.fov =
+      camera.aspect < 1.25
+        ? baseFov * (1.3 / Math.max(camera.aspect, 0.55))
+        : baseFov;
+  }
   camera.updateProjectionMatrix();
 }
 

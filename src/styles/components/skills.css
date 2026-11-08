@@ -1,4 +1,5 @@
-/* Skills evidence: chips for skills and projects, plus a detail line. */
+/* Skills: a knowledge graph on a board, with domain chips above and a detail
+   line below. Without scripts the page shows the plain index instead. */
 .skill-index {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -19,53 +20,17 @@
   font-size: var(--step-0);
 }
 
-.skills-detail {
-  min-height: 4.6em;
-  margin: 0 0 16px;
-  padding: 10px 14px;
-  border: var(--hair);
-  background: var(--panel);
-  font-size: var(--step-0);
-  line-height: 1.5;
-}
-.skills-note {
-  color: var(--muted);
-}
-.skills-columns {
-  display: grid;
-  gap: 20px 40px;
-  margin-bottom: 16px;
-}
-@media (min-width: 1000px) {
-  .skills-columns {
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-  }
-}
-.skills-group,
-.skills-projects {
-  margin: 0;
-}
-.skills-group + .skills-group {
-  margin-top: 14px;
-}
-.skills-group h3,
-.skills-projects h3 {
-  margin: 0 0 8px;
-  color: var(--muted);
-  font: 500 var(--step--1) / 1.4 var(--font-mono);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-.chips {
+.skills-controls {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  margin: 0 0 12px;
 }
 .chip {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  padding: 0 12px;
+  padding: 0 10px;
   border: var(--hair);
   border-radius: var(--button-radius);
   background: var(--panel);
@@ -75,12 +40,7 @@
   letter-spacing: 0.02em;
   transition:
     background-color 80ms steps(2, end),
-    color 80ms steps(2, end),
-    opacity 80ms steps(2, end);
-}
-.chip .count {
-  margin-left: 8px;
-  color: var(--warm);
+    color 80ms steps(2, end);
 }
 .chip:hover,
 .chip:focus-visible,
@@ -89,25 +49,151 @@
   background: var(--navy);
   color: var(--panel);
 }
-.chip:hover .count,
-.chip:focus-visible .count,
-.chip[aria-pressed="true"] .count {
+.chip-more {
+  margin-left: auto;
+  color: var(--acid);
+}
+.chip-more[aria-pressed="true"] {
   color: var(--panel);
 }
-.chip.is-linked {
-  border-color: var(--navy);
-  background: color-mix(in srgb, var(--navy) 16%, var(--panel));
-  box-shadow: inset 0 0 0 1px var(--navy);
+
+.skills-board {
+  position: relative;
+  border: var(--hair);
+  background:
+    linear-gradient(rgba(18, 55, 107, 0.07) 1px, transparent 1px) 0 0 / 24px
+      24px,
+    linear-gradient(90deg, rgba(18, 55, 107, 0.07) 1px, transparent 1px) 0 0 /
+      24px 24px,
+    var(--panel);
+  touch-action: pan-y;
 }
-.chip.is-dim {
-  opacity: 0.4;
+.skills-board svg {
+  display: block;
+  max-width: 100%;
 }
-.chip-shelf,
-.chip-practice {
-  border-style: dashed;
+.skills-board .edge {
+  stroke: var(--ink);
+  stroke-opacity: 0.32;
+  stroke-width: 1;
 }
-.chip-more {
-  color: var(--acid);
+.skills-board .edge-domain {
+  stroke: var(--navy);
+  stroke-opacity: 0.5;
+  stroke-dasharray: 5 4;
+}
+.skills-board .edge.is-lit {
+  stroke: var(--navy);
+  stroke-opacity: 1;
+  stroke-dasharray: none;
+  stroke-width: 2;
+}
+.skills-board .edge.is-dim,
+.skills-board .edge.is-faded {
+  stroke-opacity: 0.08;
+}
+.skills-board .node {
+  cursor: pointer;
+  outline: 0;
+  transition: opacity 90ms steps(3, end);
+}
+.skills-board .node .hit {
+  fill: transparent;
+}
+.skills-board .shape {
+  fill: var(--panel);
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  shape-rendering: crispEdges;
+}
+.skills-board .node-hub .shape {
+  fill: var(--navy);
+  stroke: var(--ink);
+}
+.skills-board .node-skill .shape {
+  fill: #e7e6df;
+}
+.skills-board .node-other .shape,
+.skills-board .node-practice .shape {
+  stroke-dasharray: 3 2;
+}
+.skills-board .label {
+  fill: var(--ink);
+  font: 13px var(--font-chrome);
+  paint-order: stroke;
+  stroke: var(--panel);
+  stroke-linejoin: round;
+  stroke-width: 4px;
+  pointer-events: none;
+  user-select: none;
+}
+.skills-board .label-hub {
+  fill: var(--panel);
+  stroke: none;
+  font-size: 14px;
+}
+.skills-board .label-pop {
+  opacity: 0;
+}
+.skills-board .node:hover .label-pop,
+.skills-board .node:focus-visible .label-pop,
+.skills-board .node.is-selected .label-pop,
+.skills-board .node.is-lit .label-pop {
+  opacity: 1;
+}
+.skills-board .node:hover .shape,
+.skills-board .node:focus-visible .shape {
+  stroke: var(--navy);
+  stroke-width: 2.5;
+}
+.skills-board .node.is-lit .shape {
+  fill: color-mix(in srgb, var(--navy) 18%, var(--panel));
+  stroke: var(--navy);
+  stroke-width: 2.5;
+}
+.skills-board .node-hub.is-lit .shape {
+  fill: var(--navy);
+  stroke: var(--ink);
+}
+.skills-board .node.is-selected .shape {
+  fill: var(--plum, var(--warm));
+  stroke: var(--ink);
+  stroke-width: 2.5;
+}
+.skills-board .node-hub.is-selected .shape {
+  fill: var(--warm);
+}
+.skills-board .node.is-dim,
+.skills-board .node.is-faded {
+  opacity: 0.22;
+}
+.skills-board .focus-ring {
+  fill: none;
+  stroke: var(--navy);
+  stroke-dasharray: 3 2;
+  stroke-width: 2;
+  opacity: 0;
+  pointer-events: none;
+}
+.skills-board .node:focus-visible .focus-ring {
+  opacity: 1;
+}
+
+.skills-detail {
+  min-height: 4.6em;
+  margin: 12px 0 0;
+  padding: 10px 14px;
+  border: var(--hair);
+  background: var(--panel);
+  font-size: var(--step-0);
+  line-height: 1.5;
+}
+.skills-note {
+  color: var(--muted);
+}
+.skills-detail .terminal-link {
+  display: inline;
+  min-height: 0;
 }
 html.is-scenes .skills .section-heading p {
   display: none;
@@ -116,8 +202,4 @@ html.is-scenes .skills .section-heading p {
   html.is-scenes .skills .section-heading p {
     display: block;
   }
-}
-.skills-detail .terminal-link {
-  display: inline;
-  min-height: 0;
 }

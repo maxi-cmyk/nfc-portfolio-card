@@ -1,9 +1,5 @@
 // Command-palette items and matching. Pure: the dialog lives in components/.
-import {
-  allProjects,
-  caseStudyProjects,
-  shelfEntries,
-} from "../data/projects.js";
+import { allProjects, caseStudyProjects } from "../data/projects.js";
 import { projectHash } from "./routes.js";
 
 export function getPaletteItems() {
@@ -37,13 +33,6 @@ export function getPaletteItems() {
       keywords: "case study steps write-up",
     })),
     {
-      id: "shelf",
-      label: "Also built",
-      hint: `${shelfEntries.length} smaller projects`,
-      hash: "#shelf",
-      keywords: "more other projects",
-    },
-    {
       id: "skills",
       label: "Skills",
       hint: "Languages and tools",
@@ -67,7 +56,7 @@ export function getPaletteItems() {
     {
       id: "terminal",
       label: "Terminal",
-      hint: "Type commands",
+      hint: "Type commands in the console",
       action: "terminal",
       keywords: "shell command line",
     },
@@ -106,7 +95,6 @@ export function matchPalette(query = "", items = getPaletteItems(), limit = 8) {
     const topLevel = new Set([
       "hub",
       "work",
-      "shelf",
       "skills",
       "credentials",
       "contact",

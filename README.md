@@ -1,6 +1,6 @@
 # Max Leong — NFC portfolio
 
-A Vite site with a retro desktop theme, a retro Macintosh-style desktop (pixel icons, an About window, and every other scene as a window with red, yellow and green buttons), a terminal window, a command palette, and one shared project collection. Without JavaScript it is one linear page. Three project groups (Signals & hardware, Systems & security, Applied AI & products) filter work with any-match logic; each project has one case-study URL. Facts that are not yet known show as dashed `WIP` placeholders; `npm run wip` lists them.
+A Vite site with a retro desktop theme, a retro Macintosh-style desktop (pixel icons, an About window, and every other scene as a window with close, minimize and zoom boxes, a menu bar, and a workbench desk with the project boards lying on it), the About window as a live console (typed banner, quick commands, `cat <project>`, `open <name>`, `led <text>` for the desk's LED matrix; the little Mac's screen echoes what you type), a command palette, and one shared project collection, Skills as a knowledge graph of domains, projects and skills, dark instrument screens (a dot-matrix name drawn by Fourier circles again every 14 seconds, datasheet strips, 3D figures), a desk of project boards that move and link, and an Asteroids screensaver and game (`play`). Without JavaScript it is one linear page. Three project groups (Signals & hardware, Systems & security, Applied AI & products) filter work with any-match logic; each project has one case-study URL. Facts that are not yet known are left off the page rather than invented; `npm run wip` lists every gap.
 
 ## Run locally
 
@@ -20,7 +20,7 @@ npm run preview
 
 ## Content and assets
 
-- `src/data/projects.js` owns the project cards (hook, role, proof, stack, links), the "Also built" shelf, group membership, and case-study blocks. `src/data/case-study-steps.js` reads any case-study layout as a list of short steps.
+- `src/data/projects.js` owns the project cards (hook, role, proof, stack, links), the small projects that appear only in the Skills graph, group membership, and case-study blocks. `src/data/case-study-steps.js` reads any case-study layout as a list of short steps.
 - `src/data/focus-tools.js` owns the optional tooling disclosure and terminal skills output.
 - `src/data/certificates.js` owns certificate metadata.
 - `public/assets/` contains the public resume, certificate PDF/preview, favicon, and sharing image. These are versioned source assets, not generated deployment secrets.
@@ -39,7 +39,7 @@ Browser checks should cover overlapping filters, reset, legacy category links, p
 
 ## URLs
 
-- `#home`, `#work`, `#shelf`, `#skills`, `#certificates` (also `#credentials`), `#contact`: scenes. `#terminal` opens the terminal drawer over the hub.
+- `#home`, `#work`, `#skills`, `#certificates` (also `#credentials`), `#contact`: scenes. `#terminal` opens the About window's console, expanded, with the prompt focused (the backtick key and the Terminal icon do the same; Esc closes it).
 - `#work/echo`: one project in the pager. `#project/echo/2`: step 2 of its case study; `#project/echo/read`: the full write-up.
 - `#work?categories=signals-hardware,applied-ai`: the pager walks only the matching projects (add `&project=<slug>` to pick one).
 - `#project/music-leds`: a permanent case-study link.
@@ -62,7 +62,7 @@ The social preview image uses a root-relative URL. If a host or sharing crawler 
 
 ## Photos, screenshots and clips
 
-Each work card has a media slot (`media` in `src/data/projects.js`). Until a file exists it shows a dashed WIP frame that says what to supply. To fill one, put the file in `public/assets/media/` (for example `music-leds.webp`, `conway.mp4`, plus a `poster` image for clips) and set `src`, `alt`, and optionally `poster`, `width`, `height` and `caption`; then run `npm run content`. Alt text is required: the tests fail while `alt` is still WIP, or when a named file is missing.
+Each work card has a media slot (`media` in `src/data/projects.js`). Until a file exists nothing is shown for it (`npm run wip` says what to supply). To fill one, put the file in `public/assets/media/` (for example `music-leds.webp`, `conway.mp4`, plus a `poster` image for clips) and set `src`, `alt`, and optionally `poster`, `width`, `height` and `caption`; then run `npm run content`. Alt text is required: the tests fail while `alt` is still WIP, or when a named file is missing.
 
 ## Motion
 

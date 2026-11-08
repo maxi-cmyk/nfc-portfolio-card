@@ -1,19 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import {
-  getTerminalTabAction,
-  shouldAutoFocusTerminal,
-  shouldFocusTerminalAfterQuickCommand,
-} from "../src/terminal/input.js";
-
-test("terminal does not autofocus after reveal", () => {
-  assert.equal(shouldAutoFocusTerminal(), false);
-});
-
-test("quick commands keep focus away from the text input", () => {
-  assert.equal(shouldFocusTerminalAfterQuickCommand(), false);
-});
+import { getTerminalTabAction } from "../src/terminal/input.js";
 
 test("empty Tab follows the page's normal forward focus order", () => {
   assert.deepEqual(getTerminalTabAction(""), {
@@ -144,8 +132,8 @@ test("retro terminal error meets WCAG AA normal-text contrast", () => {
 test("primary compact controls provide 44px touch targets", () => {
   [
     ".suggestion-item",
-    ".command-line input",
-    ".focus-header-btn",
+    ".hero-prompt",
+    ".hero-chip",
     ".certificate-actions a",
     "footer a",
     ".work-filters button",

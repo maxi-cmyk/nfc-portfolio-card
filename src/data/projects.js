@@ -703,32 +703,24 @@ export const allProjects = selectProjects(
   "cya",
 );
 
-// Everything that has a case study, including shelf entries such as Sentinel.
+// Everything that has a case study, including Sentinel, which is not a card.
 export const caseStudyProjects = [...allProjects, projectsBySlug.sentinel];
 
-// "Also built": one compact row each. Unknown facts are WIP placeholders.
-export const shelfEntries = [
+// Smaller projects with no page of their own. They appear only as evidence in
+// the Skills graph, linking out to their repositories.
+export const otherProjects = [
   {
     id: "sentinel",
-    caseStudy: "sentinel",
     name: projectsBySlug.sentinel.name,
     categories: projectsBySlug.sentinel.categories,
-    meta: projectsBySlug.sentinel.meta,
-    hook: projectsBySlug.sentinel.hook,
     tags: projectsBySlug.sentinel.tags,
-    role: WIP,
-    proof: WIP,
     links: projectsBySlug.sentinel.links,
   },
   {
     id: "network-sniffer",
     name: "network_sniffer",
     categories: ["systems-security"],
-    meta: "packet capture",
-    hook: "Real-time packet capture with Scapy, streamed over WebSockets to a live dashboard that visualises network traffic.",
     tags: ["Scapy", "FastAPI", "WebSockets", "Next.js"],
-    role: WIP,
-    proof: WIP,
     links: [
       { label: "github", url: "https://github.com/maxi-cmyk/network_sniffer" },
     ],
@@ -737,11 +729,7 @@ export const shelfEntries = [
     id: "lockingang",
     name: "lockingang",
     categories: ["applied-ai"],
-    meta: "DLW 2026 hackathon",
-    hook: "A local-first desktop study app that models how quickly you forget each topic and suggests the next action to keep it.",
     tags: ["Electron", "React", "FastAPI", "SQLite"],
-    role: WIP,
-    proof: WIP,
     links: [
       { label: "github", url: "https://github.com/maxi-cmyk/lockingang" },
       { label: "demo video", url: "https://youtube.com/shorts/wftzCy07OX4" },
@@ -751,33 +739,21 @@ export const shelfEntries = [
     id: "epicenter",
     name: "epicenter",
     categories: ["applied-ai"],
-    meta: "synthetic demo",
-    hook: "A synthetic outpatient registration demo: coverage documents become evidence-backed readiness states, and each patient keeps one ticket routed to a labelled counter.",
     tags: ["Next.js", "FastAPI", "Supabase", "Clerk", "OpenAI"],
-    role: WIP,
-    proof: WIP,
     links: [{ label: "github", url: "https://github.com/maxi-cmyk/epicenter" }],
   },
   {
     id: "cekcek",
     name: "cekcek",
     categories: ["applied-ai"],
-    meta: "Hackomania",
-    hook: "A phone-frame smart-home energy app with usage insights, appliance recognition, spike detection and AI savings suggestions.",
     tags: ["Next.js", "FastAPI", "ClickHouse"],
-    role: WIP,
-    proof: WIP,
     links: [{ label: "github", url: "https://github.com/maxi-cmyk/cekcek" }],
   },
   {
     id: "shiftwork",
     name: "Shiftwork",
     categories: ["applied-ai"],
-    meta: "desktop app",
-    hook: "A desktop task manager built around a six-speed manual gearbox: assign each task a gear, then shift through your day.",
     tags: ["Electron", "Vite", "TypeScript"],
-    role: WIP,
-    proof: WIP,
     links: [
       { label: "github", url: "https://github.com/maxi-cmyk/shifting_work" },
     ],
@@ -786,11 +762,7 @@ export const shelfEntries = [
     id: "hologram-ar",
     name: "hologram_AR",
     categories: ["applied-ai"],
-    meta: "webcam AR",
-    hook: "Webcam augmented reality driven by MediaPipe hand tracking: an exoskeleton overlay, pinch-to-scale holograms and gesture-fired repulsor effects.",
     tags: ["Python", "MediaPipe"],
-    role: WIP,
-    proof: WIP,
     links: [
       { label: "github", url: "https://github.com/maxi-cmyk/hologram_AR" },
     ],
@@ -799,11 +771,7 @@ export const shelfEntries = [
     id: "cv-experiments",
     name: "Small vision experiments",
     categories: ["applied-ai"],
-    meta: "anti_brainrot · goblin_detector",
-    hook: "Two webcam tools: a focus monitor that tracks head pitch with MediaPipe, and a posture game driven by YOLOv8 pose estimation.",
     tags: ["Python", "MediaPipe", "YOLOv8"],
-    role: WIP,
-    proof: WIP,
     links: [
       {
         label: "anti_brainrot",

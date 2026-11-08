@@ -5,7 +5,6 @@ import {
   allProjects,
   focusCategories,
   getFilteredProjects,
-  shelfEntries,
 } from "../src/data/projects.js";
 import { parseRoute, workHash } from "../src/navigation/routes.js";
 
@@ -114,13 +113,6 @@ test("Static HTML exposes work, real links, case-study fallback and certificates
     [...html.matchAll(/class="static-case-study"/g)].length,
     allProjects.length,
   );
-  for (const entry of shelfEntries) {
-    assert.equal(
-      [...html.matchAll(new RegExp(`data-shelf-id="${entry.id}"`, "g"))].length,
-      1,
-      entry.name,
-    );
-  }
   assert.doesNotMatch(html, /A few things I.ve built/);
   assert.ok(html.includes("/assets/Max_Leong_Resume.pdf"));
   assert.ok(html.includes("/assets/AI-professional-preview.webp"));

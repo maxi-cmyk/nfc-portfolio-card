@@ -7,6 +7,7 @@ import { WebGLRenderer } from "three";
 import { createBoundaryFigure } from "./boundary.js";
 import { createCardFigure } from "./card.js";
 import { disposeFigure } from "./common.js";
+import { createOrbit, dragOrbit, stepOrbit } from "./orbit.js";
 import { createStaircaseFigure } from "./staircase.js";
 import { createTorusFigure } from "./torus.js";
 import { createWindingFigure } from "./winding.js";
@@ -19,18 +20,21 @@ const FIGURES = {
   boundary: createBoundaryFigure,
 };
 
-const cssColor = (name, fallback) =>
-  getComputedStyle(document.documentElement).getPropertyValue(name).trim() ||
-  fallback;
-
-const palette = () => ({
-  ink: cssColor("--ink", "#1d1d1d"),
-  paper: cssColor("--panel", "#f4f3ed"),
-  navy: cssColor("--navy", "#12376b"),
-  acid: cssColor("--acid", "#1e4f9e"),
-  plum: cssColor("--warm", "#7a2e5d"),
-  muted: cssColor("--muted", "#545454"),
-});
+// A figure takes its colours from the element it draws into, so a dark
+// instrument screen (.is-dark) gets pale line art on near-black automatically.
+const palette = (host) => {
+  const style = getComputedStyle(host);
+  const css = (name, fallback) =>
+    style.getPropertyValue(name).trim() || fallback;
+  return {
+    ink: css("--ink", "#1d1d1d"),
+    paper: css("--panel", "#f4f3ed"),
+    navy: css("--navy", "#12376b"),
+    acid: css("--acid", "#1e4f9e"),
+    plum: css("--warm", "#7a2e5d"),
+    muted: css("--muted", "#545454"),
+  };
+};
 
 export function createStage({ mode }) {
   const canvas = document.createElement("canvas");
@@ -69,12 +73,11 @@ export function createStage({ mode }) {
     const scene = host.closest(".scene");
     if (scene) {
       const s = scene.getBoundingClientRect();
-      const bar = scene
-        .querySelector(":scope > .titlebar")
-        ?.getBoundingClientRect();
-      const status = scene
-        .querySelector(":scope > .statusbar")
-        ?.getBoundingClientRect();
+      // Only bars that are showing count: a hidden status strip has no rectangle.
+      const shown = (el) =>
+        el?.getClientRects().length ? el.getBoundingClientRect() : null;
+      const bar = shown(scene.querySelector(":scope > .titlebar"));
+      const status = shown(scene.querySelector(":scope > .statusbar"));
       left = Math.max(left, s.left);
       right = Math.min(right, s.right);
       top = Math.max(top, bar ? bar.bottom : s.top);
@@ -117,15 +120,20 @@ export function createStage({ mode }) {
     renderer.clear();
     renderer.setScissorTest(true);
     let anyVisible = false;
+    let moving = false;
     for (const [host, entry] of entries) {
       const rect = visibleRect(host);
       if (!rect) continue;
       anyVisible = true;
       entry.figure.setSize(rect.full.width, rect.full.height);
+      // A thumbnail fills its small screen, so it zooms in past the full-fit distance.
+      if (entry.thumb) entry.figure.camera.position.z *= 0.58;
+      if (stepOrbit(entry.orbit, dt)) moving = true;
       entry.figure.update({
         time: clock,
         dt,
         pointer: entry.pointer,
+        orbit: entry.orbit,
         still: mode === "still",
       });
       renderer.setViewport(
@@ -148,7 +156,8 @@ export function createStage({ mode }) {
     }
     if (sinceReport > 0.2) sinceReport = 0;
     // Loop only while something is showing and the tab is in front.
-    if (mode === "live" && anyVisible && !document.hidden) schedule();
+    if ((mode === "live" || moving) && anyVisible && !document.hidden)
+      schedule();
   }
 
   function schedule() {
@@ -161,14 +170,18 @@ export function createStage({ mode }) {
     if (!factory) return null;
     return {
       id,
-      figure: factory(palette()),
+      figure: factory(palette(host)),
       pointer: { x: 0, y: 0 },
+      orbit: createOrbit(),
+      thumb: host.hasAttribute("data-thumb"),
       paramsKey: "",
       readout: "",
     };
   }
 
   function listen(host, entry) {
+    // Tile thumbnails only turn on their own; the tile is a link.
+    if (host.hasAttribute("data-thumb")) return;
     const track = (event) => {
       const r = host.getBoundingClientRect();
       entry.pointer.x = ((event.clientX - r.left) / r.width) * 2 - 1;
@@ -187,10 +200,39 @@ export function createStage({ mode }) {
         schedule();
       });
     }
-    host.addEventListener("pointerdown", () => {
+    // Drag to turn the figure. On touch, a vertical swipe still scrolls the page
+    // (touch-action: pan-y), so a finger turns it left and right only.
+    let dragFrom = null;
+    host.addEventListener("pointerdown", (event) => {
       entry.figure.nudge?.(1);
+      dragFrom = { x: event.clientX, y: event.clientY, t: event.timeStamp };
+      entry.orbit.dragging = true;
+      entry.orbit.vyaw = entry.orbit.vpitch = 0;
+      host.setPointerCapture?.(event.pointerId);
+      host.classList.add("is-turning");
       schedule();
     });
+    host.addEventListener("pointermove", (event) => {
+      if (!dragFrom) return;
+      const dt = (event.timeStamp - dragFrom.t) / 1000;
+      dragOrbit(
+        entry.orbit,
+        event.clientX - dragFrom.x,
+        event.pointerType === "touch" ? 0 : event.clientY - dragFrom.y,
+        dt,
+      );
+      dragFrom = { x: event.clientX, y: event.clientY, t: event.timeStamp };
+      schedule();
+    });
+    const release = () => {
+      if (!dragFrom) return;
+      dragFrom = null;
+      entry.orbit.dragging = false;
+      host.classList.remove("is-turning");
+      schedule();
+    };
+    host.addEventListener("pointerup", release);
+    host.addEventListener("pointercancel", release);
     host
       .closest(".figure-frame")
       ?.querySelector("[data-figure-wake]")
@@ -222,6 +264,7 @@ export function createStage({ mode }) {
       // Keep the host's listeners (they read the live entry) by reusing the
       // pointer object and pointing the old closures at the new figure.
       entry.pointer = old.pointer;
+      entry.orbit = old.orbit;
       entries.set(host, Object.assign(old, entry));
       host.dataset.figureState = mode;
       report(host, old, true);

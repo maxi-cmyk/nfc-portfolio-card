@@ -15,7 +15,7 @@ import {
   DoubleSide,
 } from "three";
 import { approach } from "./card-math.js";
-import { baseFigure, colorsFrom, fitCamera } from "./common.js";
+import { baseFigure, boundingRadius, colorsFrom, fitCamera } from "./common.js";
 import {
   countWrong,
   makePoints,
@@ -28,6 +28,7 @@ const WRONG = new Color("#d83a3a");
 export function createBoundaryFigure(palette) {
   const colors = colorsFrom(palette);
   const { scene, camera, group, baseFov } = baseFigure(28, 8.4);
+  let radius = 0;
   const points = makePoints();
   const state = { strength: 0.3, kind: "jpeg", shown: 0.3 };
   const current = points.map((p) => ({ x: p.x, y: p.y, z: p.z }));
@@ -111,16 +112,20 @@ export function createBoundaryFigure(palette) {
     readout: () =>
       `${wrong} of ${points.length} points on the wrong side at ${Math.round(state.strength * 100)}% ${state.kind}`,
     setSize(width, height) {
-      fitCamera(camera, baseFov, width, height);
+      radius ||= boundingRadius(group, 1.1);
+      fitCamera(camera, baseFov, width, height, radius);
     },
-    update({ dt, pointer, still, time }) {
+    update({ dt, pointer, still, time, orbit }) {
       state.shown = still
         ? state.strength
         : approach(state.shown, state.strength, dt, 6);
       paint(state.shown);
       group.rotation.y =
-        -0.6 + pointer.x * 0.4 + (still ? 0 : Math.sin(time * 0.3) * 0.1);
-      group.rotation.x = 0.25 - pointer.y * 0.2;
+        -0.6 +
+        pointer.x * 0.4 +
+        (still ? 0 : Math.sin(time * 0.3) * 0.1) +
+        orbit.yaw;
+      group.rotation.x = 0.25 - pointer.y * 0.2 + orbit.pitch;
     },
   };
 }

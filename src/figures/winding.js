@@ -15,7 +15,13 @@ import {
   SphereGeometry,
 } from "three";
 import { approach } from "./card-math.js";
-import { LED, baseFigure, colorsFrom, fitCamera } from "./common.js";
+import {
+  LED,
+  baseFigure,
+  boundingRadius,
+  colorsFrom,
+  fitCamera,
+} from "./common.js";
 import {
   BINS,
   N,
@@ -34,6 +40,7 @@ const GAIN = 3; // the centre of mass is small, so it is drawn ×3
 export function createWindingFigure(palette) {
   const colors = colorsFrom(palette);
   const { scene, camera, group, baseFov } = baseFigure(24, 9);
+  let radius = 0;
   const signal = exampleSignal();
   const spec = spectrum(signal);
   const maxMag = Math.max(...spec);
@@ -255,9 +262,10 @@ export function createWindingFigure(palette) {
     readout: () =>
       `${info.freq} Hz · ${info.band ? `${info.band} band` : "outside the bands"} · centre of mass ${info.magnitude.toFixed(2)} of the strongest tone`,
     setSize(width, height) {
-      fitCamera(camera, baseFov, width, height);
+      radius ||= boundingRadius(group, 1.15);
+      fitCamera(camera, baseFov, width, height, radius);
     },
-    update({ dt, pointer, still, time }) {
+    update({ dt, pointer, still, time, orbit }) {
       if (still) {
         state.shown = 3;
       } else if (state.auto) {
@@ -270,8 +278,11 @@ export function createWindingFigure(palette) {
         lastShown = state.shown;
       }
       group.rotation.y =
-        -0.55 + pointer.x * 0.3 + (still ? 0 : Math.sin(time * 0.35) * 0.06);
-      group.rotation.x = 0.28 - pointer.y * 0.18;
+        -0.55 +
+        pointer.x * 0.3 +
+        (still ? 0 : Math.sin(time * 0.35) * 0.06) +
+        orbit.yaw;
+      group.rotation.x = 0.28 - pointer.y * 0.18 + orbit.pitch;
     },
   };
 }

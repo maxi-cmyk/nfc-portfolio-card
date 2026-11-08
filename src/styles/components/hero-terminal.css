@@ -1,0 +1,168 @@
+/* The About window as a console: typed banner lines, an output pane, a prompt, and
+   quick commands as buttons. The window's own look stays; this adds the rows. */
+.hero-line {
+  margin: 8px 0 4px;
+  color: var(--muted);
+  font: var(--step--1) / 1.4 var(--font-code);
+}
+.hero-line.is-pending {
+  visibility: hidden;
+}
+/* The old hero spacing left tall gaps round the name; the console needs the room. */
+html.is-scenes #home .about h1 {
+  margin: 4px 0 6px;
+}
+html.is-scenes #home .about .lede {
+  margin-top: 6px;
+}
+.about.is-intro #site-title,
+.about.is-intro .lede {
+  opacity: 0;
+}
+.about.is-intro-lede #site-title {
+  opacity: 1;
+}
+.about .lede {
+  transition: opacity 240ms steps(4, end);
+}
+
+.hero-console {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  padding: 0 16px 16px;
+}
+.hero-output {
+  max-height: 150px;
+  padding: 10px 12px;
+  border: var(--hair);
+  background: #e7e6df;
+  font: var(--step--1) / 1.45 var(--font-code);
+}
+.hero-output[hidden] {
+  display: none;
+}
+.hero-output .project-description,
+.hero-output .result {
+  color: var(--ink);
+}
+.hero-prompt {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: var(--hair);
+  background: var(--panel);
+  cursor: text;
+  font: var(--step-0) / 1.4 var(--font-code);
+}
+.hero-prompt .prompt {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+.hero-prompt input {
+  flex: 1;
+  min-width: 0;
+  min-height: 40px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--warm);
+  /* 16px stops iOS from zooming the page when the field is focused. */
+  font: 16px / 1.4 var(--font-code);
+}
+.hero-prompt input::placeholder {
+  color: var(--terminal-placeholder);
+}
+.hero-prompt:focus-within {
+  outline: 2px solid var(--acid);
+  outline-offset: 2px;
+}
+.hero-chips {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 5px;
+}
+.hero-chip {
+  min-height: 44px;
+  padding: 0 2px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+.hero-output > pre.result,
+.hero-output .result-text {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+@media (min-width: 700px) {
+  .hero-console {
+    padding: 0 28px 24px;
+  }
+  .hero-output {
+    max-height: 190px;
+  }
+}
+@media (min-width: 1180px) {
+  .hero-console {
+    padding: 0 44px 32px;
+  }
+  .hero-output {
+    max-height: 132px;
+  }
+}
+/* A laptop screen is short: tighten the banner so the console fits beneath it. */
+@media (min-width: 1180px) and (max-height: 1000px) {
+  html.is-scenes #home .about .window-body {
+    gap: 8px 32px;
+    padding: 20px 44px 12px;
+  }
+  html.is-scenes #home .about h1 {
+    font-size: 80px;
+  }
+  html.is-scenes #home .about .lede {
+    margin-top: 4px;
+    font-size: 24px;
+  }
+  html.is-scenes #home .about .px-mac {
+    width: 176px;
+    height: 154px;
+  }
+  .hero-line {
+    margin: 4px 0 2px;
+  }
+}
+
+/* Expanded: the console fills the desktop. Automatic on a phone's first command,
+   and the green button on a laptop. The banner steps aside for the output. */
+html.is-scenes #home .about.is-terminal {
+  position: fixed;
+  inset: calc(var(--bar-h, 26px) + 10px) 10px 10px;
+  z-index: 7;
+  display: flex;
+  flex-direction: column;
+  max-width: 980px;
+  margin: 0 auto;
+}
+html.is-scenes #home .about.is-terminal .window-body {
+  display: none;
+}
+html.is-scenes #home .about.is-terminal .hero-console {
+  flex: 1;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  min-height: 0;
+  padding: 12px 16px 16px;
+}
+html.is-scenes #home .about.is-terminal .hero-output {
+  max-height: none;
+  min-height: 0;
+}
+@media (min-width: 900px) {
+  html.is-scenes #home .about.is-terminal {
+    inset: calc(var(--bar-h, 26px) + 24px) 40px 40px;
+  }
+}

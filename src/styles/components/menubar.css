@@ -1,0 +1,140 @@
+/* The desktop's menu bar. Pure furniture: it names the open window and shows the
+   time, and has no links, because every way around the site is on the desktop. */
+html.is-scenes {
+  --bar-h: 26px;
+}
+html.is-scenes .shell {
+  inset: var(--bar-h) 0 0;
+}
+.menubar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: var(--bar-h, 26px);
+  padding: 0 12px;
+  border-bottom: var(--hair);
+  background: var(--panel);
+  color: var(--ink);
+  font: 400 var(--step-0) / 1 var(--font-chrome);
+  letter-spacing: 0.04em;
+  user-select: none;
+}
+.menubar-mark {
+  display: block;
+  width: 14px;
+  height: 14px;
+  color: var(--navy);
+  image-rendering: pixelated;
+}
+.menubar-scene {
+  font-weight: 600;
+}
+.menubar-scene::after {
+  content: "Desktop";
+}
+html[data-scene="work"] .menubar-scene::after {
+  content: "Work";
+}
+html[data-scene="case"] .menubar-scene::after {
+  content: "Case study";
+}
+html[data-scene="skills"] .menubar-scene::after {
+  content: "Skills";
+}
+html[data-scene="credentials"] .menubar-scene::after {
+  content: "Credentials";
+}
+html[data-scene="contact"] .menubar-scene::after {
+  content: "Contact";
+}
+.menubar-gauges {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+  color: var(--muted);
+  font: var(--step--1) / 1 var(--font-chrome);
+}
+.gauge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.gauge-wifi {
+  display: none;
+}
+.meter {
+  display: inline-flex;
+  gap: 1px;
+}
+.meter i {
+  display: block;
+  width: 3px;
+  height: 9px;
+  background: color-mix(in srgb, var(--ink) 16%, transparent);
+}
+.meter i.is-lit {
+  background: var(--navy);
+}
+.meter.is-over i.is-lit {
+  background: var(--warm);
+}
+.gauge b {
+  min-width: 4.5ch;
+  color: var(--ink);
+  font-weight: 400;
+  text-align: right;
+}
+.menubar-sound {
+  position: relative;
+  display: grid;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+.menubar-sound::after {
+  position: absolute;
+  inset: -13px -10px;
+  content: "";
+}
+.menubar-sound svg {
+  width: 14px;
+  height: 14px;
+}
+.menubar-sound .waves {
+  opacity: 0;
+}
+.menubar-sound[aria-pressed="true"] {
+  color: var(--navy);
+}
+.menubar-sound[aria-pressed="true"] .waves {
+  opacity: 1;
+}
+.menubar-sound:hover,
+.menubar-sound:focus-visible {
+  color: var(--ink);
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+@media (min-width: 700px) {
+  .gauge-wifi {
+    display: inline-flex;
+  }
+}
+.menubar-clock {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+@media (min-width: 900px) {
+  .menubar {
+    padding: 0 20px;
+  }
+}

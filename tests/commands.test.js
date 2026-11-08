@@ -10,7 +10,6 @@ import {
   getCaseStudyLinkLabel,
   isWip,
   resolveCategory,
-  shelfEntries,
 } from "../src/data/projects.js";
 import { getCaseStudySteps } from "../src/data/case-study-steps.js";
 import { getInsightContentOrder } from "../src/components/subpages/project-modal.js";
@@ -488,7 +487,7 @@ test("retired category names still work in the terminal", () => {
 
 test("every work card has a one-sentence hook with a distinct opening", () => {
   const openings = new Set();
-  for (const project of [...allProjects, ...shelfEntries]) {
+  for (const project of allProjects) {
     const words = project.hook.trim().split(/\s+/);
     assert.ok(
       words.length >= 15 && words.length <= 30,
@@ -509,7 +508,7 @@ test("missing facts are explicit WIP placeholders, never invented", () => {
   assert.equal(isWip(timing.role), true);
   assert.equal(isWip(timing.proof), true);
   assert.match(timing.insights.sections.at(-1).body, /^WIP/);
-  for (const project of [...allProjects, ...shelfEntries]) {
+  for (const project of allProjects) {
     assert.equal(typeof project.role, "string", project.name);
     assert.equal(typeof project.proof, "string", project.name);
     assert.ok(

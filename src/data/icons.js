@@ -2,6 +2,7 @@
 // drawing, built from plain shapes on a grid and emitted as crisp SVG. Colours
 // are classes (c-k ink, c-p paper, c-w platinum, c-g shade, c-n navy,
 // c-m plum, c-s screen) so the theme stays in CSS. Pure: no DOM.
+import { screenPath } from "./mac-screen.js";
 
 const GLYPHS = {
   h: ["x.x", "x.x", "xxx", "x.x", "x.x"],
@@ -89,16 +90,6 @@ const DRAW = {
     fill(g, 5, 21, 12, 2, "n");
     fill(g, 5, 24, 8, 1, "g");
   },
-  shelf(g) {
-    fill(g, 5, 4, 22, 24, "p");
-    frame(g, 5, 4, 22, 24, "k");
-    for (let i = 0; i < 3; i++) {
-      const y = 7 + i * 7;
-      fill(g, 8, y, 16, 5, "w");
-      frame(g, 8, y, 16, 5, "k");
-      fill(g, 14, y + 2, 4, 2, "n");
-    }
-  },
   skills(g) {
     fill(g, 10, 10, 12, 12, "p");
     frame(g, 10, 10, 12, 12, "k");
@@ -162,7 +153,6 @@ function drawMac(g) {
   frame(g, 17, 8, 30, 28, "k");
   fill(g, 19, 10, 26, 24, "s");
   frame(g, 19, 10, 26, 24, "k");
-  text(g, 22, 19, "hello", "k");
   fill(g, 22, 40, 16, 2, "k");
   fill(g, 41, 40, 3, 2, "g");
   put(g, 46, 41, "m");
@@ -171,7 +161,7 @@ function drawMac(g) {
   fill(g, 12, 53, 40, 1, "k");
 }
 
-function toSvg(g, className) {
+function toSvg(g, className, extra = "") {
   const h = g.length;
   const w = g[0].length;
   const paths = {};
@@ -192,7 +182,7 @@ function toSvg(g, className) {
   const body = Object.entries(paths)
     .map(([k, d]) => `<path class="c-${k}" d="${d.join("")}"/>`)
     .join("");
-  return `<svg class="${className}" viewBox="0 0 ${w} ${h}" shape-rendering="crispEdges" aria-hidden="true" focusable="false">${body}</svg>`;
+  return `<svg class="${className}" viewBox="0 0 ${w} ${h}" shape-rendering="crispEdges" aria-hidden="true" focusable="false">${body}${extra}</svg>`;
 }
 
 function drawCard(g) {
@@ -225,14 +215,15 @@ export function renderIcon(name) {
 export function renderMac() {
   const g = grid(64, 56);
   drawMac(g);
-  return toSvg(g, "px-icon px-mac");
+  // The screen text is its own path, so the console can change what it says.
+  const greeting = `<path class="c-k mac-screen-text" d="${screenPath("hello")}"/>`;
+  return toSvg(g, "px-icon px-mac", greeting);
 }
 
-// What sits on the desktop, in order. `terminal` opens the drawer; `resume`
-// downloads the PDF; the rest open a scene.
+// What sits on the desktop, in order. `terminal` opens the hero console expanded;
+// `resume` downloads the PDF; the rest open a scene.
 export const desktopIcons = [
   { key: "work", label: "Work", icon: "work", href: "#work" },
-  { key: "shelf", label: "Also built", icon: "shelf", href: "#shelf" },
   { key: "skills", label: "Skills", icon: "skills", href: "#skills" },
   {
     key: "credentials",
@@ -241,7 +232,7 @@ export const desktopIcons = [
     href: "#certificates",
   },
   { key: "contact", label: "Contact", icon: "contact", href: "#contact" },
-  { key: "terminal", label: "Terminal", icon: "terminal", terminal: true },
+  { key: "terminal", label: "Terminal", icon: "terminal", href: "#terminal" },
   {
     key: "resume",
     label: "Resume",

@@ -1,0 +1,147 @@
+/* Selected work: a landing where you choose what to open, and exits from each
+   project back to it or to the desktop. */
+.exit-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin: 0 0 14px;
+}
+.exit-row .push {
+  min-height: 44px;
+}
+html.is-scenes #work.is-landing > .work-controls,
+html.is-scenes #work.is-landing > .stage,
+html.is-scenes #work.is-landing > .statusbar,
+html.is-scenes #work.is-landing > #work-projects,
+html.is-scenes #work.is-landing #work-exit {
+  display: none;
+}
+/* Inside a project the exit row is the header: no second "Selected work". */
+html.is-scenes #work:not(.is-landing) > .section-heading {
+  display: none;
+}
+html.is-scenes #work > .exit-row {
+  margin-top: 14px;
+}
+
+.work-landing {
+  display: grid;
+  gap: 28px;
+  margin: 8px 0 12px;
+}
+.work-group h3 {
+  margin: 0 0 4px;
+  color: var(--navy);
+  font: 400 var(--px-1) / 1.15 var(--font-chrome);
+}
+.work-group > p {
+  max-width: 52ch;
+  margin: 0 0 12px;
+  color: var(--muted);
+  font: var(--step-0) / 1.45 var(--font-text);
+}
+.work-tiles {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.work-tile {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-height: 44px;
+  padding: 12px 14px;
+  border: var(--hair);
+  background: var(--panel);
+  box-shadow: 2px 2px 0 var(--ink);
+  color: var(--ink);
+  text-decoration: none;
+  transition:
+    background-color 80ms steps(2, end),
+    color 80ms steps(2, end);
+}
+.work-tile:hover,
+.work-tile:focus-visible {
+  background: var(--navy);
+  color: var(--panel);
+}
+.work-tile:active {
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+.tile-name {
+  font: 400 var(--px-1) / 1.1 var(--font-chrome);
+}
+.tile-meta {
+  color: var(--muted);
+  font: var(--step--1) / 1.4 var(--font-text);
+}
+.work-tile:hover .tile-meta,
+.work-tile:focus-visible .tile-meta {
+  color: inherit;
+}
+.tile-hook {
+  display: -webkit-box;
+  overflow: hidden;
+  font: var(--step-0) / 1.45 var(--font-text);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+.tile-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tile-badges:empty {
+  display: none;
+}
+.tile-badge {
+  padding: 1px 6px;
+  border: 1px solid currentColor;
+  font: var(--step--1) / 1.4 var(--font-chrome);
+  letter-spacing: 0.04em;
+}
+@media (min-width: 900px) {
+  .work-landing {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+    align-items: start;
+  }
+}
+
+/* Each tile opens with a small instrument screen: the project's own 3D figure, or
+   a vector drawing until it has one. */
+.tile-screen {
+  display: grid;
+  height: 108px;
+  margin: -12px -14px 6px;
+  place-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid #36508a;
+  background:
+    linear-gradient(rgba(156, 192, 255, 0.07) 1px, transparent 1px) 0 0 / 16px
+      16px,
+    linear-gradient(90deg, rgba(156, 192, 255, 0.07) 1px, transparent 1px) 0 0 /
+      16px 16px,
+    var(--bg);
+  color: var(--ink);
+}
+.tile-screen .figure-host {
+  width: 100%;
+  height: 100%;
+  touch-action: auto;
+}
+.tile-screen svg {
+  display: block;
+  width: auto;
+  height: 76%;
+}
+.tile-screen .figure-host[data-figure-state="live"]::after {
+  content: none;
+}
+.work-tile:hover .tile-screen,
+.work-tile:focus-visible .tile-screen {
+  color: var(--ink);
+}

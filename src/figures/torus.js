@@ -14,7 +14,7 @@ import {
   Vector3,
 } from "three";
 import { approach } from "./card-math.js";
-import { baseFigure, colorsFrom, fitCamera } from "./common.js";
+import { baseFigure, boundingRadius, colorsFrom, fitCamera } from "./common.js";
 import {
   HEIGHT,
   WIDTH,
@@ -52,6 +52,7 @@ function surface(u, v) {
 export function createTorusFigure(palette) {
   const colors = colorsFrom(palette);
   const { scene, camera, group, baseFov } = baseFigure(28, 8.6);
+  let radius = 0;
   const torus = group;
   let cells = seedBoard();
   let generation = 0;
@@ -156,9 +157,10 @@ export function createTorusFigure(palette) {
     params: () => ({}),
     readout: () => `Generation ${generation} · ${population(cells)} live cells`,
     setSize(width, height) {
-      fitCamera(camera, baseFov, width, height);
+      radius ||= boundingRadius(group, 1.1);
+      fitCamera(camera, baseFov, width, height, radius);
     },
-    update({ dt, pointer, still, time }) {
+    update({ dt, pointer, still, time, orbit }) {
       if (!still) {
         accumulator += dt;
         while (accumulator >= TICK) {
@@ -183,8 +185,9 @@ export function createTorusFigure(palette) {
       }
       mesh.instanceMatrix.needsUpdate = true;
       if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
-      torus.rotation.z = (still ? 0.4 : time * 0.12) + pointer.x * 0.5;
-      torus.rotation.x = 1.05 - pointer.y * 0.3;
+      torus.rotation.z =
+        (still ? 0.4 : time * 0.12) + pointer.x * 0.5 + orbit.yaw;
+      torus.rotation.x = 1.05 - pointer.y * 0.3 + orbit.pitch;
     },
   };
 }

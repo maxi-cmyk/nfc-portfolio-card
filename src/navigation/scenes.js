@@ -8,7 +8,6 @@ export const SCENES = [
   "hub",
   "work",
   "case",
-  "shelf",
   "skills",
   "credentials",
   "contact",
@@ -20,7 +19,6 @@ const SECTION_SCENES = {
   certificates: "credentials",
   contact: "contact",
   skills: "skills",
-  shelf: "shelf",
 };
 
 const hubTarget = () => ({ scene: "hub" });
@@ -60,8 +58,6 @@ export function sceneToHash(target) {
         target.slug,
         target.step > 1 ? target.step : undefined,
       );
-    case "shelf":
-      return "#shelf";
     case "skills":
       return "#skills";
     case "credentials":
@@ -73,10 +69,14 @@ export function sceneToHash(target) {
   }
 }
 
-// One step "up": reading view to its step view, a case study to its project,
-// every other scene to the hub. Hub has no parent.
+// One step "up": reading view to its step view, a case study to its project, a
+// project to the Selected work landing, every other scene to the hub. Hub has
+// no parent.
 export function parentScene(target) {
   if (target.scene === "hub") return null;
+  if (target.scene === "work" && target.slug) {
+    return { scene: "work", slug: null, categories: target.categories ?? [] };
+  }
   if (target.scene === "case") {
     if (target.read) {
       return { scene: "case", slug: target.slug, step: target.step ?? 1 };

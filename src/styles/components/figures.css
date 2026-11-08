@@ -18,6 +18,26 @@
   height: 190px;
   touch-action: pan-y;
 }
+.figure-host[data-figure-state="live"] {
+  cursor: grab;
+}
+.figure-host.is-turning {
+  cursor: grabbing;
+}
+.figure-host[data-figure-state="live"]::after {
+  position: absolute;
+  bottom: 6px;
+  left: 8px;
+  color: var(--muted);
+  content: "Drag to turn";
+  font: var(--step--1) / 1 var(--font-chrome);
+  letter-spacing: 0.04em;
+  pointer-events: none;
+  transition: opacity 120ms steps(2, end);
+}
+.figure-host.is-turning::after {
+  opacity: 0;
+}
 .figure-frame-small .figure-host {
   height: 150px;
 }
@@ -36,8 +56,8 @@
 }
 .figure-action {
   position: absolute;
+  top: 8px;
   right: 8px;
-  bottom: 8px;
   z-index: 11;
   min-height: 44px;
 }
@@ -126,9 +146,6 @@ html.is-scenes .stage .figure-host {
   display: flex;
   align-items: center;
 }
-.control-range {
-  flex: 1 1 260px;
-}
 .slider {
   display: flex;
   flex: 1;
@@ -159,7 +176,7 @@ html.is-scenes .stage .figure-host {
   min-height: 3em;
   margin: 0;
   color: var(--ink);
-  font: var(--step--1) / 1.5 var(--font-mono);
+  font: var(--step--1) / 1.5 var(--font-code);
 }
 .stage.is-empty .figure-frame,
 .stage.is-empty .figure-controls,

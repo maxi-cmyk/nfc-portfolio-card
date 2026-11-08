@@ -34,12 +34,14 @@
   font-display: swap;
 }
 
+/* The pixel voice has one weight; size-adjust lifts it to the size it reads at. */
 @font-face {
-  font-family: "Departure Mono";
-  src: url("../../assets/fonts/DepartureMono-Regular.woff2") format("woff2");
-  font-weight: 400;
+  font-family: "Jersey 15";
+  src: url("../../assets/fonts/Jersey15-400.woff2") format("woff2");
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
+  size-adjust: 125%;
 }
 
 :root {
@@ -56,12 +58,15 @@
   --terminal-placeholder: #66645f;
   --terminal-error: #b93434;
 
-  /* Chrome and headlines: bitmap. Keep sizes on the 11px grid. */
-  --font-chrome: "Departure Mono", "IBM Plex Mono", ui-monospace, monospace;
+  /* One pixel voice for headlines and every piece of window chrome, one humanist
+     sans for reading, and a true monospace only where the text is code. */
+  --font-chrome:
+    "Jersey 15", "Atkinson Hyperlegible Next", system-ui, sans-serif;
   --font-text: "Atkinson Hyperlegible Next", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-mono: var(--font-chrome);
+  --font-code: "IBM Plex Mono", ui-monospace, monospace;
 
-  /* Bitmap steps (multiples of 11). */
+  /* Pixel headline steps. */
   --px-1: 22px;
   --px-2: 22px;
   --px-hero: 55px;
@@ -89,4 +94,28 @@
   :root {
     --px-hero: 99px;
   }
+}
+
+/* An instrument screen: near-black navy with pale phosphor ink, like the OLED in
+   Asteroids. Anything inside `.is-dark` re-reads the colour tokens, so buttons,
+   text and the 3D figures (which take their palette from their host) all follow. */
+:root {
+  --led-r: #ff6b6b;
+  --led-g: #4fe08a;
+  --led-b: #6aa8ff;
+}
+.is-dark {
+  --ink: #e6eeff;
+  --muted: #9db2d9;
+  --panel: #0d1a33;
+  --bg: #0a1429;
+  --line: #36508a;
+  --acid: #9cc0ff;
+  --navy: #9cc0ff;
+  --warm: #f3a9d0;
+  --terminal-placeholder: #8aa0c8;
+  --hair: 1px solid #36508a;
+  --window-shadow: 1px 1px 0 #36508a;
+  background: var(--bg);
+  color: var(--ink);
 }

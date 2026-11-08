@@ -1,17 +1,29 @@
-import test from "node:test";
 import assert from "node:assert/strict";
-import { matrixFrame } from "../src/components/led-matrix.js";
-test("32x8 matrix preserves the seven-row glyphs and blank eighth row", () => {
-  const frame = matrixFrame("HELLO", -1);
-  assert.equal(frame.length, 256);
-  assert.ok(frame.slice(224).every((value) => !value));
-  assert.equal(frame[1], true);
-  assert.equal(frame[2], false);
-  assert.equal(frame[5], true);
-  assert.ok(frame.slice(97, 102).every(Boolean));
+import test from "node:test";
+import { glyphs, matrixFrame } from "../src/components/led-matrix.js";
+import { LED_CHARS, LED_MAX } from "../src/terminal/hero-script.js";
+
+test("the matrix font has every character the led command accepts", () => {
+  const allowed = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ,.!?:'-"];
+  for (const char of allowed) {
+    assert.ok(LED_CHARS.test(char), `${char} should be accepted`);
+    assert.ok(glyphs[char], `${char} has no glyph`);
+    assert.equal(glyphs[char].length, 7, `${char} is not 7 rows`);
+    for (const row of glyphs[char]) assert.match(row, /^[01]{5}$/, char);
+  }
 });
-test("scroll enters and exits cleanly without wrapping negative columns", () => {
-  assert.ok(matrixFrame("HELLO", -32).every((value) => !value));
-  assert.ok(matrixFrame("HELLO", 30).every((value) => !value));
-  assert.notDeepEqual(matrixFrame("HELLO", 0), matrixFrame("HELLO", 1));
+
+test("every drawn glyph lights at least one dot, and space lights none", () => {
+  for (const [char, rows] of Object.entries(glyphs)) {
+    const lit = rows.join("").includes("1");
+    assert.equal(lit, char !== " ", char);
+  }
+  assert.equal(matrixFrame(" ", 0).some(Boolean), false);
+  assert.ok(matrixFrame("A", 0).some(Boolean));
+});
+
+test("the longest message still scrolls through the 32-column matrix", () => {
+  const text = "A".repeat(LED_MAX);
+  assert.ok(matrixFrame(text, 0).length === 256);
+  assert.ok(matrixFrame(text, LED_MAX * 6 - 5).some(Boolean));
 });

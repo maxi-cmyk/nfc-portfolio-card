@@ -34,9 +34,9 @@ test("a filled media slot has real alt text and a file that exists", () => {
   }
 });
 
-test("the static page renders one media slot per work card", () => {
+test("the static page shows a media slot only for real media, never a WIP frame", () => {
   const slots = [...html.matchAll(/<figure class="media[ "]/g)].length;
-  assert.equal(slots, allProjects.length);
-  const waiting = allProjects.filter((p) => isWip(p.media.src)).length;
-  assert.equal([...html.matchAll(/class="media media-wip"/g)].length, waiting);
+  const real = allProjects.filter((p) => !isWip(p.media.src)).length;
+  assert.equal(slots, real);
+  assert.equal([...html.matchAll(/class="media media-wip"/g)].length, 0);
 });

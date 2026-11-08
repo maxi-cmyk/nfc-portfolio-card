@@ -30,7 +30,6 @@ test("every hash maps to one scene, including legacy and filtered links", () => 
   assert.equal(sceneOf("#certificates").scene, "credentials");
   assert.equal(sceneOf("#credentials").scene, "credentials");
   assert.equal(sceneOf("#skills").scene, "skills");
-  assert.equal(sceneOf("#shelf").scene, "shelf");
   assert.equal(sceneOf("#contact").scene, "contact");
   assert.deepEqual(sceneOf("#project/echo"), {
     scene: "case",
@@ -41,7 +40,7 @@ test("every hash maps to one scene, including legacy and filtered links", () => 
   assert.equal(sceneOf("#project/echo/3").step, 3);
   assert.equal(sceneOf("#project/echo/read").read, true);
   assert.deepEqual(sceneOf("#nonsense"), { scene: "hub", missing: true });
-  for (const hash of ["", "#home", "#work", "#shelf", "#skills", "#contact"]) {
+  for (const hash of ["", "#home", "#work", "#skills", "#contact"]) {
     assert.ok(SCENES.includes(sceneOf(hash).scene), hash);
   }
 });
@@ -63,7 +62,6 @@ test("a project rides along with a filter and survives a round trip", () => {
     "#project/music-leds",
     "#project/music-leds/3",
     "#project/music-leds/read",
-    "#shelf",
     "#skills",
     "#certificates",
     "#contact",
@@ -91,7 +89,13 @@ test("hostile or out-of-range scene hashes are missing, not thrown", () => {
 
 test("up goes one level and ends at the hub", () => {
   assert.equal(parentScene({ scene: "hub" }), null);
+  // A project goes up to the Selected work landing, and the landing to the hub.
   assert.deepEqual(parentScene({ scene: "work", slug: "echo" }), {
+    scene: "work",
+    slug: null,
+    categories: [],
+  });
+  assert.deepEqual(parentScene({ scene: "work", slug: null }), {
     scene: "hub",
   });
   assert.deepEqual(parentScene({ scene: "skills" }), { scene: "hub" });
@@ -112,22 +116,18 @@ test("up goes one level and ends at the hub", () => {
   });
 });
 
-test("every scene is reachable from the hub in at most two actions", () => {
-  // Actions: tap a desktop icon (1), then a project's case-study button (2).
+test("every scene is reachable from the hub in at most three actions", () => {
+  // Actions: a desktop icon (1), a project tile on the Selected work landing (2),
+  // then the project's case-study button (3).
   const hubTiles = html.match(/<nav class="desktop-icons"[\s\S]*?<\/nav>/)[0];
-  for (const target of [
-    "#work",
-    "#shelf",
-    "#skills",
-    "#certificates",
-    "#contact",
-  ]) {
+  for (const target of ["#work", "#skills", "#certificates", "#contact"]) {
     assert.ok(hubTiles.includes(`href="${target}"`), target);
   }
   for (const project of caseStudyProjects) {
+    // Sentinel has a case study but no card, so only the others have a button.
     const onCard = allProjects.some((p) => p.slug === project.slug);
-    const button = `id="case-study-${onCard ? "work" : "shelf"}-${project.slug}"`;
-    assert.ok(html.includes(button), `${project.name}: ${button}`);
+    const button = `id="case-study-work-${project.slug}"`;
+    if (onCard) assert.ok(html.includes(button), `${project.name}: ${button}`);
     assert.equal(parseRoute(projectHash(project.slug)).kind, "project");
   }
 });
@@ -181,7 +181,6 @@ test("the machine reaches every scene and unsubscribes cleanly", () => {
   const targets = [
     { scene: "work", slug: "echo", categories: [] },
     { scene: "case", slug: "echo", step: 2 },
-    { scene: "shelf" },
     { scene: "skills" },
     { scene: "credentials" },
     { scene: "contact" },
@@ -208,7 +207,6 @@ test("the palette finds places by name, tag and case study", () => {
   assert.deepEqual(top, [
     "hub",
     "work",
-    "shelf",
     "skills",
     "credentials",
     "contact",
@@ -238,13 +236,48 @@ test("the static page keeps working without scripts and drops the old rail", () 
   for (const id of [
     "home",
     "work",
-    "shelf",
     "skills",
     "certificates",
     "contact",
-    "terminal",
+    "hero-form",
+    "hero-output",
   ]) {
     assert.ok(html.includes(`id="${id}"`), id);
   }
   assert.match(html, /id="scene-status"[^>]*role="status"/);
+});
+
+test("Selected work opens on a landing with a tile for every featured project", () => {
+  const landing = html.match(
+    /<div id="work-landing"[\s\S]*?<\/div>(?=\s*<div id="work-filters")/,
+  )[0];
+  for (const project of allProjects) {
+    assert.ok(
+      landing.includes(`href="#work/${project.slug}"`),
+      `${project.name} has no tile`,
+    );
+  }
+  assert.deepEqual(routeToScene(parseRoute("#work")), {
+    scene: "work",
+    slug: null,
+    categories: [],
+  });
+});
+
+test("a project and a case study each offer exits to Selected work and to the desktop", () => {
+  const work = readFileSync(
+    new URL("../src/components/work.js", import.meta.url),
+    "utf8",
+  );
+  const scenes = readFileSync(
+    new URL("../src/components/scenes.js", import.meta.url),
+    "utf8",
+  );
+  for (const source of [work, scenes]) {
+    assert.match(
+      source,
+      /class="push"[^>]*href="#work"|href="#work"[^>]*>‹ Selected work/,
+    );
+    assert.match(source, /href="#home">Home</);
+  }
 });

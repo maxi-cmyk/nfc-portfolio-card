@@ -1,0 +1,164 @@
+/* The workbench: boards and displays from the projects, lying on the desk behind
+   the windows. They are 2D objects with a hard shadow, never
+   interactive, and every window sits above them. */
+html.is-scenes .field-trio {
+  --px: 0;
+  --py: 0;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  overflow: hidden;
+  pointer-events: none;
+}
+html.is-scenes .field-trio .field-art-card {
+  position: absolute;
+  min-height: 0;
+  padding: 0;
+  opacity: 1;
+  /* Depth: each object moves a little with the pointer or tilt, by its own amount,
+     and its shadow moves the opposite way. Windows sit above all of it. */
+  translate: calc(var(--px) * var(--depth, 1) * -14px)
+    calc(var(--py) * var(--depth, 1) * -10px);
+  filter: drop-shadow(
+    calc(3px + var(--px) * var(--depth, 1) * 5px)
+      calc(3px + var(--py) * var(--depth, 1) * 4px) 0 var(--ink)
+  );
+  pointer-events: auto;
+  cursor: pointer;
+  transition:
+    scale 120ms steps(3, end),
+    filter 120ms steps(3, end);
+}
+html.is-scenes .field-trio .field-art-card:hover {
+  scale: 1.06;
+}
+html.is-scenes .field-trio .field-art-card::after {
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  padding: 1px 6px;
+  border: var(--hair);
+  background: var(--panel);
+  color: var(--ink);
+  content: attr(data-label);
+  font: var(--step--1) / 1.5 var(--font-chrome);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) rotate(var(--untilt, 0deg));
+  white-space: nowrap;
+}
+html.is-scenes .field-trio .field-art-card:hover::after {
+  opacity: 1;
+}
+.oled-attract {
+  position: absolute;
+  top: 23.1%;
+  left: 14%;
+  width: 72%;
+  height: 51.9%;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+/* The camera board's lens follows you; the ESP32's LED runs through the three
+   bands' colours. */
+.camera-art .camera-lens,
+.camera-art .camera-lens-ring {
+  transform: translate(calc(var(--px) * 2.2px), calc(var(--py) * 2.2px));
+}
+.esp32-art .esp-led {
+  animation: led-bands 3.6s steps(1, end) infinite;
+}
+@keyframes led-bands {
+  0% {
+    fill: var(--led-r);
+  }
+  33% {
+    fill: var(--led-g);
+  }
+  66% {
+    fill: var(--led-b);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .esp32-art .esp-led {
+    animation: none;
+  }
+}
+html.is-scenes .field-trio .field-art-card svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/* Phone: the desktop is full of icons and the console, so only the LED matrix
+   lies on the desk, along the foot of the screen (the console's `led` writes on it). */
+html.is-scenes .field-trio .cyber-art,
+html.is-scenes .field-trio .esp32-art,
+html.is-scenes .field-trio .camera-art,
+html.is-scenes .field-trio .asteroids-art {
+  display: none;
+}
+html.is-scenes .field-trio .matrix-art {
+  top: auto;
+  right: 14px;
+  bottom: 8px;
+  left: auto;
+  width: 176px;
+  height: 49px;
+  transform: rotate(-1deg);
+}
+
+/* Laptop and tablet: parts spread round the edges, tags visible. */
+@media (min-width: 700px) {
+  html.is-scenes .field-trio .esp32-art,
+  html.is-scenes .field-trio .camera-art,
+  html.is-scenes .field-trio .asteroids-art {
+    display: block;
+  }
+  html.is-scenes .field-trio .cyber-art {
+    top: 2%;
+    right: auto;
+    bottom: auto;
+    left: 4%;
+    display: block;
+    width: clamp(100px, 9vw, 150px);
+    height: clamp(78px, 7vw, 117px);
+    transform: rotate(-5deg);
+  }
+  html.is-scenes .field-trio .asteroids-art {
+    top: 3%;
+    right: 3%;
+    bottom: auto;
+    left: auto;
+    width: clamp(130px, 13vw, 210px);
+    height: clamp(94px, 9.4vw, 152px);
+    transform: rotate(5deg);
+  }
+  html.is-scenes .field-trio .esp32-art {
+    top: auto;
+    right: auto;
+    bottom: 5%;
+    left: 4%;
+    width: clamp(56px, 5.6vw, 90px);
+    height: clamp(102px, 10.2vw, 164px);
+    transform: rotate(-84deg);
+  }
+  html.is-scenes .field-trio .matrix-art {
+    top: auto;
+    right: auto;
+    bottom: 5%;
+    left: 22%;
+    width: clamp(230px, 25vw, 380px);
+    height: clamp(64px, 7vw, 106px);
+    transform: rotate(1.5deg);
+  }
+  html.is-scenes .field-trio .camera-art {
+    top: auto;
+    right: 4%;
+    bottom: 7%;
+    left: auto;
+    width: clamp(130px, 13vw, 210px);
+    height: clamp(94px, 9.4vw, 152px);
+    transform: rotate(-6deg);
+  }
+}

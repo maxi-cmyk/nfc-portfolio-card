@@ -13,7 +13,7 @@ import {
   MeshBasicMaterial,
 } from "three";
 import { approach } from "./card-math.js";
-import { baseFigure, colorsFrom, fitCamera } from "./common.js";
+import { baseFigure, boundingRadius, colorsFrom, fitCamera } from "./common.js";
 import { SECRET_BYTES, jitter, stairs } from "./staircase-math.js";
 
 const UNIT = 0.5; // scene height per millisecond
@@ -25,6 +25,7 @@ export function createStaircaseFigure(palette) {
   const { scene, camera, group, baseFov } = baseFigure(26, 9);
   const state = { fixed: false };
   const bars = [];
+  let radius = 0;
   for (let k = 0; k <= SECRET_BYTES; k++) {
     const box = new BoxGeometry(0.62, 1, 0.62);
     const holder = new Group();
@@ -88,9 +89,18 @@ export function createStaircaseFigure(palette) {
         ? "Constant-time: every guess takes the same time, so timing reveals nothing."
         : "Vulnerable: each correct byte adds about 1 ms (the lab's default delay), so the slowest guess is the right one.",
     setSize(width, height) {
-      fitCamera(camera, baseFov, width, height);
+      if (!radius) {
+        // Measure with the bars at their tallest, so no step can clip.
+        const tallest = stairs(false);
+        bars.forEach((bar, k) => {
+          bar.holder.scale.y = FLAT + tallest[k] * UNIT;
+          bar.holder.position.y = FLOOR + bar.holder.scale.y / 2;
+        });
+        radius = boundingRadius(group);
+      }
+      fitCamera(camera, baseFov, width, height, radius);
     },
-    update({ dt, pointer, still, time }) {
+    update({ dt, pointer, still, time, orbit }) {
       const target = stairs(state.fixed);
       bars.forEach((bar, k) => {
         const wanted =
@@ -101,8 +111,8 @@ export function createStaircaseFigure(palette) {
         bar.holder.scale.y = Math.max(bar.height, 0.02);
         bar.holder.position.y = FLOOR + bar.height / 2;
       });
-      group.rotation.y = -0.5 + pointer.x * 0.3;
-      group.rotation.x = 0.22 - pointer.y * 0.15;
+      group.rotation.y = -0.5 + pointer.x * 0.3 + orbit.yaw;
+      group.rotation.x = 0.22 - pointer.y * 0.15 + orbit.pitch;
     },
   };
 }

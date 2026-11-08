@@ -17,19 +17,12 @@ export function projectHash(slug, step) {
   return step ? `#project/${slug}/${step}` : `#project/${slug}`;
 }
 
-const SECTION_IDS = [
-  "home",
-  "terminal",
-  "certificates",
-  "contact",
-  "skills",
-  "shelf",
-];
+const SECTION_IDS = ["home", "terminal", "certificates", "contact", "skills"];
 const SECTION_ALIASES = { credentials: "certificates" };
 
 // Hashes: #home #terminal #work #work/<slug> #work?categories=a,b
 // #project/<slug> #project/<slug>/<step> #project/<slug>/read
-// #shelf #skills #certificates (also #credentials) #contact
+// #skills #certificates (also #credentials) #contact
 // Retired category ids in #focus/... and ?categories= still resolve.
 export function parseRoute(hash = "") {
   if (hash === "#focus" || hash === "#work" || hash.startsWith("#work?")) {

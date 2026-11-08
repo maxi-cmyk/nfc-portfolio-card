@@ -63,9 +63,17 @@
 /* ---------- The desktop (hub) ---------- */
 html.is-scenes,
 html.is-scenes body {
+  /* A cutting mat: a fine 24px grid with a heavier line every 96px, in blueprint
+     blue at low strength, on the platinum desk. */
   background:
-    repeating-conic-gradient(rgba(29, 29, 29, 0.07) 0% 25%, transparent 0% 50%)
-      0 0 / 4px 4px,
+    linear-gradient(rgba(18, 55, 107, 0.15) 1px, transparent 1px) 0 0 / 96px
+      96px,
+    linear-gradient(90deg, rgba(18, 55, 107, 0.15) 1px, transparent 1px) 0 0 /
+      96px 96px,
+    linear-gradient(rgba(18, 55, 107, 0.07) 1px, transparent 1px) 0 0 / 24px
+      24px,
+    linear-gradient(90deg, rgba(18, 55, 107, 0.07) 1px, transparent 1px) 0 0 /
+      24px 24px,
     var(--bg);
 }
 .desktop {
@@ -195,6 +203,19 @@ html.is-scenes .scene:not(#home) {
 @media (min-width: 900px) {
   html.is-scenes .scene:not(#home) {
     inset: 28px max(28px, calc((100% - 1040px) / 2)) 36px;
+  }
+}
+/* On a laptop, the short windows are only as tall as what is in them, so the
+   desktop shows around them. Work and the case studies keep one fixed size so
+   the window does not jump between projects. */
+@media (min-width: 900px) {
+  html.is-scenes #skills:not(.is-zoomed),
+  html.is-scenes #certificates:not(.is-zoomed),
+  html.is-scenes #contact:not(.is-zoomed) {
+    bottom: auto;
+    height: fit-content;
+    min-height: min(520px, calc(100% - 64px));
+    max-height: calc(100% - 64px);
   }
 }
 html.is-scenes .scene > .titlebar {

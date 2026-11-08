@@ -28,7 +28,7 @@ body.is-booting {
   border: 1px solid var(--line);
   background: var(--panel);
   box-shadow: var(--window-shadow);
-  font: clamp(13px, 1.8vw, 16px) / 1.7 var(--font-mono);
+  font: clamp(13px, 1.8vw, 16px) / 1.7 var(--font-code);
 }
 
 .boot-topline {

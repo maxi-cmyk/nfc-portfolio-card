@@ -42,7 +42,7 @@
 .insights-pipeline-terminal strong {
   margin-bottom: 6px;
   color: var(--acid);
-  font: 500 var(--step--1) var(--font-mono);
+  font: 500 var(--step--1) var(--font-code);
 }
 
 .insights-pipeline-terminal span {
@@ -85,7 +85,7 @@
   padding: 12px;
   border-right: 1px solid var(--line);
   color: var(--ink);
-  font: 500 var(--step--1)/1.35 var(--font-mono);
+  font: 500 var(--step--1)/1.35 var(--font-code);
 }
 
 .insights-pipeline-lane ol {
@@ -144,7 +144,7 @@
   display: block;
   margin-bottom: 14px;
   color: var(--acid);
-  font: 500 var(--step--1) var(--font-mono);
+  font: 500 var(--step--1) var(--font-code);
 }
 
 .insights-lifecycle-step[data-state="gate"] .insights-lifecycle-marker::after {
@@ -160,7 +160,7 @@
 .insights-lifecycle-step h5 {
   margin-bottom: 6px;
   color: var(--ink);
-  font: 500 var(--step--1) var(--font-mono);
+  font: 500 var(--step--1) var(--font-code);
 }
 
 .insights-lifecycle-step p {
@@ -190,7 +190,7 @@
 .insights-frame-budget strong,
 .insights-frame-budget span {
   display: block;
-  font-family: var(--font-mono);
+  font-family: var(--font-code);
 }
 
 .insights-frame-budget strong {
@@ -231,7 +231,7 @@
 .insights-frame-phases strong {
   margin-bottom: 7px;
   color: var(--ink);
-  font: 500 var(--step--1) var(--font-mono);
+  font: 500 var(--step--1) var(--font-code);
 }
 
 .insights-frame-phases span {
@@ -244,7 +244,7 @@
   max-width: 60ch;
   margin: 0;
   color: var(--muted);
-  font: var(--step--1)/1.5 var(--font-mono);
+  font: var(--step--1)/1.5 var(--font-code);
 }
 
 .insights-frame-after strong {
@@ -261,7 +261,7 @@
 .insights-event-section-label {
   margin: 0 0 -10px;
   color: var(--muted);
-  font: 500 var(--step--1) var(--font-mono);
+  font: 500 var(--step--1) var(--font-code);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -281,7 +281,7 @@
 .insights-device strong {
   margin-bottom: 5px;
   color: var(--acid);
-  font: 500 var(--step--1) var(--font-mono);
+  font: 500 var(--step--1) var(--font-code);
 }
 
 .insights-device span {
@@ -320,7 +320,7 @@
 
 .insights-event-actor {
   color: var(--acid);
-  font: 500 var(--step--1)/1.4 var(--font-mono);
+  font: 500 var(--step--1)/1.4 var(--font-code);
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -337,7 +337,7 @@
   justify-content: center;
   border: 1px solid var(--acid);
   color: var(--acid);
-  font: 500 var(--step--1) var(--font-mono);
+  font: 500 var(--step--1) var(--font-code);
 }
 
 .insights-event-step h5,
@@ -348,7 +348,7 @@
 .insights-event-step h5 {
   margin-bottom: 5px;
   color: var(--ink);
-  font: 500 var(--step--1) var(--font-mono);
+  font: 500 var(--step--1) var(--font-code);
 }
 
 .insights-event-step p {
@@ -370,7 +370,7 @@
 .insights-how-it-works > h4 {
   margin: 0;
   color: var(--acid);
-  font: 500 clamp(17px, 2.4vw, 22px) var(--font-mono);
+  font: 500 clamp(17px, 2.4vw, 22px) var(--font-code);
   line-height: 1.25;
 }
 
@@ -425,7 +425,7 @@
   border: 1px solid var(--acid);
   background: var(--acid);
   color: var(--bg);
-  font: 500 var(--step--1) var(--font-mono);
+  font: 500 var(--step--1) var(--font-code);
 }
 
 .insights-how-copy {
@@ -435,7 +435,7 @@
 .insights-how-copy h5 {
   margin: 2px 0 6px;
   color: var(--ink);
-  font: 500 var(--step-0) var(--font-mono);
+  font: 500 var(--step-0) var(--font-code);
 }
 
 .insights-how-copy p {
@@ -455,7 +455,7 @@
   padding: 5px 7px;
   background: var(--panel);
   color: var(--acid);
-  font: var(--step--1) var(--font-mono);
+  font: var(--step--1) var(--font-code);
   overflow-wrap: anywhere;
 }
 
@@ -465,7 +465,7 @@
   padding-top: 12px;
   border-top: 1px solid var(--line);
   color: var(--muted);
-  font: var(--step--1)/1.5 var(--font-mono);
+  font: var(--step--1)/1.5 var(--font-code);
 }
 
 .insights-visual {
@@ -520,13 +520,13 @@
 .insights-flow-index {
   margin-bottom: 12px;
   color: var(--acid);
-  font: var(--step--1) var(--font-mono);
+  font: var(--step--1) var(--font-code);
 }
 
 .insights-flow-node strong {
   margin-bottom: 5px;
   color: var(--ink);
-  font: 500 var(--step--1) var(--font-mono);
+  font: 500 var(--step--1) var(--font-code);
   overflow-wrap: anywhere;
 }
 
@@ -540,7 +540,7 @@
 .insights-visual figcaption {
   margin-top: 7px;
   color: var(--muted);
-  font: var(--step--1) var(--font-mono);
+  font: var(--step--1) var(--font-code);
   text-align: right;
 }
 
@@ -559,7 +559,7 @@
 .insights-detail h4 {
   margin: 0 0 8px;
   color: var(--acid);
-  font: 500 var(--step--1) var(--font-mono);
+  font: 500 var(--step--1) var(--font-code);
 }
 
 .insights-detail p {

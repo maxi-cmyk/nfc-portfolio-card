@@ -11,33 +11,21 @@ import {
   getMascotHint,
   getTerminalPlaceholder,
 } from "./terminal/easter-eggs.js";
-import {
-  getTerminalTabAction,
-  shouldAutoFocusTerminal,
-  shouldFocusTerminalAfterQuickCommand,
-} from "./terminal/input.js";
 import { initScenes, playHeroReveal } from "./components/scenes.js";
-import {
-  appendCommand,
-  appendSuggestions,
-} from "./components/terminal/runner.js";
-import { CommandHistory } from "./terminal/history.js";
 import { initCertificates } from "./components/certificates.js";
 import { initFocusTooling } from "./components/focus-tooling.js";
-import { initSkills } from "./components/skills.js";
 import { initFigures } from "./components/figures.js";
+import { initMenubar } from "./components/menubar.js";
+import { playHeroIntro } from "./components/hero-terminal.js";
 
-const form = document.querySelector("#terminal-form");
-const input = document.querySelector("#command-input");
-input.disabled = false;
-const quickLinks = document.querySelectorAll("[data-command]");
+// The easter egg that flashes "type alias" in the prompt lives on the hero console.
+const input = document.querySelector("#hero-input");
 const bootScreen = document.querySelector("#boot-screen");
 const bootLog = document.querySelector("#boot-log");
 const skipBoot = document.querySelector("#skip-boot");
 const pandaMascot = document.querySelector("#panda-mascot");
 const mascotHint = document.querySelector("#mascot-hint");
 
-const commandHistory = new CommandHistory();
 let mascotClicks = 0;
 let aliasTeaserTimer;
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -101,10 +89,6 @@ function revealPortfolio() {
   bootScreen.hidden = true;
   document.body.classList.remove("is-booting");
   window.setTimeout(() => bootScreen.remove(), exitDelay);
-
-  if (shouldAutoFocusTerminal()) {
-    input.focus();
-  }
 }
 
 async function runBootSequence() {
@@ -156,98 +140,48 @@ async function runBootSequence() {
   revealPortfolio();
 }
 
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const command = input.value;
-  if (!command.trim()) return;
-
-  commandHistory.push(command);
-  appendCommand(command);
-  input.value = "";
-});
-
-input.addEventListener("keydown", (event) => {
-  if (event.key === "Tab") {
-    const action = getTerminalTabAction(input.value, {
-      shiftKey: event.shiftKey,
-    });
-
-    if (!action.preventDefault) return;
-
-    event.preventDefault();
-    const result = action.autocomplete;
-
-    if (!result.hasMatch) {
-      input.classList.add("is-autocomplete-empty");
-      window.setTimeout(() => {
-        input.classList.remove("is-autocomplete-empty");
-      }, 250);
-      return;
-    }
-
-    if (!result.hasMultiple) {
-      input.value = result.completion;
-      input.setSelectionRange(
-        result.completion.length,
-        result.completion.length,
-      );
-      input.classList.add("is-autocomplete-success");
-      window.setTimeout(() => {
-        input.classList.remove("is-autocomplete-success");
-      }, 250);
-    } else {
-      if (result.completion && result.completion !== input.value) {
-        input.value = result.completion;
-        input.setSelectionRange(
-          result.completion.length,
-          result.completion.length,
-        );
-      }
-      appendSuggestions(input.value, result.matches, (selected) => {
-        input.value = selected;
-        input.focus();
-        input.setSelectionRange(selected.length, selected.length);
-      });
-    }
-  } else if (event.key === "ArrowUp") {
-    event.preventDefault();
-    const prev = commandHistory.navigateUp(input.value);
-    if (prev !== null) {
-      input.value = prev;
-      input.setSelectionRange(prev.length, prev.length);
-    }
-  } else if (event.key === "ArrowDown") {
-    event.preventDefault();
-    const next = commandHistory.navigateDown();
-    if (next !== null) {
-      input.value = next;
-      input.setSelectionRange(next.length, next.length);
-    }
-  }
-});
-
-quickLinks.forEach((button) => {
-  button.disabled = false;
-  button.addEventListener("click", () => {
-    commandHistory.push(button.dataset.command);
-    appendCommand(button.dataset.command);
-
-    if (shouldFocusTerminalAfterQuickCommand()) {
-      input.focus();
-    }
-  });
-});
-
 pandaMascot.addEventListener("click", handleMascotClick);
 skipBoot?.addEventListener("click", revealPortfolio);
 initCertificates();
 initFocusTooling();
-initSkills();
+// The skills graph (its layout and drawing code) loads the first time the Skills
+// window opens, so it does not weigh on the first screen.
+let skillsLoading = false;
+const loadSkills = () => {
+  if (skillsLoading || document.documentElement.dataset.scene !== "skills")
+    return;
+  skillsLoading = true;
+  import("./components/skills.js").then((module) => module.initSkills());
+};
+window.addEventListener("portfolio:scene", loadSkills);
 initScenes();
+loadSkills();
+initMenubar();
 initFigures();
 initBackgroundArt();
+// The desk's motion (parallax, the OLED's attract mode) loads after first paint.
+(window.requestIdleCallback ?? ((fn) => setTimeout(fn, 600)))(() =>
+  import("./components/desk.js").then((module) => module.initDesk()),
+);
+// The Asteroids screensaver and game load after first paint, or when `play` is typed.
+(window.requestIdleCallback ?? ((fn) => setTimeout(fn, 800)))(() =>
+  import("./components/arcade.js").then((module) => module.initScreensaver()),
+);
+window.addEventListener("portfolio:play", () =>
+  import("./components/arcade.js").then((module) => module.startGame()),
+);
 const motion = initMotion();
 motion.register(input, startAliasTeaser);
 initLedMatrix(motion);
 document.documentElement.classList.add("is-enhanced");
-runBootSequence().finally(playHeroReveal);
+// The dot-matrix name (with its Fourier intro) loads right after first paint; until
+// then, and if it cannot start, the h1's text is what shows.
+const oled = import("./components/oled-name.js").then((module) =>
+  module.initOledName(),
+);
+runBootSequence().finally(() =>
+  playHeroIntro(
+    () => oled.then((o) => (o ? o.play() : playHeroReveal())),
+    () => oled.then((o) => (o ? o.finish() : playHeroReveal())),
+  ),
+);

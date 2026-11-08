@@ -1,7 +1,7 @@
 // Skills as evidence: every skill is a stack tag on a project, so a skill can
 // never appear without a project behind it. Pure data; the interactive view is
 // components/skills.js and a Three.js view can replace it later.
-import { allProjects, focusCategories, shelfEntries } from "./projects.js";
+import { allProjects, focusCategories, otherProjects } from "./projects.js";
 
 // Practice that backs the low-level skills but is not shown as a project.
 export const practiceNode = {
@@ -34,11 +34,12 @@ export function getSkillGraph() {
       categories: p.categories,
       tags: p.tags,
     })),
-    ...shelfEntries.map((e) => ({
+    ...otherProjects.map((e) => ({
       id: e.id,
       name: e.name,
-      kind: "shelf",
-      href: e.caseStudy ? `#project/${e.caseStudy}` : "#shelf",
+      kind: "other",
+      href: e.id === "sentinel" ? "#project/sentinel" : e.links[0].url,
+      external: e.id !== "sentinel",
       categories: e.categories,
       tags: e.tags,
     })),
@@ -98,3 +99,90 @@ export const projectsOfSkill = (graph, skillId) =>
 
 export const skillsOfProject = (graph, projectId) =>
   graph.skills.filter((s) => s.projects.includes(projectId));
+
+// ---------------------------------------------------------------------------
+// The graph view's model: domain hubs, projects and skills as nodes; an edge
+// means "this project's stack lists this skill" or "this project belongs to this
+// domain". Nothing here is invented: every node and edge comes from graph above.
+
+export const nodeId = {
+  hub: (id) => `group:${id}`,
+  project: (id) => `project:${id}`,
+  skill: (id) => `skill:${id}`,
+};
+
+export function buildGraphModel(graph, { all = false } = {}) {
+  const projects = all ? graph.projects : featuredProjectNodes(graph);
+  const shown = new Set(projects.map((p) => p.id));
+  // A skill shows only if a shown project backs it, so no node floats alone.
+  const skills = (all ? graph.skills : topSkills(graph)).filter((s) =>
+    s.projects.some((id) => shown.has(id)),
+  );
+
+  const nodes = [
+    ...graph.groups.map((g) => ({
+      id: nodeId.hub(g.id),
+      kind: "hub",
+      label: g.label,
+      group: g.id,
+    })),
+    ...projects.map((p) => ({
+      id: nodeId.project(p.id),
+      kind: p.kind,
+      label: p.name,
+      group: p.categories[0] ?? null,
+      ref: p.id,
+    })),
+    ...skills.map((s) => ({
+      id: nodeId.skill(s.id),
+      kind: "skill",
+      label: s.label,
+      group: s.group,
+      count: s.count,
+      ref: s.id,
+    })),
+  ];
+
+  const edges = [];
+  for (const p of projects) {
+    for (const category of p.categories) {
+      edges.push({
+        a: nodeId.project(p.id),
+        b: nodeId.hub(category),
+        kind: "domain",
+      });
+    }
+  }
+  for (const s of skills) {
+    for (const id of s.projects) {
+      if (shown.has(id)) {
+        edges.push({
+          a: nodeId.skill(s.id),
+          b: nodeId.project(id),
+          kind: "evidence",
+        });
+      }
+    }
+  }
+  return { nodes, edges };
+}
+
+// What lights up when a node is chosen: the node, what it connects to, and the
+// domain hubs of the projects involved.
+export function neighbourhood(model, id) {
+  const lit = new Set([id]);
+  const next = (of) =>
+    model.edges
+      .filter((e) => e.a === of || e.b === of)
+      .map((e) => (e.a === of ? e.b : e.a));
+  const first = next(id);
+  first.forEach((n) => lit.add(n));
+  const node = model.nodes.find((n) => n.id === id);
+  if (node?.kind === "skill") {
+    for (const n of first)
+      next(n)
+        .filter((m) => m.startsWith("group:"))
+        .forEach((m) => lit.add(m));
+  }
+  return lit;
+}

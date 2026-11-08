@@ -43,16 +43,10 @@ test("zoom state survives a round trip and ignores bad stored data", () => {
   assert.deepEqual(toggleZoomed(list, "work"), ["skills"]);
 });
 
-test("the static page has window buttons on the terminal and a quiet About window", () => {
-  const terminalBar = html.match(
-    /<div class="terminal-bar titlebar">[\s\S]*?<\/div>/,
-  )[0];
-  for (const kind of ["red", "yellow", "green"]) {
-    assert.match(terminalBar, new RegExp(`class="light ${kind}"`), kind);
-  }
-  assert.match(terminalBar, /aria-hidden="true"/);
+test("the static page has a quiet About window and no separate Terminal window", () => {
   assert.match(html, /class="lights is-inactive" aria-hidden="true"/);
   assert.doesNotMatch(html, /close-box/);
-  assert.match(html, /class="terminal-status"/);
-  assert.match(html, /80×24/);
+  // The console lives in the About window; the old floating window is gone.
+  assert.match(html, /id="hero-form"/);
+  assert.doesNotMatch(html, /class="terminal-bar|class="terminal-status|80×24/);
 });

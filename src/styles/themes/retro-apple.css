@@ -15,8 +15,7 @@ body {
   background: var(--bg);
 }
 
-.boot-terminal,
-.terminal {
+.boot-terminal {
   border: var(--hair);
   border-radius: 0;
   background: var(--panel);
@@ -24,12 +23,11 @@ body {
 }
 
 .boot-terminal {
-  font-family: var(--font-mono);
+  font-family: var(--font-code);
 }
 
 /* System 7 title bar: hairline pinstripes with the title on a plate. */
-.boot-topline,
-.terminal-bar {
+.boot-topline {
   background: repeating-linear-gradient(
     0deg,
     var(--ink) 0 1px,
@@ -98,7 +96,6 @@ body {
   color: var(--acid);
 }
 
-.eyebrow,
 .mascot-hint {
   color: var(--muted);
   font-size: var(--step--1);
@@ -117,30 +114,9 @@ body {
   font-weight: 600;
 }
 
-.terminal-bar {
-  min-height: 44px;
-  padding: 9px 12px;
-  border-bottom: var(--hair);
-}
-
-.terminal-bar h2 {
-  margin: 0 auto;
-  padding: 2px 12px;
-  background: var(--panel);
-  color: var(--ink);
-  font-size: var(--step--1);
-  font-weight: 500;
-}
-
-.terminal-bar::after {
-  width: 13px;
-  height: 13px;
-  content: "";
-}
-
 .output {
   color: var(--ink);
-  font-family: var(--font-mono);
+  font-family: var(--font-code);
 }
 
 .result,
@@ -154,54 +130,12 @@ body {
   font-weight: 700;
 }
 
-.command-line {
-  border-top: var(--hair);
-  background: #e7e6df;
-}
-
-.command-line input {
-  color: var(--warm);
-  font-weight: 500;
-}
-
-.command-line input::placeholder {
-  color: var(--terminal-placeholder);
-}
-
-.quick-links {
-  gap: 12px;
-}
-
 /* Mac push button: flat 1px rounded rectangle, inverts on hover. */
-.quick-links button {
-  border: var(--hair);
-  border-radius: var(--button-radius);
-  background: var(--panel);
-  box-shadow: none;
-  color: var(--ink);
-  font-size: var(--step--1);
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
 
-.quick-links button:hover,
-.quick-links button:focus-visible {
-  border-color: var(--navy);
-  background: var(--navy);
-  color: var(--panel);
-}
-
-.quick-links button:active {
-  background: var(--ink);
-  border-color: var(--ink);
-}
-
-/* Bitmap headlines: only at sizes on the 11px grid, never tracked or shadowed. */
+/* Pixel headlines: never tracked or shadowed. */
 .intro h1,
 .section-heading h2,
 .focus h2,
-.focus-index h3,
 .certificates-heading h2,
 .project-card-title,
 .modal-title {
@@ -228,27 +162,16 @@ body {
   line-height: 1.1;
 }
 
-.focus-index h3,
 .project-card-title,
 .modal-title {
   font-size: var(--px-1);
   line-height: 1.15;
 }
 
-.focus-terminal,
-.focus-index article,
-.focus-command,
 footer {
   border-color: var(--ink);
 }
 
-.focus-number {
-  color: #7a2e5d;
-  font-weight: 700;
-}
-
-.focus-kind,
-.focus-index p,
 footer {
   color: var(--muted);
 }
@@ -286,8 +209,6 @@ footer a {
 .esp-board,
 .esp-trace,
 .esp-antenna-trace,
-.conway-grid,
-.conway-arrow,
 .camera-board,
 .camera-lens-ring,
 .camera-trace,
@@ -338,7 +259,6 @@ footer a {
 }
 
 .asteroid-shot,
-.life-cell,
 .art-packet,
 .esp-led {
   fill: #7a2e5d;

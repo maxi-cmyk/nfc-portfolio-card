@@ -27,7 +27,6 @@ test("changing topic dissolves", () => {
     ["work", "skills"],
     ["skills", "credentials"],
     ["credentials", "contact"],
-    ["shelf", "work"],
     ["case", "skills"],
   ]) {
     assert.equal(
@@ -133,15 +132,7 @@ test("first paint, the write-up dialog and no-op moves do not animate", () => {
 });
 
 test("every transition the picker can return is a known kind", () => {
-  const scenes = [
-    "hub",
-    "work",
-    "case",
-    "shelf",
-    "skills",
-    "credentials",
-    "contact",
-  ];
+  const scenes = ["hub", "work", "case", "skills", "credentials", "contact"];
   for (const a of scenes) {
     for (const b of scenes) {
       const kind = pick(

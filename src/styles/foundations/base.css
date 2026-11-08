@@ -3,6 +3,7 @@
 }
 
 html {
+  font-synthesis: none;
   scroll-behavior: smooth;
 }
 

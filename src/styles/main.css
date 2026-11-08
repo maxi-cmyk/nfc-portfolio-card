@@ -15,6 +15,13 @@
 @import "./components/scenes.css";
 @import "./components/desktop.css";
 @import "./components/mac.css";
+@import "./components/menubar.css";
+@import "./components/work-landing.css";
+@import "./components/workbench.css";
+@import "./components/hero-terminal.css";
+@import "./components/oled.css";
+@import "./components/datasheet.css";
+@import "./components/arcade.css";
 @import "./components/figures.css";
 @import "./components/skills.css";
 @import "./components/interaction.css";

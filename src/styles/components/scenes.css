@@ -62,7 +62,6 @@ html.is-scenes .route-notice {
 }
 html.is-scenes .field-trio,
 html.is-scenes .certificate-atmosphere,
-html.is-scenes .js-note,
 html.is-scenes .static-case-study {
   display: none;
 }
@@ -114,15 +113,6 @@ html.is-scenes .project-card-desc {
 .case-crumb {
   margin: 0;
 }
-.case-crumb a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  color: var(--acid);
-  font: 500 var(--step--1) / 1 var(--font-mono);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
 .case-kicker {
   margin: 8px 0;
   color: var(--warm);
@@ -158,7 +148,7 @@ html.is-scenes .project-card-desc {
   overflow: auto;
   border: var(--hair);
   background: var(--panel);
-  font: var(--step--1) / 1.5 var(--font-mono);
+  font: var(--step--1) / 1.5 var(--font-code);
 }
 .case-actions {
   display: flex;
@@ -173,13 +163,6 @@ html.is-scenes .project-card-desc {
 }
 
 /* ---------- Skills, credentials, contact ---------- */
-html.is-scenes .focus-summaries {
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-}
-html.is-scenes .skills-evidence {
-  margin: 20px 0 0;
-  color: var(--muted);
-}
 html.is-scenes #certificates {
   padding-top: clamp(16px, 3vw, 32px);
 }
@@ -219,32 +202,6 @@ html.is-scenes #contact h2 {
 }
 
 /* ---------- Terminal drawer ---------- */
-html.is-scenes #terminal {
-  position: fixed;
-  right: 16px;
-  bottom: 16px;
-  z-index: 45;
-  display: none;
-  flex-direction: column;
-  width: min(560px, calc(100vw - 32px));
-  max-height: min(72dvh, 600px);
-  margin: 0;
-}
-html.is-scenes #terminal.is-open {
-  display: flex;
-}
-html.is-scenes #terminal .output {
-  flex: 1;
-  max-height: none;
-  min-height: 120px;
-}
-html.is-scenes #terminal .quick-links {
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0;
-  padding: 8px 12px;
-  border-top: var(--hair);
-}
 
 /* ---------- Command palette ---------- */
 .palette {
@@ -360,15 +317,23 @@ html.is-scenes #terminal .quick-links {
     grid-column: 2;
     align-self: start;
   }
-  html.is-scenes #case > .stage {
-    grid-row: 1 / span 8;
+  /* The figure's window starts at the top of the content, beside the text. */
+  html.is-scenes #case > .titlebar,
+  html.is-scenes #work > .titlebar {
+    grid-row: 1;
+    grid-column: 1 / -1;
   }
-  html.is-scenes #case > :not(.stage),
-  html.is-scenes #work > #work-projects {
+  html.is-scenes #case > .stage,
+  html.is-scenes #work > .stage {
+    grid-row: 2 / span 8;
+  }
+  html.is-scenes #case > :not(.stage):not(.titlebar):not(.statusbar),
+  html.is-scenes #work > :not(.stage):not(.titlebar):not(.statusbar) {
     grid-column: 1;
   }
-  html.is-scenes #work > .section-heading,
-  html.is-scenes #work > .work-filters {
+  html.is-scenes #work.is-landing > .section-heading.section-heading,
+  html.is-scenes #work.is-landing > .work-landing.work-landing,
+  html.is-scenes #work.is-landing > .exit-row.exit-row {
     grid-column: 1 / -1;
   }
 }

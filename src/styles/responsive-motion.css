@@ -9,10 +9,6 @@
     width: min(100% - 28px, 1120px);
   }
 
-  .masthead {
-    padding: 19px 0;
-  }
-
   .status {
     font-size: var(--step--1);
   }
@@ -37,10 +33,6 @@
     padding: 80px 0 48px;
   }
 
-  .terminal {
-    box-shadow: var(--window-shadow);
-  }
-
   .output {
     min-height: 0;
     padding: 18px;
@@ -51,27 +43,8 @@
     font-size: var(--step--1);
   }
 
-  .command-line {
-    padding: 4px 18px;
-    font-size: var(--step-1);
-  }
-
-  .command-line input {
-    font-size: var(--step-1);
-  }
-
-  .quick-links {
-    margin: 27px 0 100px;
-  }
-
   .focus {
     padding-bottom: 80px;
-  }
-
-  .focus-heading {
-    grid-template-columns: 1fr;
-    gap: 28px;
-    margin-bottom: 42px;
   }
 
   .field-art-card {
@@ -83,11 +56,6 @@
     height: 70px;
   }
 
-  .field-art-label,
-  .field-art-caption {
-    font-size: var(--step--1);
-  }
-
   .field-trio .field-art-card {
     min-height: 0;
     padding: 0;
@@ -95,20 +63,6 @@
 
   .field-trio .field-art-card svg {
     height: 100%;
-  }
-
-  .focus-index article {
-    grid-template-columns: 34px minmax(0, 1fr);
-    gap: 12px;
-    padding: 20px 0;
-  }
-
-  .focus-kind {
-    display: none;
-  }
-
-  .focus-command {
-    font-size: var(--step--1);
   }
 
   .certificates-heading,

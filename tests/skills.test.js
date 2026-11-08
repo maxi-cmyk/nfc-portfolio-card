@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { allProjects, shelfEntries } from "../src/data/projects.js";
+import { allProjects, otherProjects } from "../src/data/projects.js";
 import {
   featuredProjectNodes,
   getSkillGraph,
@@ -29,7 +29,7 @@ test("every skill is backed by at least one project", () => {
 
 test("every tag on every project becomes a skill, and skill ids are unique", () => {
   const labels = new Set(graph.skills.map((s) => s.label));
-  for (const p of [...allProjects, ...shelfEntries, practiceNode]) {
+  for (const p of [...allProjects, ...otherProjects, practiceNode]) {
     for (const tag of p.tags) assert.ok(labels.has(tag), `${p.name}: ${tag}`);
   }
   const ids = graph.skills.map((s) => s.id);

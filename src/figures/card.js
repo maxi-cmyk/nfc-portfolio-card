@@ -28,6 +28,7 @@ import {
   roundedRectPoints,
   toSegments,
 } from "./card-math.js";
+import { fitCamera } from "./common.js";
 
 const LOOPS = 5;
 
@@ -76,6 +77,8 @@ function faceTexture(palette) {
   texture.colorSpace = SRGBColorSpace;
   return texture;
 }
+
+const FIT_RADIUS = 2.8;
 
 export function createCardFigure(palette) {
   const colors = Object.fromEntries(
@@ -175,22 +178,26 @@ export function createCardFigure(palette) {
       state.target = on ? 0.55 : 0;
     },
     setSize(width, height) {
-      camera.aspect = width / height;
-      // Keep the whole card in view in a tall or a wide host.
-      camera.fov =
-        camera.aspect < 1.2 ? 26 * (1.3 / Math.max(camera.aspect, 0.6)) : 26;
-      camera.updateProjectionMatrix();
+      // The card and the field rings that rise off it, at any angle. The outer
+      // rings are nearly faded by then, so they are allowed to leave the frame.
+      fitCamera(camera, 26, width, height, FIT_RADIUS);
     },
-    update({ time, dt, pointer, still }) {
+    update({ time, dt, pointer, still, orbit }) {
       state.impulse = approach(state.impulse, 0, dt, 1.4);
       const goal = Math.max(state.target, state.impulse);
       state.power = approach(state.power, goal, dt, 5);
       const power = still ? 0.45 : state.power;
       const t = still ? 0.9 : time;
       group.rotation.y =
-        -0.5 + pointer.x * 0.35 + (still ? 0 : Math.sin(t * 0.4) * 0.08);
+        -0.5 +
+        pointer.x * 0.35 +
+        (still ? 0 : Math.sin(t * 0.4) * 0.08) +
+        orbit.yaw;
       group.rotation.x =
-        0.42 - pointer.y * 0.25 + (still ? 0 : Math.cos(t * 0.33) * 0.05);
+        0.42 -
+        pointer.y * 0.25 +
+        (still ? 0 : Math.cos(t * 0.33) * 0.05) +
+        orbit.pitch;
       group.rotation.z = -0.1;
       loops.forEach((line, i) => {
         const s = fieldLoopState(i, LOOPS, t, power);

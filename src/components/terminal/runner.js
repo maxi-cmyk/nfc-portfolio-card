@@ -1,12 +1,13 @@
 import { resolveCommand } from "../../terminal/commands/index.js";
 import { getLatestResultScrollOptions } from "../../terminal/scroll.js";
 import { createProjectInsightsButton } from "../project-insights-button.js";
+import { reduced } from "../reduced-motion.js";
 
-const output = document.querySelector("#output");
-const terminalContainer = document.querySelector("#terminal");
-
-export function appendCommand(command) {
-  const result = resolveCommand(command);
+// The runner prints into whatever console passes its own output pane, window and
+// command resolver (the hero console in the About window).
+export function appendCommand(command, target = {}) {
+  const { output, container: terminalContainer } = target;
+  const result = (target.resolve ?? resolveCommand)(command);
 
   if (result.kind === "clear") {
     output.replaceChildren();
@@ -92,9 +93,7 @@ export function appendCommand(command) {
     });
   } else if (result.kind === "sudo") {
     const lines = result.output.split("\n");
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    const prefersReducedMotion = reduced();
 
     if (prefersReducedMotion) {
       resultRow.textContent = result.output;
@@ -116,9 +115,7 @@ export function appendCommand(command) {
     }
   } else if (result.kind === "panda") {
     const stages = result.stages || [result.output];
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    const prefersReducedMotion = reduced();
 
     const pandaMascot = document.querySelector("#panda-mascot");
     if (pandaMascot) {
@@ -157,9 +154,7 @@ export function appendCommand(command) {
     Boolean(output.querySelector(".result.projects")),
   );
   output.scrollTop = output.scrollHeight;
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  ).matches;
+  const prefersReducedMotion = reduced();
 
   window.requestAnimationFrame(() => {
     resultRow.scrollIntoView(
@@ -174,7 +169,13 @@ export function appendCommand(command) {
   }
 }
 
-export function appendSuggestions(currentInput, suggestions, onSelect) {
+export function appendSuggestions(
+  currentInput,
+  suggestions,
+  onSelect,
+  target = {},
+) {
+  const { output } = target;
   if (!output || !suggestions || suggestions.length === 0) return;
 
   const commandRow = document.createElement("p");
@@ -205,9 +206,7 @@ export function appendSuggestions(currentInput, suggestions, onSelect) {
   output.append(commandRow, resultRow);
   output.scrollTop = output.scrollHeight;
 
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  ).matches;
+  const prefersReducedMotion = reduced();
 
   window.requestAnimationFrame(() => {
     resultRow.scrollIntoView(
