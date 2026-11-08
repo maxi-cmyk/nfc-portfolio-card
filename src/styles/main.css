@@ -12,4 +12,10 @@
 @import "./components/case-studies.css";
 @import "./effects/terminal-glitch.css";
 
+@import "./components/scenes.css";
+@import "./components/desktop.css";
+@import "./components/mac.css";
+@import "./components/figures.css";
+@import "./components/skills.css";
+@import "./components/interaction.css";
 @import "./effects/motion-policy.css";

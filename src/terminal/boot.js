@@ -4,9 +4,9 @@ export function getTypingFrames(text) {
 
 export function getBootTiming() {
   return {
-    typingDelay: 22.5,
-    lineDelay: 125,
-    completionDelay: 500,
+    typingDelay: 12,
+    lineDelay: 80,
+    completionDelay: 250,
     exitDelay: 125,
   };
 }
@@ -17,12 +17,8 @@ export function getBootDelay() {
 
 export function getBootSteps() {
   return [
-    { kind: "command", text: "pwd" },
-    { kind: "output", text: "/Users/max/portfolio" },
-    { kind: "command", text: "cd portfolio" },
-    { kind: "command", text: "ls" },
-    { kind: "output", text: "about/projects/contact/" },
-    { kind: "command", text: "start --portfolio" },
+    { kind: "command", text: "tap --card" },
+    { kind: "output", text: "13.56 MHz field detected." },
     { kind: "success", text: "System online." },
   ];
 }

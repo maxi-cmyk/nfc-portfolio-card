@@ -1,0 +1,243 @@
+/* The retro desktop: pixel icons on a dithered desktop, windows with title
+   bars and close boxes, hard drop shadows. Colour comes from the theme tokens. */
+
+.c-k {
+  fill: var(--ink);
+}
+.c-p {
+  fill: var(--panel);
+}
+.c-w {
+  fill: #e7e6df;
+}
+.c-g {
+  fill: #8b8a84;
+}
+.c-n {
+  fill: var(--navy);
+}
+.c-m {
+  fill: var(--warm);
+}
+.c-s {
+  fill: #d9edf6;
+}
+
+.px-icon {
+  display: block;
+  width: 64px;
+  height: 64px;
+  image-rendering: pixelated;
+}
+.px-mac {
+  width: 160px;
+  height: 140px;
+}
+
+/* ---------- Window chrome ---------- */
+.window {
+  border: var(--hair);
+  background: var(--panel);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.titlebar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  border-bottom: var(--hair);
+  background: repeating-linear-gradient(
+    0deg,
+    var(--ink) 0 1px,
+    var(--panel) 1px 3px
+  );
+}
+.titlebar-title {
+  padding: 0 12px;
+  background: var(--panel);
+  font: 500 var(--step--1) / 1.5 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+/* ---------- The desktop (hub) ---------- */
+html.is-scenes,
+html.is-scenes body {
+  background:
+    repeating-conic-gradient(rgba(29, 29, 29, 0.07) 0% 25%, transparent 0% 50%)
+      0 0 / 4px 4px,
+    var(--bg);
+}
+.desktop {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.desktop-icons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 14px 6px;
+  max-width: 440px;
+}
+.icon {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 4px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  text-align: center;
+  text-decoration: none;
+}
+.icon-label {
+  padding: 1px 7px;
+  background: var(--panel);
+  font: 500 var(--step--1) / 1.4 var(--font-mono);
+}
+.about {
+  max-width: 640px;
+}
+.about .window-body {
+  display: grid;
+  gap: 8px 24px;
+  padding: 16px 16px 20px;
+}
+.about .intro-tools {
+  margin-bottom: 4px;
+}
+.mac-art {
+  display: none;
+  margin: 0;
+}
+@media (min-width: 700px) {
+  .about .window-body {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    padding: 24px 28px;
+  }
+  .mac-art {
+    display: block;
+  }
+}
+html.is-scenes #home {
+  padding: 16px;
+  background: none;
+}
+html.is-scenes #home:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+html.is-scenes #home .lede {
+  margin-top: 16px;
+}
+/* A laptop desktop: a large About window and the icon column. */
+@media (min-width: 900px) {
+  html.is-scenes #home:not([hidden]) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 236px;
+    gap: 28px 56px;
+    align-content: center;
+    align-content: safe center;
+    align-items: center;
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding: 28px 40px;
+  }
+  html.is-scenes #home .about {
+    max-width: none;
+  }
+  html.is-scenes .desktop-icons {
+    grid-template-columns: repeat(2, 108px);
+    gap: 18px 10px;
+    max-width: none;
+  }
+}
+@media (min-width: 1180px) {
+  html.is-scenes #home .about .window-body {
+    gap: 20px 32px;
+    padding: 40px 44px 44px;
+  }
+  html.is-scenes #home .about .intro-tools {
+    margin-bottom: 12px;
+  }
+  html.is-scenes #home .about .lede {
+    max-width: 22ch;
+    font-size: 28px;
+  }
+  html.is-scenes #home .about .px-mac {
+    width: 224px;
+    height: 196px;
+  }
+}
+
+/* ---------- Scenes are windows ---------- */
+html.is-scenes {
+  --win-pad: 16px;
+}
+@media (min-width: 700px) {
+  html.is-scenes {
+    --win-pad: 28px;
+  }
+}
+html.is-scenes .scene:not(#home) {
+  inset: 12px;
+  padding: 0 var(--win-pad) var(--win-pad);
+  border: var(--hair);
+  background: var(--panel);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+@media (min-width: 900px) {
+  html.is-scenes .scene:not(#home) {
+    inset: 28px max(28px, calc((100% - 1040px) / 2)) 36px;
+  }
+}
+html.is-scenes .scene > .titlebar {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  margin: 0 calc(var(--win-pad) * -1) 20px;
+}
+@media (min-width: 1000px) {
+  html.is-scenes .scene > .titlebar {
+    grid-column: 1 / -1;
+  }
+}
+
+/* The name has to fit inside the About window: 55px on phones, 66px above. */
+.intro .about h1 {
+  font-size: 55px;
+}
+@media (min-width: 700px) {
+  .intro .about h1 {
+    font-size: 66px;
+  }
+}
+@media (min-width: 1180px) {
+  .intro .about h1 {
+    font-size: 99px;
+  }
+}
+
+/* Contact is a window like the others: a plain block under the title bar. */
+html.is-scenes #contact:not([hidden]) {
+  display: block;
+}
+html.is-scenes #contact > p {
+  max-width: 48ch;
+  margin: 0 0 16px;
+}
+html.is-scenes #contact > div:not(.titlebar):not(.figure-frame) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin: 0 0 20px;
+}
+html.is-scenes #contact .project-facts {
+  max-width: 320px;
+}

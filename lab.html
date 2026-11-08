@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Transition lab</title>
+    <link rel="stylesheet" href="./src/styles/main.css" />
+    <link rel="stylesheet" href="./src/styles/themes/retro-apple.css" />
+    <link rel="stylesheet" href="./src/styles/components/work.css" />
+    <style>
+      body {
+        padding: 16px;
+      }
+      .lab {
+        max-width: 640px;
+        margin: 0 auto;
+      }
+      .lab h1 {
+        font: 500 var(--step-2) var(--font-mono);
+        margin: 0 0 4px;
+      }
+      .lab p {
+        margin: 0 0 12px;
+        color: var(--muted);
+      }
+      .stage-lab {
+        position: relative;
+        height: 320px;
+        overflow: hidden;
+        border: var(--hair);
+        background: var(--bg);
+      }
+      .lab-scene {
+        position: absolute;
+        inset: 0;
+        padding: 20px;
+        overflow: hidden;
+        background: var(--bg);
+      }
+      .lab-scene h2 {
+        margin: 0 0 8px;
+        font: 400 var(--px-2) var(--font-chrome);
+        color: var(--navy);
+      }
+      .lab-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 12px 0;
+      }
+      .lab-controls button,
+      .lab-controls select {
+        min-height: 44px;
+        padding: 0 14px;
+        border: var(--hair);
+        border-radius: var(--button-radius);
+        background: var(--panel);
+        color: var(--ink);
+        font: 500 var(--step--1) var(--font-mono);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      .lab-controls label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 44px;
+        font: var(--step--1) var(--font-mono);
+      }
+      #log {
+        min-height: 3em;
+        font: var(--step--1) / 1.5 var(--font-mono);
+        color: var(--muted);
+        white-space: pre-wrap;
+      }
+      .lab-tiles {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin-top: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="lab">
+      <h1>Transition lab</h1>
+      <p>
+        Throwaway page for feeling the three transitions on real content. Not
+        linked from the site and not part of the build. Try it on a phone and a
+        laptop, then keep, change or drop each one.
+      </p>
+      <div id="stage" class="stage-lab"></div>
+      <div class="lab-controls" role="group" aria-label="Transitions">
+        <button type="button" data-kind="zoom-in">Zoom in</button>
+        <button type="button" data-kind="zoom-out">Zoom out</button>
+        <button type="button" data-kind="slide-prev">‹ Slide</button>
+        <button type="button" data-kind="slide-next">Slide ›</button>
+        <button type="button" data-kind="dissolve">Dissolve</button>
+        <button type="button" data-kind="interrupt">Interrupt</button>
+      </div>
+      <div class="lab-controls">
+        <label
+          >Speed
+          <select id="speed">
+            <option value="2">slow ×2</option>
+            <option value="1" selected>normal</option>
+            <option value="0.5">fast ×0.5</option>
+          </select>
+        </label>
+        <label><input id="reduced" type="checkbox" /> reduced motion</label>
+      </div>
+      <p id="log" role="status"></p>
+    </main>
+    <script type="module" src="./src/lab/lab.js"></script>
+  </body>
+</html>

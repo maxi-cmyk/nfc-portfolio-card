@@ -240,12 +240,8 @@
   display: block;
   padding: 9px 12px;
   border-bottom: var(--hair);
-  background: repeating-linear-gradient(
-    0deg,
-    var(--ink) 0 1px,
-    var(--panel) 1px 3px
-  );
-  font: 11px var(--font-mono);
+  background: var(--panel);
+  font: var(--step--1) var(--font-mono);
 }
 
 .certificate-preview img {
@@ -262,7 +258,7 @@
 .certificate-meta {
   margin: 0 0 16px;
   color: var(--warm);
-  font: 500 12px var(--font-mono);
+  font: 500 var(--step--1) var(--font-mono);
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
@@ -279,7 +275,7 @@
   max-width: 52ch;
   margin: 22px 0 0;
   color: var(--muted);
-  font-size: 17px;
+  font-size: var(--step-1);
   line-height: 1.55;
 }
 
@@ -295,7 +291,7 @@
   min-height: 44px;
   align-items: center;
   color: var(--acid);
-  font: 500 13px var(--font-mono);
+  font: 500 var(--step-0) var(--font-mono);
   text-underline-offset: 4px;
 }
 
@@ -312,7 +308,7 @@ footer {
   padding: 24px 0 42px;
   border-top: 1px solid var(--line);
   color: var(--muted);
-  font: 12px var(--font-mono);
+  font: var(--step--1) var(--font-mono);
 }
 
 footer p {

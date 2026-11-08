@@ -5,9 +5,14 @@ import { projectsCommand } from "../src/terminal/commands/project.js";
 import { certificates } from "../src/data/certificates.js";
 import {
   allProjects,
+  caseStudyProjects,
   focusCategories,
   getCaseStudyLinkLabel,
+  isWip,
+  resolveCategory,
+  shelfEntries,
 } from "../src/data/projects.js";
+import { getCaseStudySteps } from "../src/data/case-study-steps.js";
 import { getInsightContentOrder } from "../src/components/subpages/project-modal.js";
 import {
   focusTechnologyGroups,
@@ -50,11 +55,10 @@ test("skills returns categorised capabilities and stack matrix", () => {
   const result = resolveCommand("skills");
 
   assert.equal(result.kind, "skills");
-  assert.match(result.output, /CYBERSECURITY/);
+  assert.match(result.output, /SYSTEMS & SECURITY/);
   assert.match(result.output, /ESP32/);
-  assert.match(result.output, /ENGINEERING/);
-  assert.match(result.output, /AI & MATH/);
-  assert.match(result.output, /HACKATHONS/);
+  assert.match(result.output, /SIGNALS & HARDWARE/);
+  assert.match(result.output, /APPLIED AI & PRODUCTS/);
 
   const stackResult = resolveCommand("stack");
   assert.equal(stackResult.kind, "skills");
@@ -63,7 +67,7 @@ test("skills returns categorised capabilities and stack matrix", () => {
 test("skills use project-backed tools and languages in focus order", () => {
   assert.deepEqual(
     focusTechnologyGroups.map((group) => group.title),
-    ["Cybersecurity", "Engineering", "AI & Math", "Hackathons"],
+    ["Signals & hardware", "Systems & security", "Applied AI & products"],
   );
 
   const tools = focusTechnologyGroups.flatMap((group) => group.tools);
@@ -92,14 +96,14 @@ test("terminal skills output comes from focus data without proficiency claims", 
   assert.doesNotMatch(copy, /\b\d+\+?\s+years?\b/i);
 });
 
-test("hackathon tooling reflects the shipped project stacks", () => {
-  const hackathons = getFocusTechnologyGroup("hackathons");
+test("applied AI tooling reflects the shipped project stacks", () => {
+  const hackathons = getFocusTechnologyGroup("applied-ai");
 
   assert.equal(hackathons.variant, "expanded");
   assert.deepEqual(hackathons.languages, [
+    "Python",
     "TypeScript",
     "JavaScript",
-    "Python",
     "SQL",
   ]);
   [
@@ -118,10 +122,9 @@ test("hackathon tooling reflects the shipped project stacks", () => {
 
 test("every focus lists the languages used by its linked work", () => {
   const expectedLanguages = new Map([
-    ["cybersecurity", ["C++"]],
-    ["engineering", ["C++", "JavaScript"]],
-    ["ai-math", ["Python", "C++", "JavaScript"]],
-    ["hackathons", ["TypeScript", "JavaScript", "Python", "SQL"]],
+    ["signals-hardware", ["C++", "JavaScript"]],
+    ["systems-security", ["Python", "C", "C++"]],
+    ["applied-ai", ["Python", "TypeScript", "JavaScript", "SQL"]],
   ]);
 
   focusTechnologyGroups.forEach((group) => {
@@ -131,10 +134,27 @@ test("every focus lists the languages used by its linked work", () => {
 
 test("focus tools reflect the linked implementations", () => {
   const expectedTools = new Map([
-    ["cybersecurity", ["ESP32-CAM", "Blynk", "HTTP / MJPEG"]],
-    ["engineering", ["ESP32", "SSD1306 OLED", "React", "Chart.js"]],
-    ["ai-math", ["NumPy", "pandas", "scikit-learn", "Jupyter"]],
-    ["hackathons", ["FastAPI", "MediaPipe", "Next.js", "Supabase"]],
+    [
+      "signals-hardware",
+      ["ESP32", "SSD1306 OLED", "React", "Chart.js", "DFT / FFT"],
+    ],
+    [
+      "systems-security",
+      ["Flask", "hmac.compare_digest", "ESP32-CAM", "Blynk", "HTTP / MJPEG"],
+    ],
+    [
+      "applied-ai",
+      [
+        "PyTorch",
+        "NumPy",
+        "pandas",
+        "Jupyter",
+        "FastAPI",
+        "MediaPipe",
+        "Next.js",
+        "Supabase",
+      ],
+    ],
   ]);
 
   focusTechnologyGroups.forEach((group) => {
@@ -193,9 +213,19 @@ test("projects lists the selected hardware and maths builds", () => {
         urls: ["https://github.com/maxi-cmyk/music_LED"],
       },
       {
-        name: "cya",
-        meta: "TechJam 26 · participant",
-        urls: ["https://github.com/maxi-cmyk/cya-techjam26"],
+        name: "timing-attack-lab",
+        meta: "Learning lab · localhost only",
+        urls: ["https://github.com/maxi-cmyk/timing-attack-lab"],
+      },
+      {
+        name: "Conway's Game of Life",
+        meta: "maths + hardware",
+        urls: ["https://github.com/maxi-cmyk/conway_game_of_life"],
+      },
+      {
+        name: "Asteroids",
+        meta: "ESP32 + web",
+        urls: ["https://github.com/maxi-cmyk/asteriods"],
       },
       {
         name: "it'sPEAK",
@@ -211,19 +241,14 @@ test("projects lists the selected hardware and maths builds", () => {
         urls: ["https://github.com/maxi-cmyk/echo"],
       },
       {
-        name: "Asteroids",
-        meta: "ESP32 + web",
-        urls: ["https://github.com/maxi-cmyk/asteriods"],
+        name: "cya",
+        meta: "TechJam 26 · participant",
+        urls: ["https://github.com/maxi-cmyk/cya-techjam26"],
       },
       {
         name: "Sentinel",
         meta: "hardware",
         urls: ["https://github.com/maxi-cmyk/sentinel"],
-      },
-      {
-        name: "Conway's Game of Life",
-        meta: "maths + hardware",
-        urls: ["https://github.com/maxi-cmyk/conway_game_of_life"],
       },
     ],
   );
@@ -231,9 +256,10 @@ test("projects lists the selected hardware and maths builds", () => {
 
 test("every project publishes a visitor-facing case study", () => {
   assert.equal(allProjects.length, 7);
-  assert.equal(new Set(allProjects.map(({ slug }) => slug)).size, 7);
+  assert.equal(caseStudyProjects.length, 8);
+  assert.equal(new Set(caseStudyProjects.map(({ slug }) => slug)).size, 8);
 
-  for (const project of allProjects) {
+  for (const project of caseStudyProjects) {
     assert.equal(
       getCaseStudyLinkLabel(project),
       "view case study",
@@ -248,13 +274,19 @@ test("every project publishes a visitor-facing case study", () => {
 });
 
 test("case studies define project-specific narrative structures and order", () => {
-  const conway = allProjects.find(
+  const conway = caseStudyProjects.find(
     (project) => project.slug === "conway-game-of-life",
   );
-  const itspeak = allProjects.find((project) => project.slug === "itspeak");
-  const echo = allProjects.find((project) => project.slug === "echo");
-  const asteroids = allProjects.find((project) => project.slug === "asteroids");
-  const sentinel = allProjects.find((project) => project.slug === "sentinel");
+  const itspeak = caseStudyProjects.find(
+    (project) => project.slug === "itspeak",
+  );
+  const echo = caseStudyProjects.find((project) => project.slug === "echo");
+  const asteroids = caseStudyProjects.find(
+    (project) => project.slug === "asteroids",
+  );
+  const sentinel = caseStudyProjects.find(
+    (project) => project.slug === "sentinel",
+  );
 
   assert.deepEqual(getInsightContentOrder(conway.insights), [
     "summary",
@@ -337,23 +369,24 @@ test("focus categories reuse the canonical project records", () => {
 });
 
 test("new projects share canonical records across their relevant focuses", () => {
-  const music = allProjects.find(({ slug }) => slug === "music-leds");
-  const cya = allProjects.find(({ slug }) => slug === "cya");
+  const music = caseStudyProjects.find(({ slug }) => slug === "music-leds");
+  const cya = caseStudyProjects.find(({ slug }) => slug === "cya");
 
   assert.equal(music.name, "music_LEDs");
   assert.equal(cya.name, "cya");
-  for (const category of ["engineering", "ai-math"]) {
-    assert.equal(
-      focusCategories[category].projects.filter((p) => p === music).length,
-      1,
-    );
-  }
-  for (const category of ["hackathons", "ai-math"]) {
-    assert.equal(
-      focusCategories[category].projects.filter((p) => p === cya).length,
-      1,
-    );
-  }
+  assert.equal(
+    focusCategories["signals-hardware"].projects.filter((p) => p === music)
+      .length,
+    1,
+  );
+  assert.equal(
+    focusCategories["applied-ai"].projects.filter((p) => p === cya).length,
+    1,
+  );
+  assert.equal(
+    focusCategories["systems-security"].projects.includes(music),
+    false,
+  );
   assert.equal(allProjects.filter((p) => p === music).length, 1);
   assert.equal(allProjects.filter((p) => p === cya).length, 1);
   assert.deepEqual(getInsightContentOrder(music.insights), [
@@ -372,7 +405,7 @@ test("new projects share canonical records across their relevant focuses", () =>
 });
 
 test("music_LEDs explains Fourier and linear algebra without obsolete Spotify features", () => {
-  const music = allProjects.find(({ slug }) => slug === "music-leds");
+  const music = caseStudyProjects.find(({ slug }) => slug === "music-leds");
   const copy = JSON.stringify(music);
   assert.match(copy, /Fourier.matrix/i);
   assert.match(copy, /inner product/i);
@@ -382,7 +415,7 @@ test("music_LEDs explains Fourier and linear algebra without obsolete Spotify fe
 });
 
 test("cya qualifies evaluation results and attributes the team contribution", () => {
-  const cya = allProjects.find(({ slug }) => slug === "cya");
+  const cya = caseStudyProjects.find(({ slug }) => slug === "cya");
   const copy = JSON.stringify(cya);
   assert.equal(cya.meta, "TechJam 26 · participant");
   assert.match(copy, /99\.29% on 141 images/);
@@ -417,23 +450,92 @@ test("unknown commands receive a useful terminal response", () => {
 });
 
 test("focus category commands return filtered project listings and navTarget", () => {
-  const hackathonsResult = resolveCommand("cd focus/hackathons");
-  assert.equal(hackathonsResult.kind, "projects");
-  assert.equal(hackathonsResult.navTarget, "#work?categories=hackathons");
-  assert.equal(hackathonsResult.projects.length, 3);
+  const applied = resolveCommand("cd focus/applied-ai");
+  assert.equal(applied.kind, "projects");
+  assert.equal(applied.navTarget, "#work?categories=applied-ai");
+  assert.equal(applied.projects.length, 3);
 
-  const cyberResult = resolveCommand("ls focus/cybersecurity");
-  assert.equal(cyberResult.kind, "projects");
-  assert.equal(cyberResult.navTarget, "#work?categories=cybersecurity");
-  assert.equal(cyberResult.projects.length, 1);
+  const security = resolveCommand("ls focus/systems-security");
+  assert.equal(security.kind, "projects");
+  assert.equal(security.navTarget, "#work?categories=systems-security");
+  assert.equal(security.projects.length, 1);
+
+  const spoken = resolveCommand("applied ai");
+  assert.equal(spoken.navTarget, "#work?categories=applied-ai");
 
   const cdBackResult = resolveCommand("cd ..");
   assert.equal(cdBackResult.kind, "nav");
   assert.equal(cdBackResult.navTarget, "#work");
 });
 
+test("retired category names still work in the terminal", () => {
+  const engineering = resolveCommand("cd focus/engineering");
+  assert.equal(engineering.navTarget, "#work?categories=signals-hardware");
+  assert.equal(engineering.projects.length, 3);
+
+  const cyber = resolveCommand("ls focus/cybersecurity");
+  assert.equal(cyber.navTarget, "#work?categories=systems-security");
+
+  const hackathons = resolveCommand("cd focus/hackathons");
+  assert.equal(hackathons.kind, "projects");
+  assert.equal(hackathons.navTarget, "#work");
+  assert.equal(hackathons.projects.length, allProjects.length);
+
+  assert.equal(resolveCategory("ai-math"), "applied-ai");
+  assert.equal(resolveCategory("hackathons"), null);
+  assert.equal(resolveCategory("constructor"), undefined);
+});
+
+test("every work card has a one-sentence hook with a distinct opening", () => {
+  const openings = new Set();
+  for (const project of [...allProjects, ...shelfEntries]) {
+    const words = project.hook.trim().split(/\s+/);
+    assert.ok(
+      words.length >= 15 && words.length <= 30,
+      `${project.name}: ${words.length} words`,
+    );
+    assert.match(project.hook, /[.?]$/, project.name);
+  }
+  for (const project of allProjects) {
+    openings.add(project.hook.split(/\s+/).slice(0, 2).join(" ").toLowerCase());
+  }
+  assert.equal(openings.size, allProjects.length);
+});
+
+test("missing facts are explicit WIP placeholders, never invented", () => {
+  const timing = caseStudyProjects.find(
+    ({ slug }) => slug === "timing-attack-lab",
+  );
+  assert.equal(isWip(timing.role), true);
+  assert.equal(isWip(timing.proof), true);
+  assert.match(timing.insights.sections.at(-1).body, /^WIP/);
+  for (const project of [...allProjects, ...shelfEntries]) {
+    assert.equal(typeof project.role, "string", project.name);
+    assert.equal(typeof project.proof, "string", project.name);
+    assert.ok(
+      project.role.length > 0 && project.proof.length > 0,
+      project.name,
+    );
+  }
+});
+
+test("every case study can be read as short steps", () => {
+  for (const project of caseStudyProjects) {
+    const steps = getCaseStudySteps(project.insights);
+    assert.ok(steps.length >= 3, `${project.name}: ${steps.length} steps`);
+    for (const step of steps) {
+      assert.ok(step.title && step.body, project.name);
+      assert.ok(
+        step.body.split(/\s+/).length <= 60,
+        `${project.name}: ${step.title}`,
+      );
+    }
+  }
+  assert.deepEqual(getCaseStudySteps({ layout: "unknown" }), []);
+});
+
 test("Asteroids reflects the shared C++/WASM game and keeps browser additions scoped", () => {
-  const asteroids = allProjects.find(({ slug }) => slug === "asteroids");
+  const asteroids = caseStudyProjects.find(({ slug }) => slug === "asteroids");
   assert.match(asteroids.description, /WebAssembly/);
   assert.match(asteroids.description, /Two versions/);
   assert.match(asteroids.description, /PS4 controller or keyboard and mouse/);

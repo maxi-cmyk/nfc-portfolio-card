@@ -16,8 +16,7 @@ import {
   shouldAutoFocusTerminal,
   shouldFocusTerminalAfterQuickCommand,
 } from "./terminal/input.js";
-import { getActiveRailTarget } from "./navigation/system-rail.js";
-import { initRouter } from "./navigation/router.js";
+import { initScenes, playHeroReveal } from "./components/scenes.js";
 import {
   appendCommand,
   appendSuggestions,
@@ -25,6 +24,8 @@ import {
 import { CommandHistory } from "./terminal/history.js";
 import { initCertificates } from "./components/certificates.js";
 import { initFocusTooling } from "./components/focus-tooling.js";
+import { initSkills } from "./components/skills.js";
+import { initFigures } from "./components/figures.js";
 
 const form = document.querySelector("#terminal-form");
 const input = document.querySelector("#command-input");
@@ -35,10 +36,6 @@ const bootLog = document.querySelector("#boot-log");
 const skipBoot = document.querySelector("#skip-boot");
 const pandaMascot = document.querySelector("#panda-mascot");
 const mascotHint = document.querySelector("#mascot-hint");
-const railLinks = document.querySelectorAll("[data-rail-target]");
-const railSections = document.querySelectorAll(
-  "#home, #terminal, #work, #certificates, #contact",
-);
 
 const commandHistory = new CommandHistory();
 let mascotClicks = 0;
@@ -78,32 +75,21 @@ function handleMascotClick() {
   pandaMascot.classList.add("has-hint");
 }
 
-function setActiveRailTarget(targetId) {
-  railLinks.forEach((link) => {
-    const isActive = link.dataset.railTarget === targetId;
-    link.classList.toggle("is-active", isActive);
-
-    if (isActive) {
-      link.setAttribute("aria-current", "location");
-    } else {
-      link.removeAttribute("aria-current");
-    }
-  });
+// The tap moment plays once per browser session; reloads and later pages skip it.
+function hasSeenBoot() {
+  try {
+    return sessionStorage.getItem("booted") === "1";
+  } catch {
+    return false;
+  }
 }
 
-function startSystemRail() {
-  if (!("IntersectionObserver" in window)) return;
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const activeTarget = getActiveRailTarget(entries);
-      if (activeTarget) setActiveRailTarget(activeTarget);
-    },
-    { rootMargin: "-28% 0px -58% 0px", threshold: [0] },
-  );
-
-  railSections.forEach((section) => observer.observe(section));
-  setActiveRailTarget("home");
+function markBootSeen() {
+  try {
+    sessionStorage.setItem("booted", "1");
+  } catch {
+    // Private mode: the boot may replay, which is harmless.
+  }
 }
 
 function revealPortfolio() {
@@ -123,8 +109,14 @@ function revealPortfolio() {
 
 async function runBootSequence() {
   const { typingDelay, completionDelay } = getBootTiming();
-  if (!bootScreen || reducedMotion.matches || window.location.hash)
+  if (
+    !bootScreen ||
+    reducedMotion.matches ||
+    window.location.hash ||
+    hasSeenBoot()
+  )
     return;
+  markBootSeen();
   bootScreen.hidden = false;
   document.body.classList.add("is-booting");
   // Always release the screen if an unexpected error interrupts startup.
@@ -248,13 +240,14 @@ quickLinks.forEach((button) => {
 
 pandaMascot.addEventListener("click", handleMascotClick);
 skipBoot?.addEventListener("click", revealPortfolio);
-initRouter();
-startSystemRail();
 initCertificates();
 initFocusTooling();
+initSkills();
+initScenes();
+initFigures();
 initBackgroundArt();
 const motion = initMotion();
 motion.register(input, startAliasTeaser);
 initLedMatrix(motion);
 document.documentElement.classList.add("is-enhanced");
-runBootSequence();
+runBootSequence().finally(playHeroReveal);

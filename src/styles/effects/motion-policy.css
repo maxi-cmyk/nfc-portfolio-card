@@ -21,7 +21,6 @@
   button:active,
   .certificate-preview:hover,
   .certificate-preview:focus-visible,
-  .system-rail a.is-active,
   .panda.has-hint {
     transform: none !important;
   }

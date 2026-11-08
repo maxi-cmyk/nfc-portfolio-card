@@ -1,8 +1,38 @@
-/* Typography and shape tokens. Colours live in themes/retro-apple.css. */
-@import "@fontsource/atkinson-hyperlegible-next/latin-400.css";
-@import "@fontsource/atkinson-hyperlegible-next/latin-600.css";
-@import "@fontsource/ibm-plex-mono/latin-400.css";
-@import "@fontsource/ibm-plex-mono/latin-500.css";
+/* Colour, typography and shape tokens. Fonts are self-hosted woff2 (see assets/fonts/README.md). */
+
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  src: url("../../assets/fonts/AtkinsonHyperlegibleNext-400.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  src: url("../../assets/fonts/AtkinsonHyperlegibleNext-600.woff2")
+    format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../../assets/fonts/IBMPlexMono-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../../assets/fonts/IBMPlexMono-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
 
 @font-face {
   font-family: "Departure Mono";
@@ -13,6 +43,19 @@
 }
 
 :root {
+  /* Colour: platinum paper, blueprint ink, plum signals. */
+  --ink: #1d1d1d;
+  --muted: #545454;
+  --bg: #d6d5cd;
+  --panel: #f4f3ed;
+  --line: #1d1d1d;
+  --acid: #1e4f9e;
+  --navy: #12376b;
+  --warm: #7a2e5d;
+  --red: #d83a3a;
+  --terminal-placeholder: #66645f;
+  --terminal-error: #b93434;
+
   /* Chrome and headlines: bitmap. Keep sizes on the 11px grid. */
   --font-chrome: "Departure Mono", "IBM Plex Mono", ui-monospace, monospace;
   --font-text: "Atkinson Hyperlegible Next", system-ui, sans-serif;
@@ -46,15 +89,4 @@
   :root {
     --px-hero: 99px;
   }
-}
-
-/* Pixel type must not be smoothed, tracked or shadowed. */
-.px {
-  font-family: var(--font-chrome);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-shadow: none;
-  -webkit-font-smoothing: none;
-  font-smooth: never;
-  text-rendering: optimizeSpeed;
 }

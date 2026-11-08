@@ -14,7 +14,7 @@
   }
 
   .status {
-    font-size: 10px;
+    font-size: var(--step--1);
   }
 
   .boot-screen {
@@ -44,20 +44,20 @@
   .output {
     min-height: 0;
     padding: 18px;
-    font-size: 12px;
+    font-size: var(--step--1);
   }
 
   .result {
-    font-size: 12px;
+    font-size: var(--step--1);
   }
 
   .command-line {
     padding: 4px 18px;
-    font-size: 16px;
+    font-size: var(--step-1);
   }
 
   .command-line input {
-    font-size: 16px;
+    font-size: var(--step-1);
   }
 
   .quick-links {
@@ -85,7 +85,7 @@
 
   .field-art-label,
   .field-art-caption {
-    font-size: 8px;
+    font-size: var(--step--1);
   }
 
   .field-trio .field-art-card {
@@ -108,7 +108,7 @@
   }
 
   .focus-command {
-    font-size: 12px;
+    font-size: var(--step--1);
   }
 
   .certificates-heading,
@@ -121,7 +121,7 @@
   }
 
   .focus-tooling {
-    font-size: 10px;
+    font-size: var(--step--1);
   }
 
   .focus-tooling > div {

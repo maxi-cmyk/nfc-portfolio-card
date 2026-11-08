@@ -42,12 +42,12 @@
 .insights-pipeline-terminal strong {
   margin-bottom: 6px;
   color: var(--acid);
-  font: 500 12px var(--font-mono);
+  font: 500 var(--step--1) var(--font-mono);
 }
 
 .insights-pipeline-terminal span {
   color: var(--muted);
-  font: 12px/1.45 var(--font-text);
+  font: var(--step--1)/1.45 var(--font-text);
 }
 
 .insights-pipeline-source::after,
@@ -85,7 +85,7 @@
   padding: 12px;
   border-right: 1px solid var(--line);
   color: var(--ink);
-  font: 500 11px/1.35 var(--font-mono);
+  font: 500 var(--step--1)/1.35 var(--font-mono);
 }
 
 .insights-pipeline-lane ol {
@@ -103,7 +103,7 @@
   align-items: center;
   padding: 12px 18px 12px 10px;
   color: var(--muted);
-  font: 11.5px/1.4 var(--font-text);
+  font: var(--step--1)/1.4 var(--font-text);
 }
 
 .insights-pipeline-lane li:not(:last-child)::after {
@@ -144,7 +144,7 @@
   display: block;
   margin-bottom: 14px;
   color: var(--acid);
-  font: 500 10px var(--font-mono);
+  font: 500 var(--step--1) var(--font-mono);
 }
 
 .insights-lifecycle-step[data-state="gate"] .insights-lifecycle-marker::after {
@@ -160,19 +160,19 @@
 .insights-lifecycle-step h5 {
   margin-bottom: 6px;
   color: var(--ink);
-  font: 500 12px var(--font-mono);
+  font: 500 var(--step--1) var(--font-mono);
 }
 
 .insights-lifecycle-step p {
   color: var(--muted);
-  font: 12.5px/1.5 var(--font-text);
+  font: var(--step--1)/1.5 var(--font-text);
 }
 
 .insights-frame {
   display: grid;
   min-width: 0;
   grid-template-columns: minmax(112px, 0.55fr) minmax(0, 2.7fr);
-  border: 2px solid var(--acid);
+  border: var(--hair);
   background: var(--panel);
 }
 
@@ -200,7 +200,7 @@
 
 .insights-frame-budget span {
   margin-top: 8px;
-  font-size: 10px;
+  font-size: var(--step--1);
   text-transform: uppercase;
 }
 
@@ -231,12 +231,12 @@
 .insights-frame-phases strong {
   margin-bottom: 7px;
   color: var(--ink);
-  font: 500 11px var(--font-mono);
+  font: 500 var(--step--1) var(--font-mono);
 }
 
 .insights-frame-phases span {
   color: var(--muted);
-  font: 12px/1.45 var(--font-text);
+  font: var(--step--1)/1.45 var(--font-text);
 }
 
 .insights-frame-after {
@@ -244,7 +244,7 @@
   max-width: 60ch;
   margin: 0;
   color: var(--muted);
-  font: 11px/1.5 var(--font-mono);
+  font: var(--step--1)/1.5 var(--font-mono);
 }
 
 .insights-frame-after strong {
@@ -261,7 +261,7 @@
 .insights-event-section-label {
   margin: 0 0 -10px;
   color: var(--muted);
-  font: 500 10px var(--font-mono);
+  font: 500 var(--step--1) var(--font-mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -281,12 +281,12 @@
 .insights-device strong {
   margin-bottom: 5px;
   color: var(--acid);
-  font: 500 12px var(--font-mono);
+  font: 500 var(--step--1) var(--font-mono);
 }
 
 .insights-device span {
   color: var(--muted);
-  font: 12px/1.4 var(--font-text);
+  font: var(--step--1)/1.4 var(--font-text);
 }
 
 .insights-event-list {
@@ -320,7 +320,7 @@
 
 .insights-event-actor {
   color: var(--acid);
-  font: 500 10px/1.4 var(--font-mono);
+  font: 500 var(--step--1)/1.4 var(--font-mono);
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -337,7 +337,7 @@
   justify-content: center;
   border: 1px solid var(--acid);
   color: var(--acid);
-  font: 500 10px var(--font-mono);
+  font: 500 var(--step--1) var(--font-mono);
 }
 
 .insights-event-step h5,
@@ -348,12 +348,12 @@
 .insights-event-step h5 {
   margin-bottom: 5px;
   color: var(--ink);
-  font: 500 12px var(--font-mono);
+  font: 500 var(--step--1) var(--font-mono);
 }
 
 .insights-event-step p {
   color: var(--muted);
-  font: 12.5px/1.5 var(--font-text);
+  font: var(--step--1)/1.5 var(--font-text);
 }
 
 .insights-how-it-works {
@@ -378,7 +378,7 @@
   margin: 0;
   color: var(--ink);
   font-family: var(--font-text);
-  font-size: 14px;
+  font-size: var(--step-0);
   line-height: 1.55;
 }
 
@@ -425,7 +425,7 @@
   border: 1px solid var(--acid);
   background: var(--acid);
   color: var(--bg);
-  font: 500 10px var(--font-mono);
+  font: 500 var(--step--1) var(--font-mono);
 }
 
 .insights-how-copy {
@@ -435,7 +435,7 @@
 .insights-how-copy h5 {
   margin: 2px 0 6px;
   color: var(--ink);
-  font: 500 13px var(--font-mono);
+  font: 500 var(--step-0) var(--font-mono);
 }
 
 .insights-how-copy p {
@@ -443,7 +443,7 @@
   margin: 0;
   color: var(--muted);
   font-family: var(--font-text);
-  font-size: 13.5px;
+  font-size: var(--step-0);
   line-height: 1.55;
 }
 
@@ -455,7 +455,7 @@
   padding: 5px 7px;
   background: var(--panel);
   color: var(--acid);
-  font: 11px var(--font-mono);
+  font: var(--step--1) var(--font-mono);
   overflow-wrap: anywhere;
 }
 
@@ -465,7 +465,7 @@
   padding-top: 12px;
   border-top: 1px solid var(--line);
   color: var(--muted);
-  font: 11px/1.5 var(--font-mono);
+  font: var(--step--1)/1.5 var(--font-mono);
 }
 
 .insights-visual {
@@ -520,27 +520,27 @@
 .insights-flow-index {
   margin-bottom: 12px;
   color: var(--acid);
-  font: 10px var(--font-mono);
+  font: var(--step--1) var(--font-mono);
 }
 
 .insights-flow-node strong {
   margin-bottom: 5px;
   color: var(--ink);
-  font: 500 12px var(--font-mono);
+  font: 500 var(--step--1) var(--font-mono);
   overflow-wrap: anywhere;
 }
 
 .insights-flow-node span:last-child {
   color: var(--muted);
   font-family: var(--font-text);
-  font-size: 12px;
+  font-size: var(--step--1);
   line-height: 1.4;
 }
 
 .insights-visual figcaption {
   margin-top: 7px;
   color: var(--muted);
-  font: 10px var(--font-mono);
+  font: var(--step--1) var(--font-mono);
   text-align: right;
 }
 
@@ -559,14 +559,14 @@
 .insights-detail h4 {
   margin: 0 0 8px;
   color: var(--acid);
-  font: 500 12px var(--font-mono);
+  font: 500 var(--step--1) var(--font-mono);
 }
 
 .insights-detail p {
   margin: 0;
   color: var(--ink);
   font-family: var(--font-text);
-  font-size: 13.5px;
+  font-size: var(--step-0);
   line-height: 1.55;
 }
 

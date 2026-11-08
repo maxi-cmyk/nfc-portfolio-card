@@ -555,7 +555,7 @@ footer {
   margin: 0;
   padding: 16px 0;
   border-bottom: 1px solid var(--line);
-  font: 14px / 1.45 var(--font-mono);
+  font: var(--step-0) / 1.45 var(--font-mono);
 }
 
 .focus-index article {
@@ -575,7 +575,7 @@ footer {
 .focus-kind {
   padding-top: 3px;
   color: var(--acid);
-  font: 12px var(--font-mono);
+  font: var(--step--1) var(--font-mono);
 }
 
 .focus-kind {
@@ -607,7 +607,7 @@ footer {
   gap: 6px;
   max-width: 640px;
   margin: 14px 0 0;
-  font: 11px / 1.45 var(--font-mono);
+  font: var(--step--1) / 1.45 var(--font-mono);
 }
 
 .focus-tooling > div {

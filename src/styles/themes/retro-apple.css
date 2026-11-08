@@ -1,19 +1,5 @@
-/* A 1990s Apple technical-manual theme: platinum paper, blueprint ink, plum signals.
-   Hairline frames, flat controls, bitmap headlines. Tokens: foundations/tokens.css. */
-:root {
-  --ink: #1d1d1d;
-  --muted: #545454;
-  --bg: #d6d5cd;
-  --panel: #f4f3ed;
-  --line: #1d1d1d;
-  --acid: #1e4f9e;
-  --navy: #12376b;
-  --warm: #7a2e5d;
-  --red: #d83a3a;
-  --terminal-placeholder: #66645f;
-  --terminal-error: #b93434;
-}
-
+/* Component appearance for the 1990s Apple technical-manual look.
+   Colour, type and shape tokens live in foundations/tokens.css. */
 html {
   background: var(--bg);
 }
@@ -23,10 +9,6 @@ body {
   color: var(--ink);
   font-family: var(--font-text);
   font-size: var(--step-1);
-}
-
-body::before {
-  display: none;
 }
 
 .boot-screen {
@@ -116,11 +98,6 @@ body::before {
   color: var(--acid);
 }
 
-/* Clip-art monitor retired; the panda stays as the only mascot. */
-.retro-monitor {
-  display: none;
-}
-
 .eyebrow,
 .mascot-hint {
   color: var(--muted);
@@ -153,23 +130,6 @@ body::before {
   color: var(--ink);
   font-size: var(--step--1);
   font-weight: 500;
-}
-
-/* One close box on the left, as System 7 had; the traffic lights are gone. */
-.dot.amber,
-.dot.green {
-  display: none;
-}
-
-.dot {
-  width: 13px;
-  height: 13px;
-  border: var(--hair);
-  border-radius: 0;
-}
-
-.dot.red {
-  background: var(--panel);
 }
 
 .terminal-bar::after {
@@ -243,7 +203,6 @@ body::before {
 .focus h2,
 .focus-index h3,
 .certificates-heading h2,
-.featured-project h3,
 .project-card-title,
 .modal-title {
   color: var(--navy);
@@ -270,7 +229,6 @@ body::before {
 }
 
 .focus-index h3,
-.featured-project h3,
 .project-card-title,
 .modal-title {
   font-size: var(--px-1);

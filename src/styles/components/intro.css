@@ -1,36 +1,7 @@
-.masthead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 28px 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.brand {
-  color: var(--ink);
-  font: 600 20px var(--font-mono);
-  text-decoration: none;
-}
-
-.brand span {
-  color: var(--acid);
-}
-
-.status,
 .eyebrow {
   color: var(--muted);
-  font: 12px var(--font-mono);
+  font: var(--step--1) var(--font-mono);
   letter-spacing: 0.07em;
-}
-
-.status span {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  margin-right: 7px;
-  border-radius: 50%;
-  background: var(--acid);
-  box-shadow: 0 0 12px var(--acid);
 }
 
 .intro {
@@ -87,18 +58,11 @@
 .mascot-hint {
   margin: 0 0 18px;
   color: var(--warm);
-  font: 12px var(--font-mono);
+  font: var(--step--1) var(--font-mono);
 }
 
 .eyebrow {
   margin: 0 0 18px;
-}
-
-.intro h1 {
-  margin: 0;
-  font-size: clamp(56px, 11vw, 132px);
-  line-height: 0.82;
-  letter-spacing: -0.075em;
 }
 
 .lede {

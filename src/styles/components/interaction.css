@@ -1,0 +1,84 @@
+/* Motion language: System 7 was snappy, not floaty. Hard steps and inversion,
+   never a smooth ease; never more than three things moving at once; all of it
+   is switched off by prefers-reduced-motion (see effects/motion-policy.css). */
+
+/* Transition layers (components/transitions.js). */
+.fx-layer {
+  position: fixed;
+  z-index: 70;
+  pointer-events: none;
+}
+.fx-rect {
+  box-sizing: border-box;
+  border: 1px solid var(--ink);
+}
+.fx-dither {
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  image-rendering: pixelated;
+}
+
+/* Push buttons, pager links and chips invert in two hard steps. */
+.quick-links button,
+.project-insights-btn,
+.work-filters button,
+.suggestion-item,
+.palette-list li,
+.icon-label {
+  transition:
+    background-color 80ms steps(2, end),
+    border-color 80ms steps(2, end),
+    color 80ms steps(2, end);
+}
+/* Pressing sinks a control by one pixel and turns it solid ink. */
+.quick-links button:active,
+.project-insights-btn:active,
+.work-filters button:active {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--panel);
+  transform: translateY(1px);
+}
+
+/* Links: the underline thickens in steps and the text turns navy. */
+.terminal-link,
+.intro-actions a,
+.case-crumb a,
+.section-heading > a,
+.contact a {
+  text-underline-offset: 4px;
+  transition:
+    color 80ms steps(2, end),
+    text-decoration-thickness 120ms steps(3, end);
+}
+.terminal-link:hover,
+.intro-actions a:hover,
+.case-crumb a:hover,
+.section-heading > a:hover,
+.contact a:hover {
+  color: var(--navy);
+  text-decoration-thickness: 2px;
+}
+
+/* Also built: a bar appears at the row's left edge. */
+.shelf-row {
+  padding-left: 12px;
+  border-left: 3px solid transparent;
+  transition: border-color 80ms steps(2, end);
+}
+.shelf-row:hover,
+.shelf-row:focus-within {
+  border-left-color: var(--navy);
+}
+
+/* Desktop icons: the label inverts, like a selected Finder icon. */
+.icon:hover .icon-label,
+.icon:focus-visible .icon-label {
+  background: var(--navy);
+  color: var(--panel);
+}
+.icon:active .icon-label {
+  background: var(--ink);
+  color: var(--panel);
+}

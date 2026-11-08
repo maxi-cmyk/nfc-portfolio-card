@@ -3,6 +3,7 @@ import { aboutCommand } from "./about.js";
 import { contactCommand } from "./contact.js";
 import { helpCommand } from "./help.js";
 import { pandaCommand } from "./panda.js";
+import { allProjects, resolveCategory } from "../../data/projects.js";
 import { projectsCommand, focusCategories } from "./project.js";
 import { resumeCommand } from "./resume.js";
 import { skillsCommand } from "./skills.js";
@@ -56,7 +57,8 @@ export function resolveCommand(rawCommand) {
 
   if (commands[command]) return commands[command];
 
-  // Match category shortcuts like "hackathons", "cybersecurity", "focus hackathons", "ls focus/engineering", "cd focus/hackathons"
+  // Match category shortcuts like "applied ai", "security", "focus signals-hardware", "ls focus/systems-security".
+  // Retired names (engineering, cybersecurity, ai-math, hackathons) still resolve.
   const normalized = command
     .replace(/^ls\s+focus\/?/, "")
     .replace(/^cat\s+focus\/?/, "")
@@ -65,12 +67,31 @@ export function resolveCommand(rawCommand) {
     .replace(/\/$/, "")
     .trim();
 
+  const shortcuts = {
+    signals: "signals-hardware",
+    hardware: "signals-hardware",
+    security: "systems-security",
+    ai: "applied-ai",
+  };
+  const slug = normalized.replace(/\s*&\s*/g, "-").replace(/\s+/g, "-");
   let matchedCategoryKey = Object.keys(focusCategories).find(
-    (key) =>
-      key === normalized ||
-      key.replace("-", " & ") === normalized ||
-      key.replace("-", " ") === normalized,
+    (key) => key === slug || key.replace("-", " & ") === normalized,
   );
+  if (!matchedCategoryKey && Object.hasOwn(shortcuts, slug)) {
+    matchedCategoryKey = shortcuts[slug];
+  }
+  if (!matchedCategoryKey) {
+    const legacy = resolveCategory(slug);
+    if (legacy) matchedCategoryKey = legacy;
+    else if (legacy === null) {
+      return {
+        kind: "projects",
+        output: "Navigating to work...",
+        navTarget: workHash([]),
+        projects: allProjects,
+      };
+    }
+  }
 
   if (matchedCategoryKey) {
     const category = focusCategories[matchedCategoryKey];

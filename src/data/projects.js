@@ -1,11 +1,20 @@
+export const WIP = "WIP";
+export const isWip = (value) => value === WIP;
+
 const projectsBySlug = {
   "music-leds": {
     slug: "music-leds",
-    feature: {
-      subject: "Fourier mathematics, made visible.",
-      note: "Custom DFT/FFT and a browser walkthrough connect linear algebra to an ESP32 RGB visualiser.",
+    categories: ["signals-hardware"],
+    hook: "Fourier mathematics, made visible: a custom FFT on an ESP32 turns sound into colour, and a browser walkthrough lets you inspect each step of the transform.",
+    role: WIP,
+    proof: "Live browser demo",
+    live: { label: "Try it", url: "https://musicled-webpage.vercel.app" },
+    media: {
+      kind: "photo",
+      want: "Photo of the board running: ESP32, microphone and the RGB LED lit.",
+      src: WIP,
+      alt: WIP,
     },
-    categories: ["engineering", "ai-math"],
     name: "music_LEDs",
     meta: "Fourier mathematics · linear algebra · hardware",
     tags: ["C++", "JavaScript", "ESP32", "DFT / FFT", "Web Serial"],
@@ -71,11 +80,16 @@ const projectsBySlug = {
   },
   cya: {
     slug: "cya",
-    feature: {
-      subject: "Image detection beyond clean inputs.",
-      note: "My work spans data, models, evaluation, and inference. Reported held-out result: 140/141 images correct.",
+    categories: ["applied-ai"],
+    hook: "An AI-image detector tested for robustness: does it still tell real from generated after JPEG recompression, blur and resizing?",
+    role: "Data pipeline, detector baselines, evaluation tooling, inference backend and CLI, submission integration.",
+    proof: "Held-out test: 140 of 141 images correct (single run)",
+    media: {
+      kind: "screenshot",
+      want: "Screenshot of the upload demo or the results table.",
+      src: WIP,
+      alt: WIP,
     },
-    categories: ["ai-math", "hackathons"],
     name: "cya",
     meta: "TechJam 26 · participant",
     tags: ["Python", "PyTorch", "CLIP / RINE", "FastAPI", "React"],
@@ -152,11 +166,17 @@ const projectsBySlug = {
   },
   itspeak: {
     slug: "itspeak",
-    feature: {
-      subject: "From rehearsal to useful feedback.",
-      note: "I built the backend and analysis pipeline for this presentation coach. 2nd place; my first full-stack app.",
+    categories: ["applied-ai"],
+    hook: "A private coach that turns a rehearsal recording into measured feedback on pace, pitch, filler words, posture and eye contact, then tracks progress against a baseline.",
+    role: "Backend, persistence, media-analysis pipeline and production deployment.",
+    proof: "2nd place · SMU .Hack Enrichment Application Programme 2026",
+    live: { label: "Try it", url: "https://it-s-peak-ruddy.vercel.app" },
+    media: {
+      kind: "screenshot",
+      want: "Screenshot of the feedback screen.",
+      src: WIP,
+      alt: WIP,
     },
-    categories: ["ai-math", "hackathons"],
     name: "it'sPEAK",
     meta: "2nd place · first full-stack app",
     tags: [
@@ -232,7 +252,17 @@ const projectsBySlug = {
   },
   echo: {
     slug: "echo",
-    categories: ["hackathons"],
+    categories: ["applied-ai"],
+    hook: "A reminiscence companion for people with dementia that favours familiar memories and adapts its interactions to reduce overload.",
+    role: "Backend, database and feed logic.",
+    proof: "Best Freshmen Award · iNTUition 2026",
+    live: { label: "Try it", url: "https://echo-patient-pwa.vercel.app" },
+    media: {
+      kind: "screenshot",
+      want: "Screenshot of the PWA feed.",
+      src: WIP,
+      alt: WIP,
+    },
     name: "Echo",
     meta: "iNTUition 2026 · Best Freshmen Award",
     tags: ["Next.js", "Supabase", "PostgreSQL", "LLaVA", "ElevenLabs"],
@@ -294,7 +324,16 @@ const projectsBySlug = {
   },
   asteroids: {
     slug: "asteroids",
-    categories: ["engineering"],
+    categories: ["signals-hardware"],
+    hook: "Two versions of an arcade shooter on shared C++: an ESP32 hardware game with an OLED, and a WebAssembly browser game playable with a PS4 controller or keyboard and mouse.",
+    role: WIP,
+    proof: WIP,
+    media: {
+      kind: "video",
+      want: "Screen capture of the browser build and a clip of the OLED game.",
+      src: WIP,
+      alt: WIP,
+    },
     name: "Asteroids",
     meta: "ESP32 + web",
     tags: ["C++", "ESP32", "WebAssembly", "Canvas", "Gamepad API"],
@@ -357,7 +396,10 @@ const projectsBySlug = {
   },
   sentinel: {
     slug: "sentinel",
-    categories: ["cybersecurity", "engineering"],
+    categories: ["signals-hardware", "systems-security"],
+    hook: "Two ESP32 nodes split sensing from image capture: motion raises a Blynk event, while an ESP32-CAM serves a live stream and flash-assisted JPEG endpoint.",
+    role: WIP,
+    proof: WIP,
     name: "Sentinel",
     meta: "hardware",
     tags: ["ESP32", "ESP32-CAM", "C++", "Blynk", "MJPEG"],
@@ -436,7 +478,16 @@ const projectsBySlug = {
   },
   "conway-game-of-life": {
     slug: "conway-game-of-life",
-    categories: ["engineering", "ai-math"],
+    categories: ["signals-hardware"],
+    hook: "A 32×8 toroidal Game of Life runs on an ESP32 and an LED matrix, streaming entropy and birth/death telemetry to a React dashboard.",
+    role: WIP,
+    proof: WIP,
+    media: {
+      kind: "video",
+      want: "Short clip of the 32×8 matrix running, beside the dashboard.",
+      src: WIP,
+      alt: WIP,
+    },
     name: "Conway's Game of Life",
     meta: "maths + hardware",
     tags: ["ESP32", "C++", "MAX7219", "SSE", "React"],
@@ -503,64 +554,268 @@ const projectsBySlug = {
       },
     ],
   },
+  "timing-attack-lab": {
+    slug: "timing-attack-lab",
+    categories: ["systems-security"],
+    hook: "A localhost-only lab on how early-exit comparisons leak timing, how an attacker can recover a secret from it, and how constant-time comparison closes the leak.",
+    role: WIP,
+    proof: WIP,
+    media: {
+      kind: "screenshot",
+      want: "Terminal capture of the timing staircase, once the experiments have run.",
+      src: WIP,
+      alt: WIP,
+    },
+    name: "timing-attack-lab",
+    meta: "Learning lab · localhost only",
+    tags: ["Python", "Flask", "C", "hmac"],
+    description:
+      "A sequential, localhost-only lab: a Flask login endpoint with a deliberately vulnerable early-exit comparison, an attacker that times candidate bytes, and a constant-time fix. Measured results are WIP.",
+    insights: {
+      layout: "algorithm",
+      summary:
+        "Status: learning lab in progress. Comparing secrets byte by byte and returning on the first mismatch leaks how many leading bytes were right through response time. The lab builds the vulnerable comparison, an attacker that measures it, and the constant-time fix. Measured results and the Python-versus-C comparison are WIP.",
+      contentOrder: ["summary", "howItWorks", "diagram", "sections"],
+      howItWorks: {
+        title: "From a timing leak to a recovered byte",
+        intro:
+          "The lab pairs a deliberately vulnerable comparison with an attacker that measures how long each guess takes.",
+        steps: [
+          {
+            title: "Leak the prefix length",
+            body: "The vulnerable comparison returns on the first mismatched byte and sleeps after every matching one, so each extra correct byte adds a small delay to the response.",
+            code: "if a != b: return False  /  sleep(delay)",
+          },
+          {
+            title: "Rank 256 guesses per byte",
+            body: "For each position the attacker times all 256 byte values over repeated samples, keeps the slowest average, fixes that byte, and moves to the next position.",
+            code: "score[b] = mean(timings(prefix + b))",
+          },
+          {
+            title: "Remove the signal",
+            body: "A constant-time comparison built on hmac.compare_digest checks every byte regardless of mismatches, so response time no longer reveals how many leading bytes were correct.",
+            code: "hmac.compare_digest(candidate, expected)",
+          },
+        ],
+        takeaway:
+          "Early-exit comparison leaks the matching-prefix length through timing; constant-time comparison removes that signal. Passwords should still be stored with a password-hashing algorithm such as Argon2 or bcrypt.",
+      },
+      diagram: {
+        label: "Request, comparison, measurement, and guess",
+        nodes: [
+          { label: "Login request", detail: "Candidate bytes over localhost" },
+          { label: "Comparison", detail: "Early exit or constant time" },
+          { label: "Timing samples", detail: "Mean, median, trimmed mean" },
+          { label: "Ranked guess", detail: "One byte at a time" },
+        ],
+      },
+      sections: [
+        {
+          title: "Scope and safety",
+          body: "The lab runs on localhost against a synthetic secret, and the starter attacker accepts localhost targets only. It must not be used against accounts, credentials, or systems you do not own.",
+        },
+        {
+          title: "What exists",
+          body: "A Flask login endpoint with vulnerable and fixed modes, an attacker module for measuring and scoring candidates, a check runner, and a C server for a Python-versus-C comparison.",
+        },
+        {
+          title: "Results",
+          body: "WIP. Raw timing samples, per-position latency distributions, and the vulnerable-versus-constant-time comparison have not been collected yet.",
+        },
+      ],
+    },
+    links: [
+      {
+        label: "github",
+        url: "https://github.com/maxi-cmyk/timing-attack-lab",
+      },
+    ],
+  },
 };
 
 function selectProjects(...slugs) {
   return slugs.map((slug) => projectsBySlug[slug]);
 }
 
+// Groups describe what was built. Hackathon results are badges on the project,
+// not a group. Retired category ids stay valid in URLs and terminal commands.
 export const focusCategories = {
-  cybersecurity: {
-    id: "cybersecurity",
-    title: "cybersecurity/",
-    path: "focus/cybersecurity",
+  "signals-hardware": {
+    id: "signals-hardware",
+    label: "Signals & hardware",
+    title: "signals & hardware/",
+    path: "focus/signals-hardware",
     description:
-      "Understand systems, identify weaknesses, and build with privacy in mind.",
+      "Sound, sensors, and ESP32 builds where mathematics meets physical hardware.",
     get projects() {
       return getFilteredProjects([this.id]);
     },
   },
-  engineering: {
-    id: "engineering",
-    title: "engineering/",
-    path: "focus/engineering",
+  "systems-security": {
+    id: "systems-security",
+    label: "Systems & security",
+    title: "systems & security/",
+    path: "focus/systems-security",
     description:
-      "Hardware, sensors, embedded systems, and interactive physical computing.",
+      "How systems leak, fail, and get defended, measured at the byte and packet level.",
     get projects() {
       return getFilteredProjects([this.id]);
     },
   },
-  "ai-math": {
-    id: "ai-math",
-    title: "ai & math/",
-    path: "focus/ai-math",
+  "applied-ai": {
+    id: "applied-ai",
+    label: "Applied AI & products",
+    title: "applied ai & products/",
+    path: "focus/applied-ai",
     description:
-      "Use models and mathematical thinking to turn noisy inputs into useful tools.",
-    get projects() {
-      return getFilteredProjects([this.id]);
-    },
-  },
-  hackathons: {
-    id: "hackathons",
-    title: "hackathons/",
-    path: "focus/hackathons",
-    description:
-      "Rapid prototyping, building under constraints, and shipping award-winning products.",
+      "Models and signal analysis turned into tools that people can use.",
     get projects() {
       return getFilteredProjects([this.id]);
     },
   },
 };
 
+// null means the old category no longer filters anything (it shows all work).
+export const legacyCategoryAliases = {
+  engineering: "signals-hardware",
+  cybersecurity: "systems-security",
+  "ai-math": "applied-ai",
+  hackathons: null,
+};
+
+// Returns a current category id, null for "all work", or undefined if unknown.
+export function resolveCategory(id) {
+  if (Object.hasOwn(focusCategories, id)) return id;
+  if (Object.hasOwn(legacyCategoryAliases, id)) {
+    return legacyCategoryAliases[id];
+  }
+  return undefined;
+}
+
+// Cards in Selected work, in display order.
 export const allProjects = selectProjects(
   "music-leds",
-  "cya",
+  "timing-attack-lab",
+  "conway-game-of-life",
+  "asteroids",
   "itspeak",
   "echo",
-  "asteroids",
-  "sentinel",
-  "conway-game-of-life",
+  "cya",
 );
+
+// Everything that has a case study, including shelf entries such as Sentinel.
+export const caseStudyProjects = [...allProjects, projectsBySlug.sentinel];
+
+// "Also built": one compact row each. Unknown facts are WIP placeholders.
+export const shelfEntries = [
+  {
+    id: "sentinel",
+    caseStudy: "sentinel",
+    name: projectsBySlug.sentinel.name,
+    categories: projectsBySlug.sentinel.categories,
+    meta: projectsBySlug.sentinel.meta,
+    hook: projectsBySlug.sentinel.hook,
+    tags: projectsBySlug.sentinel.tags,
+    role: WIP,
+    proof: WIP,
+    links: projectsBySlug.sentinel.links,
+  },
+  {
+    id: "network-sniffer",
+    name: "network_sniffer",
+    categories: ["systems-security"],
+    meta: "packet capture",
+    hook: "Real-time packet capture with Scapy, streamed over WebSockets to a live dashboard that visualises network traffic.",
+    tags: ["Scapy", "FastAPI", "WebSockets", "Next.js"],
+    role: WIP,
+    proof: WIP,
+    links: [
+      { label: "github", url: "https://github.com/maxi-cmyk/network_sniffer" },
+    ],
+  },
+  {
+    id: "lockingang",
+    name: "lockingang",
+    categories: ["applied-ai"],
+    meta: "DLW 2026 hackathon",
+    hook: "A local-first desktop study app that models how quickly you forget each topic and suggests the next action to keep it.",
+    tags: ["Electron", "React", "FastAPI", "SQLite"],
+    role: WIP,
+    proof: WIP,
+    links: [
+      { label: "github", url: "https://github.com/maxi-cmyk/lockingang" },
+      { label: "demo video", url: "https://youtube.com/shorts/wftzCy07OX4" },
+    ],
+  },
+  {
+    id: "epicenter",
+    name: "epicenter",
+    categories: ["applied-ai"],
+    meta: "synthetic demo",
+    hook: "A synthetic outpatient registration demo: coverage documents become evidence-backed readiness states, and each patient keeps one ticket routed to a labelled counter.",
+    tags: ["Next.js", "FastAPI", "Supabase", "Clerk", "OpenAI"],
+    role: WIP,
+    proof: WIP,
+    links: [{ label: "github", url: "https://github.com/maxi-cmyk/epicenter" }],
+  },
+  {
+    id: "cekcek",
+    name: "cekcek",
+    categories: ["applied-ai"],
+    meta: "Hackomania",
+    hook: "A phone-frame smart-home energy app with usage insights, appliance recognition, spike detection and AI savings suggestions.",
+    tags: ["Next.js", "FastAPI", "ClickHouse"],
+    role: WIP,
+    proof: WIP,
+    links: [{ label: "github", url: "https://github.com/maxi-cmyk/cekcek" }],
+  },
+  {
+    id: "shiftwork",
+    name: "Shiftwork",
+    categories: ["applied-ai"],
+    meta: "desktop app",
+    hook: "A desktop task manager built around a six-speed manual gearbox: assign each task a gear, then shift through your day.",
+    tags: ["Electron", "Vite", "TypeScript"],
+    role: WIP,
+    proof: WIP,
+    links: [
+      { label: "github", url: "https://github.com/maxi-cmyk/shifting_work" },
+    ],
+  },
+  {
+    id: "hologram-ar",
+    name: "hologram_AR",
+    categories: ["applied-ai"],
+    meta: "webcam AR",
+    hook: "Webcam augmented reality driven by MediaPipe hand tracking: an exoskeleton overlay, pinch-to-scale holograms and gesture-fired repulsor effects.",
+    tags: ["Python", "MediaPipe"],
+    role: WIP,
+    proof: WIP,
+    links: [
+      { label: "github", url: "https://github.com/maxi-cmyk/hologram_AR" },
+    ],
+  },
+  {
+    id: "cv-experiments",
+    name: "Small vision experiments",
+    categories: ["applied-ai"],
+    meta: "anti_brainrot · goblin_detector",
+    hook: "Two webcam tools: a focus monitor that tracks head pitch with MediaPipe, and a posture game driven by YOLOv8 pose estimation.",
+    tags: ["Python", "MediaPipe", "YOLOv8"],
+    role: WIP,
+    proof: WIP,
+    links: [
+      {
+        label: "anti_brainrot",
+        url: "https://github.com/maxi-cmyk/anti_brainrot",
+      },
+      {
+        label: "goblin_detector",
+        url: "https://github.com/maxi-cmyk/goblin_detector",
+      },
+    ],
+  },
+];
 
 export function getCaseStudyLinkLabel() {
   return "view case study";
@@ -580,11 +835,5 @@ export function getFilteredProjects(categories = []) {
 }
 
 export function categoryLabel(id) {
-  return id === "ai-math"
-    ? "AI & Math"
-    : id.charAt(0).toUpperCase() + id.slice(1);
+  return focusCategories[id]?.label ?? id;
 }
-
-export const featuredProjects = ["music-leds", "cya", "itspeak"].map(
-  (slug) => projectsBySlug[slug],
-);

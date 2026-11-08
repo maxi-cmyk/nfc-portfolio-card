@@ -1,0 +1,123 @@
+/* Skills evidence: chips for skills and projects, plus a detail line. */
+.skill-index {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 8px 24px;
+  margin: 0;
+}
+.skill-index div {
+  display: grid;
+  gap: 2px;
+}
+.skill-index dt {
+  color: var(--navy);
+  font: 500 var(--step-0) / 1.4 var(--font-mono);
+}
+.skill-index dd {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--step-0);
+}
+
+.skills-detail {
+  min-height: 4.6em;
+  margin: 0 0 16px;
+  padding: 10px 14px;
+  border: var(--hair);
+  background: var(--panel);
+  font-size: var(--step-0);
+  line-height: 1.5;
+}
+.skills-note {
+  color: var(--muted);
+}
+.skills-columns {
+  display: grid;
+  gap: 20px 40px;
+  margin-bottom: 16px;
+}
+@media (min-width: 1000px) {
+  .skills-columns {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  }
+}
+.skills-group,
+.skills-projects {
+  margin: 0;
+}
+.skills-group + .skills-group {
+  margin-top: 14px;
+}
+.skills-group h3,
+.skills-projects h3 {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font: 500 var(--step--1) / 1.4 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  border: var(--hair);
+  border-radius: var(--button-radius);
+  background: var(--panel);
+  color: var(--ink);
+  cursor: pointer;
+  font: 500 var(--step--1) / 1 var(--font-mono);
+  letter-spacing: 0.02em;
+  transition:
+    background-color 80ms steps(2, end),
+    color 80ms steps(2, end),
+    opacity 80ms steps(2, end);
+}
+.chip .count {
+  margin-left: 8px;
+  color: var(--warm);
+}
+.chip:hover,
+.chip:focus-visible,
+.chip[aria-pressed="true"] {
+  border-color: var(--navy);
+  background: var(--navy);
+  color: var(--panel);
+}
+.chip:hover .count,
+.chip:focus-visible .count,
+.chip[aria-pressed="true"] .count {
+  color: var(--panel);
+}
+.chip.is-linked {
+  border-color: var(--navy);
+  background: color-mix(in srgb, var(--navy) 16%, var(--panel));
+  box-shadow: inset 0 0 0 1px var(--navy);
+}
+.chip.is-dim {
+  opacity: 0.4;
+}
+.chip-shelf,
+.chip-practice {
+  border-style: dashed;
+}
+.chip-more {
+  color: var(--acid);
+}
+html.is-scenes .skills .section-heading p {
+  display: none;
+}
+@media (min-width: 700px) {
+  html.is-scenes .skills .section-heading p {
+    display: block;
+  }
+}
+.skills-detail .terminal-link {
+  display: inline;
+  min-height: 0;
+}

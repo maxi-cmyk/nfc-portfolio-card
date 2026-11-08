@@ -1,4 +1,4 @@
-import { allProjects } from "../../data/projects.js";
+import { caseStudyProjects } from "../../data/projects.js";
 
 let modalEl = null;
 
@@ -404,7 +404,7 @@ function ensureModal() {
 }
 
 export function openProjectModal(slug, returnFocusElement) {
-  const project = allProjects.find((p) => p.slug === slug);
+  const project = caseStudyProjects.find((p) => p.slug === slug);
 
   if (!project) return false;
 
@@ -447,10 +447,10 @@ export function openProjectModal(slug, returnFocusElement) {
   meta.textContent = project.meta;
 
   header.append(title, meta);
-  if (project.feature) {
+  if (project.hook) {
     const result = document.createElement("p");
     result.className = "modal-result";
-    result.textContent = project.feature.note;
+    result.textContent = project.hook;
     header.append(result);
   }
 

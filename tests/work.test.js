@@ -5,13 +5,14 @@ import {
   allProjects,
   focusCategories,
   getFilteredProjects,
+  shelfEntries,
 } from "../src/data/projects.js";
 import { parseRoute, workHash } from "../src/navigation/routes.js";
 
 const html = readFileSync(new URL("../index.html", import.meta.url), "utf8");
 test("All work and overlapping OR filters keep canonical order without duplicates", () => {
   assert.deepEqual(getFilteredProjects(), allProjects);
-  const union = getFilteredProjects(["engineering", "ai-math"]);
+  const union = getFilteredProjects(["signals-hardware", "applied-ai"]);
   assert.equal(union.length, 6);
   assert.equal(union.filter((p) => p.slug === "music-leds").length, 1);
   assert.equal(
@@ -19,13 +20,15 @@ test("All work and overlapping OR filters keep canonical order without duplicate
     true,
   );
   assert.equal(
-    union.some((p) => p.slug === "echo"),
+    union.some((p) => p.slug === "timing-attack-lab"),
     false,
   );
   assert.deepEqual(
     union,
     allProjects.filter((p) =>
-      p.categories.some((id) => ["engineering", "ai-math"].includes(id)),
+      p.categories.some((id) =>
+        ["signals-hardware", "applied-ai"].includes(id),
+      ),
     ),
   );
   for (const id of Object.keys(focusCategories)) {
@@ -33,21 +36,45 @@ test("All work and overlapping OR filters keep canonical order without duplicate
   }
 });
 test("Legacy routes normalize to shareable filters and category order is stable", () => {
-  assert.deepEqual(parseRoute("#focus/engineering"), {
+  assert.deepEqual(parseRoute("#focus/signals-hardware"), {
     kind: "work",
-    categories: ["engineering"],
-    hash: "#work?categories=engineering",
+    categories: ["signals-hardware"],
+    hash: "#work?categories=signals-hardware",
   });
   assert.deepEqual(parseRoute("#focus").categories, []);
   assert.equal(
-    workHash(["ai-math", "engineering", "engineering"]),
-    "#work?categories=engineering,ai-math",
+    workHash(["applied-ai", "signals-hardware", "signals-hardware"]),
+    "#work?categories=signals-hardware,applied-ai",
   );
   assert.deepEqual(
-    parseRoute(workHash(["engineering", "ai-math"])).categories,
-    ["engineering", "ai-math"],
+    parseRoute(workHash(["signals-hardware", "applied-ai"])).categories,
+    ["signals-hardware", "applied-ai"],
   );
   assert.equal(workHash([]), "#work");
+});
+test("Retired category links still resolve to the new groups", () => {
+  assert.deepEqual(parseRoute("#focus/engineering"), {
+    kind: "work",
+    categories: ["signals-hardware"],
+    hash: "#work?categories=signals-hardware",
+  });
+  assert.deepEqual(parseRoute("#focus/cybersecurity").categories, [
+    "systems-security",
+  ]);
+  assert.deepEqual(parseRoute("#focus/ai-math").categories, ["applied-ai"]);
+  assert.deepEqual(parseRoute("#focus/hackathons"), {
+    kind: "work",
+    categories: [],
+    hash: "#work",
+  });
+  assert.deepEqual(
+    parseRoute("#work?categories=engineering,ai-math").categories,
+    ["signals-hardware", "applied-ai"],
+  );
+  assert.deepEqual(parseRoute("#project/sentinel"), {
+    kind: "project",
+    slug: "sentinel",
+  });
 });
 test("Unknown and hostile fragments are handled without selector parsing", () => {
   for (const hash of [
@@ -59,7 +86,7 @@ test("Unknown and hostile fragments are handled without selector parsing", () =>
     "#][",
     "#work?categories=__proto__",
     "#focus/constructor",
-    "#work?categories=engineering,invalid",
+    "#work?categories=signals-hardware,invalid",
   ]) {
     assert.deepEqual(parseRoute(hash), { kind: "missing" }, hash);
   }
@@ -87,6 +114,14 @@ test("Static HTML exposes work, real links, case-study fallback and certificates
     [...html.matchAll(/class="static-case-study"/g)].length,
     allProjects.length,
   );
+  for (const entry of shelfEntries) {
+    assert.equal(
+      [...html.matchAll(new RegExp(`data-shelf-id="${entry.id}"`, "g"))].length,
+      1,
+      entry.name,
+    );
+  }
+  assert.doesNotMatch(html, /A few things I.ve built/);
   assert.ok(html.includes("/assets/Max_Leong_Resume.pdf"));
   assert.ok(html.includes("/assets/AI-professional-preview.webp"));
 });

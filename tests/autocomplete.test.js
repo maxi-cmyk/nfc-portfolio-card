@@ -15,8 +15,8 @@ test("getAutocompleteCandidates returns non-empty list of unique commands", () =
   assert.ok(candidates.includes("projects"));
   assert.ok(candidates.includes("resume"));
   assert.ok(candidates.includes("thebananachip"));
-  assert.ok(candidates.includes("cd focus/hackathons"));
-  assert.ok(candidates.includes("ls focus/cybersecurity"));
+  assert.ok(candidates.includes("cd focus/applied-ai"));
+  assert.ok(candidates.includes("ls focus/systems-security"));
   assert.ok(candidates.includes("cat resume"));
 
   // Destructive easter egg commands should not be autocomplete candidates
@@ -32,8 +32,11 @@ test("getLongestCommonPrefix computes correct prefix across strings", () => {
   assert.equal(getLongestCommonPrefix([]), "");
   assert.equal(getLongestCommonPrefix(["about"]), "about");
   assert.equal(
-    getLongestCommonPrefix(["cd focus/hackathons", "cd focus/hardware"]),
-    "cd focus/ha",
+    getLongestCommonPrefix([
+      "cd focus/signals-hardware",
+      "cd focus/systems-security",
+    ]),
+    "cd focus/s",
   );
   assert.equal(
     getLongestCommonPrefix(["cat resume", "cat resume.pdf"]),
@@ -62,11 +65,11 @@ test("single match autocompletion produces exact command replacement", () => {
   assert.equal(re.hasMultiple, false);
   assert.equal(re.completion, "resume");
 
-  // cd focus/h -> cd focus/hackathons
-  const cdH = getAutocompleteResult("cd focus/h");
-  assert.equal(cdH.hasMatch, true);
-  assert.equal(cdH.hasMultiple, false);
-  assert.equal(cdH.completion, "cd focus/hackathons");
+  // cd focus/ap -> cd focus/applied-ai
+  const cdA = getAutocompleteResult("cd focus/ap");
+  assert.equal(cdA.hasMatch, true);
+  assert.equal(cdA.hasMultiple, false);
+  assert.equal(cdA.completion, "cd focus/applied-ai");
 
   // pro -> projects
   const pro = getAutocompleteResult("pro");
@@ -83,24 +86,24 @@ test("single match autocompletion produces exact command replacement", () => {
 
 test("category subpath single match autocompletions", () => {
   assert.equal(
-    getAutocompleteResult("cd focus/c").completion,
-    "cd focus/cybersecurity",
+    getAutocompleteResult("cd focus/sy").completion,
+    "cd focus/systems-security",
   );
   assert.equal(
-    getAutocompleteResult("cd focus/e").completion,
-    "cd focus/engineering",
+    getAutocompleteResult("cd focus/si").completion,
+    "cd focus/signals-hardware",
   );
   assert.equal(
     getAutocompleteResult("cd focus/a").completion,
-    "cd focus/ai-math",
+    "cd focus/applied-ai",
   );
   assert.equal(
-    getAutocompleteResult("ls focus/h").completion,
-    "ls focus/hackathons",
+    getAutocompleteResult("ls focus/ap").completion,
+    "ls focus/applied-ai",
   );
   assert.equal(
-    getAutocompleteResult("cat focus/c").completion,
-    "cat focus/cybersecurity",
+    getAutocompleteResult("cat focus/sy").completion,
+    "cat focus/systems-security",
   );
 });
 
@@ -119,7 +122,7 @@ test("multiple matches return full match list and longest common prefix", () => 
   assert.equal(cdFocus.hasMatch, true);
   assert.equal(cdFocus.hasMultiple, true);
   assert.equal(cdFocus.commonPrefix, "cd focus/");
-  assert.equal(cdFocus.matches.length, 4);
+  assert.equal(cdFocus.matches.length, 3);
 });
 
 test("case-insensitivity and whitespace resilience in autocomplete", () => {
@@ -127,9 +130,9 @@ test("case-insensitivity and whitespace resilience in autocomplete", () => {
   assert.equal(upper.hasMatch, true);
   assert.equal(upper.completion, "about");
 
-  const mixed = getAutocompleteResult("CD FOCUS/H");
+  const mixed = getAutocompleteResult("CD FOCUS/AP");
   assert.equal(mixed.hasMatch, true);
-  assert.equal(mixed.completion, "cd focus/hackathons");
+  assert.equal(mixed.completion, "cd focus/applied-ai");
 });
 
 test("zero matches returns hasMatch false and preserves raw input", () => {

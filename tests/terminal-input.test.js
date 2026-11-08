@@ -55,7 +55,7 @@ test("non-empty Tab returns suggestions for multiple matching commands", () => {
 });
 
 const retroTheme = readFileSync(
-  new URL("../src/styles/themes/retro-apple.css", import.meta.url),
+  new URL("../src/styles/foundations/tokens.css", import.meta.url),
   "utf8",
 );
 function readStyleGraph(fileUrl, visited = new Set()) {
