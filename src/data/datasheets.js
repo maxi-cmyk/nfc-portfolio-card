@@ -23,7 +23,7 @@ export const datasheets = {
       },
       { k: "GPIO 19", v: `red · ${band("red")}`, led: "r", readme: true },
       { k: "GPIO 18", v: `green · ${band("green")}`, led: "g", readme: true },
-      { k: "GPIO 5", v: `blue · ${band("blue")}`, led: "b", readme: true },
+      { k: "GPIO 23", v: `blue · ${band("blue")}`, led: "b", readme: true },
     ],
   },
   asteroids: {
